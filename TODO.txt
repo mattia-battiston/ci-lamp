@@ -1,0 +1,3 @@
+- find a nicer icon (and add the hudson guy on it, maybe)
+- decide how to install the app: write a bat to install the service, which launches the main?
+- write an ant build to package the app
