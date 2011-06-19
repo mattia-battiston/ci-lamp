@@ -8,5 +8,7 @@
 	<classpathentry kind="lib" path="lib/test/mockito-all-1.8.5-sources.jar"/>
 	<classpathentry kind="lib" path="lib/test/mockito-all-1.8.5.jar"/>
 	<classpathentry kind="lib" path="lib/test/powermock-mockito-1.4.9-full.jar"/>
+	<classpathentry kind="lib" path="lib/runtime/x86/RXTXcomm.jar"/>
+	<classpathentry kind="lib" path="lib/runtime/x86/rxtxSerial.dll"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
