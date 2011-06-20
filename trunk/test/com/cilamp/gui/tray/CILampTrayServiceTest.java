@@ -23,9 +23,9 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import com.cilamp.factory.SystemTrayFactory;
-import com.cilamp.factory.TrayIconFactory;
 import com.cilamp.gui.app.CILampGui;
+import com.cilamp.gui.factory.SystemTrayFactory;
+import com.cilamp.gui.factory.TrayIconFactory;
 
 public class CILampTrayServiceTest {
 
