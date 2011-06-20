@@ -8,9 +8,9 @@ import java.awt.TrayIcon;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import com.cilamp.factory.SystemTrayFactory;
-import com.cilamp.factory.TrayIconFactory;
 import com.cilamp.gui.app.CILampGui;
+import com.cilamp.gui.factory.SystemTrayFactory;
+import com.cilamp.gui.factory.TrayIconFactory;
 
 public class CILampTrayService {
 

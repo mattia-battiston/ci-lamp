@@ -1,4 +1,4 @@
-package com.cilamp.factory;
+package com.cilamp.gui.factory;
 
 import java.awt.SystemTray;
 
