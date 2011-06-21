@@ -1,4 +1,4 @@
-package com.cilamp.lamp;
+package com.cilamp.service.lamp;
 
 public class LampDao {
 

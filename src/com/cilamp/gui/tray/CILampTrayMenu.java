@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 
 import com.cilamp.gui.app.CILampGui;
 import com.cilamp.gui.factory.PopupMenuFactory;
-import com.cilamp.util.ShutdownService;
+import com.cilamp.service.services.ShutdownService;
 
 public class CILampTrayMenu {
 
