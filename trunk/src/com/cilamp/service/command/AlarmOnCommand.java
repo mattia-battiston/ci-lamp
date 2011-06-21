@@ -1,4 +1,4 @@
-package com.cilamp.command;
+package com.cilamp.service.command;
 
 import com.cilamp.serial.SerialPortInterface;
 
