@@ -23,7 +23,7 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import com.cilamp.gui.app.CILampGui;
+import com.cilamp.gui.app.CILampGuiPresenter;
 import com.cilamp.gui.factory.SystemTrayFactory;
 import com.cilamp.gui.factory.TrayIconFactory;
 
@@ -87,13 +87,13 @@ public class CILampTrayServiceTest {
   public void openMenuOnRightClick() {
     service.init();
 
-    verify(trayMenu).init(any(CILampGui.class));
+    verify(trayMenu).init(any(CILampGuiPresenter.class));
     verify(trayIcon).setPopupMenu(any(PopupMenu.class));
   }
 
   @Test
   public void showMainClickOnClick() {
-    CILampGui mainGui = mock(CILampGui.class);
+    CILampGuiPresenter mainGui = mock(CILampGuiPresenter.class);
     service.setMainGui(mainGui);
     service.init();
 
@@ -133,7 +133,8 @@ public class CILampTrayServiceTest {
 
   private void mockMenu() {
     service.setTrayMenu(trayMenu);
-    when(trayMenu.init(any(CILampGui.class))).thenReturn(new PopupMenu());
+    when(trayMenu.init(any(CILampGuiPresenter.class))).thenReturn(
+        new PopupMenu());
   }
 
   private void mockFactories() {
