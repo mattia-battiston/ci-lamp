@@ -4,11 +4,13 @@ import java.awt.Button;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import com.cilamp.service.command.AlarmOnCommand;
+import com.cilamp.service.services.LampService;
 
 public class CILampGuiPresenter {
 
   private final View view;
+
+  private LampService lampService = new LampService();
 
   interface View {
     Button getAlarmOnButton();
@@ -20,21 +22,26 @@ public class CILampGuiPresenter {
 
   public CILampGuiPresenter(View view) {
     this.view = view;
-    initialize();
+    bindListenersToView();
   }
 
-  private void initialize() {
+  private void bindListenersToView() {
     view.getAlarmOnButton().addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        new AlarmOnCommand().execute();
-        // TODO enable alarmOff
+        lampService.turnAlarmOn();
+        // TODO fire AlarmTurnedOn event; alarmOff button will be listening for
+        // it and it will enable itself
       }
     });
   }
 
   public void show() {
     view.show();
+  }
+
+  public void setLampService(LampService lampService) {
+    this.lampService = lampService;
   }
 
 }
