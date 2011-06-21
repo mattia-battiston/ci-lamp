@@ -6,9 +6,13 @@ import java.awt.Container;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import com.cilamp.gui.factory.PanelFactory;
+
 public class CILampGui implements CILampGuiPresenter.View {
 
   private JFrame app = new JFrame();
+
+  private PanelFactory panelFactory = new PanelFactory();
 
   private Button alarmOnButton;
 
@@ -26,7 +30,7 @@ public class CILampGui implements CILampGuiPresenter.View {
 
   private void drawGui() {
     Container container = app.getContentPane();
-    JPanel content = new JPanel();
+    JPanel content = panelFactory.createPanel();
     container.add(content);
 
     addAlarmOnButton(content);
@@ -54,6 +58,10 @@ public class CILampGui implements CILampGuiPresenter.View {
 
   public void setApp(JFrame app) {
     this.app = app;
+  }
+
+  public void setPanelFactory(PanelFactory panelFactory) {
+    this.panelFactory = panelFactory;
   }
 
 }
