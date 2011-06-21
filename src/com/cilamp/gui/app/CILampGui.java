@@ -8,7 +8,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import com.cilamp.command.AlarmOnCommand;
+import com.cilamp.service.command.AlarmOnCommand;
 
 public class CILampGui {
 
