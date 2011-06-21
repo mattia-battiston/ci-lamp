@@ -16,7 +16,7 @@ import org.mockito.MockitoAnnotations;
 
 import com.cilamp.gui.app.CILampGui;
 import com.cilamp.gui.factory.PopupMenuFactory;
-import com.cilamp.util.ShutdownService;
+import com.cilamp.service.command.ShutdownService;
 
 public class CILampTrayMenuTest {
 
