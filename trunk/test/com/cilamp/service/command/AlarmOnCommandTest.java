@@ -1,14 +1,43 @@
 package com.cilamp.service.command;
 
-import static junit.framework.Assert.fail;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
+import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+
+import com.cilamp.serial.SerialPortInterface;
+import com.cilamp.serial.SerialPortInterfaceProvider;
 
 public class AlarmOnCommandTest {
 
+  private AlarmOnCommand command = new AlarmOnCommand();
+
+  @Mock
+  private SerialPortInterface serialPortInterface;
+
+  @Before
+  public void before() {
+    MockitoAnnotations.initMocks(this);
+
+    mockSerialPort();
+  }
+
   @Test
-  public void test() {
-    fail("TODO: test and refactor this class");
+  public void sendsCommandToSerialPort() {
+    command.execute();
+
+    verify(serialPortInterface).sendCommand("A1");
+  }
+
+  private void mockSerialPort() {
+    SerialPortInterfaceProvider serialPortInterfaceProvider = mock(SerialPortInterfaceProvider.class);
+    command.setSerialPortInterfaceProvider(serialPortInterfaceProvider);
+    when(serialPortInterfaceProvider.getSerialPortInterface()).thenReturn(
+        serialPortInterface);
   }
 
 }

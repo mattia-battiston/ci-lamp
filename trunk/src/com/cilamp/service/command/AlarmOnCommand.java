@@ -1,14 +1,19 @@
 package com.cilamp.service.command;
 
-import com.cilamp.serial.SerialPortInterface;
+import com.cilamp.serial.SerialPortInterfaceProvider;
 
 public class AlarmOnCommand {
 
-  // TODO use a service under services (LampService.turnAlarmOn), which might
-  // dispatch to a command
+  private SerialPortInterfaceProvider serialPortInterfaceProvider = new SerialPortInterfaceProvider();
 
   public void execute() {
     String command = "A1";
-    SerialPortInterface.getInstance().sendCommand(command);
+    serialPortInterfaceProvider.getSerialPortInterface().sendCommand(command);
   }
+
+  public void setSerialPortInterfaceProvider(
+      SerialPortInterfaceProvider serialPortInterfaceProvider) {
+    this.serialPortInterfaceProvider = serialPortInterfaceProvider;
+  }
+
 }
