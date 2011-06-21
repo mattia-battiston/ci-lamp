@@ -1,18 +1,26 @@
 package com.cilamp.gui.app;
 
+import static junit.framework.Assert.assertNotNull;
+import static junit.framework.Assert.fail;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.awt.Button;
 import java.awt.Container;
+import java.util.List;
 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+
+import com.cilamp.gui.factory.PanelFactory;
 
 public class CILampGuiTest {
 
@@ -20,6 +28,9 @@ public class CILampGuiTest {
 
   @Mock
   private JFrame app;
+
+  @Mock
+  private JPanel contentPanel;
 
   @Before
   public void before() {
@@ -64,9 +75,31 @@ public class CILampGuiTest {
     verify(app).setVisible(false);
   }
 
-  // TODO test gui is drawn correctly
+  @Test
+  public void alarmOnIsDrawn() {
+    ciLampGui.initialize();
+
+    assertNotNull(getButtonAddedToPanel("Alarm ON!"));
+  }
+
+  private Button getButtonAddedToPanel(String label) {
+    ArgumentCaptor<Button> buttonsCaptor = ArgumentCaptor
+        .forClass(Button.class);
+    verify(contentPanel).add(buttonsCaptor.capture());
+    List<Button> buttonsAddedToPanel = buttonsCaptor.getAllValues();
+    for (Button button : buttonsAddedToPanel) {
+      if (label.equals(button.getLabel()))
+        return button;
+    }
+    fail("Button with label " + label + " has not been added");
+    return null;
+  }
 
   private Container mockAppContent() {
+    PanelFactory panelFactory = mock(PanelFactory.class);
+    when(panelFactory.createPanel()).thenReturn(contentPanel);
+    ciLampGui.setPanelFactory(panelFactory);
+
     Container mainContainer = mock(Container.class);
     when(app.getContentPane()).thenReturn(mainContainer);
     return mainContainer;
