@@ -8,13 +8,13 @@ import java.awt.TrayIcon;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import com.cilamp.gui.app.CILampGui;
+import com.cilamp.gui.app.CILampGuiPresenter;
 import com.cilamp.gui.factory.SystemTrayFactory;
 import com.cilamp.gui.factory.TrayIconFactory;
 
 public class CILampTrayService {
 
-  private CILampGui mainGui;
+  private CILampGuiPresenter mainGui;
 
   private SystemTrayFactory systemTrayFactory = new SystemTrayFactory();
   private TrayIconFactory trayIconFactory = new TrayIconFactory();
@@ -66,7 +66,7 @@ public class CILampTrayService {
       throw new RuntimeException("system tray is not supported");
   }
 
-  public void setMainGui(CILampGui gui) {
+  public void setMainGui(CILampGuiPresenter gui) {
     this.mainGui = gui;
   }
 

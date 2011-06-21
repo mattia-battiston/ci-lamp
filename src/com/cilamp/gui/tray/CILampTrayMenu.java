@@ -5,16 +5,18 @@ import java.awt.PopupMenu;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import com.cilamp.gui.app.CILampGui;
+import com.cilamp.gui.app.CILampGuiPresenter;
 import com.cilamp.gui.factory.PopupMenuFactory;
 import com.cilamp.service.services.ShutdownService;
 
 public class CILampTrayMenu {
 
+  // TODO use MenuView and MenuPresenter
+
   private PopupMenuFactory popupMenuFactory = new PopupMenuFactory();
   private ShutdownService shutdownService = new ShutdownService();
 
-  public PopupMenu init(final CILampGui mainGui) {
+  public PopupMenu init(final CILampGuiPresenter mainGui) {
     PopupMenu popupMenu = popupMenuFactory.createPopupMenu();
 
     addOpen(mainGui, popupMenu);
@@ -35,7 +37,7 @@ public class CILampTrayMenu {
     popupMenu.add(exit);
   }
 
-  private void addOpen(final CILampGui mainGui, PopupMenu popupMenu) {
+  private void addOpen(final CILampGuiPresenter mainGui, PopupMenu popupMenu) {
     MenuItem open = popupMenuFactory.createMenuItem("Open");
     open.addActionListener(new ActionListener() {
       @Override

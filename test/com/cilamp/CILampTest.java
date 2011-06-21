@@ -7,7 +7,7 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import com.cilamp.gui.app.CILampGui;
+import com.cilamp.gui.app.CILampGuiPresenter;
 import com.cilamp.gui.tray.CILampTrayService;
 
 public class CILampTest {
@@ -16,7 +16,7 @@ public class CILampTest {
   private CILampTrayService ciLampTrayService;
 
   @Mock
-  private CILampGui ciLampGui;
+  private CILampGuiPresenter ciLampGui;
 
   private CILamp ciLamp = new CILamp();
 

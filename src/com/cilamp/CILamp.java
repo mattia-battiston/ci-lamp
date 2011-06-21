@@ -1,12 +1,13 @@
 package com.cilamp;
 
 import com.cilamp.gui.app.CILampGui;
+import com.cilamp.gui.app.CILampGuiPresenter;
 import com.cilamp.gui.tray.CILampTrayService;
 
 public class CILamp {
 
   private CILampTrayService trayService;
-  private CILampGui mainGui;
+  private CILampGuiPresenter mainGui;
 
   public static void main(String[] args) {
     new CILamp().initializeApplication();
@@ -14,7 +15,7 @@ public class CILamp {
 
   public CILamp() {
     trayService = new CILampTrayService();
-    mainGui = new CILampGui();
+    mainGui = new CILampGuiPresenter(new CILampGui());
   }
 
   public void initializeApplication() {
@@ -26,7 +27,7 @@ public class CILamp {
     this.trayService = trayService;
   }
 
-  public void setMainGui(CILampGui mainGui) {
+  public void setMainGui(CILampGuiPresenter mainGui) {
     this.mainGui = mainGui;
   }
 

@@ -2,17 +2,15 @@ package com.cilamp.gui.app;
 
 import java.awt.Button;
 import java.awt.Container;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import com.cilamp.service.command.AlarmOnCommand;
-
-public class CILampGui {
+public class CILampGui implements CILampGuiPresenter.View {
 
   private JFrame app = new JFrame();
+
+  private Button alarmOnButton;
 
   public CILampGui() {
     initialize();
@@ -32,39 +30,26 @@ public class CILampGui {
     container.add(content);
 
     addAlarmOnButton(content);
-    addAlarmOffButton(content);
-  }
-
-  private void addAlarmOffButton(JPanel content) {
-    Button alarmOff = new Button("Alarm OFF!");
-    content.add(alarmOff);
-    alarmOff.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent e) {
-        new AlarmOnCommand().execute();
-        // TODO enable alarmOn
-      }
-    });
   }
 
   private void addAlarmOnButton(JPanel content) {
-    Button alarmOn = new Button("Alarm ON!");
-    content.add(alarmOn);
-    alarmOn.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent e) {
-        new AlarmOnCommand().execute();
-        // TODO enable alarmOff
-      }
-    });
+    alarmOnButton = new Button("Alarm ON!");
+    content.add(alarmOnButton);
   }
 
+  @Override
   public void show() {
     app.setVisible(true);
   }
 
+  @Override
   public void hide() {
     app.setVisible(false);
+  }
+
+  @Override
+  public Button getAlarmOnButton() {
+    return alarmOnButton;
   }
 
   public void setApp(JFrame app) {
