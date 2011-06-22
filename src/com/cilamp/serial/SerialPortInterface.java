@@ -12,9 +12,12 @@ import java.util.Enumeration;
 
 public class SerialPortInterface {
 
-  private static SerialPortInterface instance = new SerialPortInterface();
+  private static SerialPortInterface instance;
 
   public static SerialPortInterface getInstance() {
+    if (instance == null) {
+      instance = new SerialPortInterface();
+    }
     return instance;
   }
 
