@@ -1,5 +1,6 @@
 package com.cilamp.service.services;
 
+import com.cilamp.service.command.AlarmOffCommand;
 import com.cilamp.service.command.AlarmOnCommand;
 
 public class LampService {
@@ -9,7 +10,7 @@ public class LampService {
   }
 
   public void turnAlarmOff() {
-    // new AlarmOffCommand().execute();
+    new AlarmOffCommand().execute();
   }
 
 }

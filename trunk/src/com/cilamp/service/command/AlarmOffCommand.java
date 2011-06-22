@@ -2,12 +2,12 @@ package com.cilamp.service.command;
 
 import com.cilamp.serial.SerialPortInterfaceProvider;
 
-public class AlarmOnCommand {
+public class AlarmOffCommand {
 
   private SerialPortInterfaceProvider serialPortInterfaceProvider = new SerialPortInterfaceProvider();
 
   public void execute() {
-    String command = "TURN_ALARM_ON";
+    String command = "TURN_ALARM_OFF";
     serialPortInterfaceProvider.getSerialPortInterface().sendCommand(command);
   }
 
