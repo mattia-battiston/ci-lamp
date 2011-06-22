@@ -10,7 +10,7 @@ public class SerialPortInterface {
 
   private static SerialPortInterface instance;
 
-  public static SerialPortInterface getInstance() {
+  static SerialPortInterface getInstance() {
     if (instance == null) {
       instance = new SerialPortInterface();
     }
@@ -26,7 +26,7 @@ public class SerialPortInterface {
   }
 
   // TODO get this from properties file
-  private static final String SERIAL_PORT_NAME = "COM1";
+  private static final String SERIAL_PORT_NAME = "COM3";
   private OutputStream serialPortOutputStream;
 
   public void initialize() throws Exception {
