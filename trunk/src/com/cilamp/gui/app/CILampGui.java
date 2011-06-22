@@ -16,6 +16,8 @@ public class CILampGui implements CILampGuiPresenter.View {
 
   private Button alarmOnButton;
 
+  private Button alarmOffButton;
+
   public CILampGui() {
     initialize();
   }
@@ -34,11 +36,17 @@ public class CILampGui implements CILampGuiPresenter.View {
     container.add(content);
 
     addAlarmOnButton(content);
+    addAlarmOffButton(content);
   }
 
   private void addAlarmOnButton(JPanel content) {
-    alarmOnButton = new Button("Alarm ON!");
+    alarmOnButton = new Button("Alarm ON");
     content.add(alarmOnButton);
+  }
+
+  private void addAlarmOffButton(JPanel content) {
+    alarmOffButton = new Button("Alarm OFF");
+    content.add(alarmOffButton);
   }
 
   @Override
@@ -54,6 +62,11 @@ public class CILampGui implements CILampGuiPresenter.View {
   @Override
   public Button getAlarmOnButton() {
     return alarmOnButton;
+  }
+
+  @Override
+  public Button getAlarmOffButton() {
+    return alarmOffButton;
   }
 
   public void setApp(JFrame app) {

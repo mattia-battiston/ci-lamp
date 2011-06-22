@@ -8,4 +8,8 @@ public class LampService {
     new AlarmOnCommand().execute();
   }
 
+  public void turnAlarmOff() {
+    // new AlarmOffCommand().execute();
+  }
+
 }

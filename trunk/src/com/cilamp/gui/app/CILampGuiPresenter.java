@@ -15,6 +15,8 @@ public class CILampGuiPresenter {
   interface View {
     Button getAlarmOnButton();
 
+    Button getAlarmOffButton();
+
     void show();
 
     void hide();
@@ -32,8 +34,23 @@ public class CILampGuiPresenter {
         lampService.turnAlarmOn();
         // TODO fire AlarmTurnedOn event; alarmOff button will be listening for
         // it and it will enable itself
+        view.getAlarmOnButton().setEnabled(false);
+        view.getAlarmOffButton().setEnabled(true);
       }
     });
+    view.getAlarmOnButton().setEnabled(true);
+
+    view.getAlarmOffButton().addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        lampService.turnAlarmOff();
+        // TODO fire AlarmTurnedOn event; alarmOff button will be listening for
+        // it and it will enable itself
+        view.getAlarmOnButton().setEnabled(true);
+        view.getAlarmOffButton().setEnabled(false);
+      }
+    });
+    view.getAlarmOffButton().setEnabled(false);
   }
 
   public void show() {

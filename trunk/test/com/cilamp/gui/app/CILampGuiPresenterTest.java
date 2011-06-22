@@ -25,6 +25,9 @@ public class CILampGuiPresenterTest {
   private Button alarmOnButton;
 
   @Mock
+  private Button alarmOffButton;
+
+  @Mock
   private LampService lampService;
 
   @Before
@@ -45,6 +48,14 @@ public class CILampGuiPresenterTest {
   }
 
   @Test
+  public void alarmOffCallsService() {
+    ActionListener alarmOffListener = getActionListenerForButton(alarmOffButton);
+    alarmOffListener.actionPerformed(null);
+
+    verify(lampService).turnAlarmOff();
+  }
+
+  @Test
   public void showShowsTheView() {
     presenter.show();
 
@@ -60,6 +71,7 @@ public class CILampGuiPresenterTest {
 
   private void mockView() {
     when(view.getAlarmOnButton()).thenReturn(alarmOnButton);
+    when(view.getAlarmOffButton()).thenReturn(alarmOffButton);
   }
 
 }

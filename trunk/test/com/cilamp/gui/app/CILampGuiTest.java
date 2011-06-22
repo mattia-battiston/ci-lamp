@@ -3,6 +3,7 @@ package com.cilamp.gui.app;
 import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.fail;
 import static org.mockito.Matchers.anyInt;
+import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -79,13 +80,20 @@ public class CILampGuiTest {
   public void alarmOnIsDrawn() {
     ciLampGui.initialize();
 
-    assertNotNull(getButtonAddedToPanel("Alarm ON!"));
+    assertNotNull(getButtonAddedToPanel("Alarm ON"));
+  }
+
+  @Test
+  public void alarmOffIsDrawn() {
+    ciLampGui.initialize();
+
+    assertNotNull(getButtonAddedToPanel("Alarm OFF"));
   }
 
   private Button getButtonAddedToPanel(String label) {
     ArgumentCaptor<Button> buttonsCaptor = ArgumentCaptor
         .forClass(Button.class);
-    verify(contentPanel).add(buttonsCaptor.capture());
+    verify(contentPanel, atLeastOnce()).add(buttonsCaptor.capture());
     List<Button> buttonsAddedToPanel = buttonsCaptor.getAllValues();
     for (Button button : buttonsAddedToPanel) {
       if (label.equals(button.getLabel()))
