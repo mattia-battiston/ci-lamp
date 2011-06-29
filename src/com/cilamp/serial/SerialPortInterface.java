@@ -1,7 +1,10 @@
 package com.cilamp.serial;
 
 import gnu.io.CommPortIdentifier;
+import gnu.io.NoSuchPortException;
+import gnu.io.PortInUseException;
 import gnu.io.SerialPort;
+import gnu.io.UnsupportedCommOperationException;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -17,7 +20,7 @@ public class SerialPortInterface {
     return instance;
   }
 
-  private SerialPortInterface() {
+  SerialPortInterface() {
     try {
       initialize();
     } catch (Exception e) {
@@ -30,9 +33,28 @@ public class SerialPortInterface {
   private OutputStream serialPortOutputStream;
 
   public void initialize() throws Exception {
+    SerialPort serialPort = retrieveSerialPort();
+    serialPortOutputStream = serialPort.getOutputStream();
+  }
+
+  private SerialPort retrieveSerialPort() throws NoSuchPortException,
+      PortInUseException, UnsupportedCommOperationException {
     CommPortIdentifier commPortIdentifier = CommPortIdentifier
         .getPortIdentifier(SERIAL_PORT_NAME);
+    ensurePortIsAvailable(commPortIdentifier);
 
+    // TODO use real log
+    System.out.println("Found port COM1");
+
+    SerialPort serialPort = (SerialPort) commPortIdentifier
+        .open("CILamp", 2000);
+    // TODO understand these parameters
+    serialPort.setSerialPortParams(9600, SerialPort.DATABITS_8,
+        SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
+    return serialPort;
+  }
+
+  private void ensurePortIsAvailable(CommPortIdentifier commPortIdentifier) {
     if (commPortIdentifier == null) {
       throw new RuntimeException("Serial port " + SERIAL_PORT_NAME
           + " is not available");
@@ -43,15 +65,6 @@ public class SerialPortInterface {
     if (commPortIdentifier.isCurrentlyOwned()) {
       throw new RuntimeException("Port is currently in use");
     }
-
-    System.out.println("Found port COM1");
-
-    SerialPort serialPort = (SerialPort) commPortIdentifier
-        .open("CILamp", 2000);
-    // TODO understand these parameters
-    serialPort.setSerialPortParams(9600, SerialPort.DATABITS_8,
-        SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
-    serialPortOutputStream = serialPort.getOutputStream();
   }
 
   public void sendCommand(String command) {
@@ -60,6 +73,14 @@ public class SerialPortInterface {
     } catch (IOException e) {
       throw new RuntimeException(e.getMessage(), e);
     }
+  }
+
+  public OutputStream getSerialPortOutputStream() {
+    return serialPortOutputStream;
+  }
+
+  public void setSerialPortOutputStream(OutputStream serialPortOutputStream) {
+    this.serialPortOutputStream = serialPortOutputStream;
   }
 
 }
