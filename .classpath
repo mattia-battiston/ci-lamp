@@ -12,5 +12,7 @@
 	<classpathentry kind="lib" path="lib/runtime/x86/RXTXcomm.jar" sourcepath="lib/source/rxtx-2.2pre2.zip"/>
 	<classpathentry kind="lib" path="lib/runtime/x86/rxtxSerial.dll"/>
 	<classpathentry kind="lib" path="lib/test/javassist.jar"/>
+	<classpathentry kind="lib" path="lib/runtime/gson-1.7.1.jar"/>
+	<classpathentry kind="lib" path="lib/runtime/dom4j-1.6.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
