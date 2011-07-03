@@ -1,4 +1,4 @@
-package com.cilamp.servial;
+package com.cilamp.serial;
 
 import org.junit.Ignore;
 import org.junit.Test;
