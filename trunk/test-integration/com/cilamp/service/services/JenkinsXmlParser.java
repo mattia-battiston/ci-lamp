@@ -14,12 +14,16 @@ public class JenkinsXmlParser {
   @Test
   public void parseBuildResult() throws MalformedURLException,
       DocumentException {
-    URL url = new URL("http://localhost:8090/job/CILamp/lastBuild/api/xml");
+    URL url = new URL(
+        "http://localhost:8090/job/CILamp/lastCompletedBuild/api/xml");
 
     Document dom = new SAXReader().read(url);
 
     Element build = dom.getRootElement();
     Element building = build.element("building");
     Element result = build.element("result");
+
+    System.out.println(building.getText());
+    System.out.println(result.getData());
   }
 }
