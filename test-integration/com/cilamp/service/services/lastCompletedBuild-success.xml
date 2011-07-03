@@ -1,0 +1,89 @@
+<freeStyleBuild>
+	<action>
+		<cause>
+			<shortDescription>Started by an SCM change</shortDescription>
+		</cause>
+	</action>
+	<action />
+	<action />
+	<action />
+	<building>false</building>
+	<duration>19540</duration>
+	<fullDisplayName>CILamp #5</fullDisplayName>
+	<id>2011-07-03_22-35-02</id>
+	<keepLog>false</keepLog>
+	<number>5</number>
+	<result>SUCCESS</result>
+	<timestamp>1309725302208</timestamp>
+	<url>http://localhost:8090/job/CILamp/5/</url>
+	<builtOn />
+	<changeSet>
+		<item>
+			<date>2011-07-03T20:34:43.312129Z</date>
+			<msg>trying out connection with jenkins</msg>
+			<path>
+				<editType>edit</editType>
+				<file>/trunk/test-integration/com/cilamp/service/services/JenkinsXmlParser.java</file>
+			</path>
+			<revision>28</revision>
+			<user>mattia.battiston@gmail.com</user>
+		</item>
+		<item>
+			<date>2011-07-03T20:30:13.711707Z</date>
+			<msg>trying out connection with jenkins</msg>
+			<path>
+				<editType>add</editType>
+				<file>/trunk/test-integration/com/cilamp/service/services/JenkinsXmlParser.java</file>
+			</path>
+			<path>
+				<editType>add</editType>
+				<file>/trunk/lib/runtime/gson-1.7.1.jar</file>
+			</path>
+			<path>
+				<editType>edit</editType>
+				<file>/trunk/.classpath</file>
+			</path>
+			<path>
+				<editType>add</editType>
+				<file>/trunk/lib/runtime/dom4j-1.6.1.jar</file>
+			</path>
+			<path>
+				<editType>add</editType>
+				<file>/trunk/test-integration/com/cilamp/service</file>
+			</path>
+			<path>
+				<editType>add</editType>
+				<file>/trunk/test-integration/com/cilamp/service/services</file>
+			</path>
+			<revision>27</revision>
+			<user>mattia.battiston@gmail.com</user>
+		</item>
+		<item>
+			<date>2011-07-03T20:09:27.547755Z</date>
+			<msg />
+			<path>
+				<editType>delete</editType>
+				<file>/trunk/test-integration/com/cilamp/servial</file>
+			</path>
+			<path>
+				<editType>edit</editType>
+				<file>/trunk/test-integration/com/cilamp/serial/SerialPortInterfaceIntegrationTest.java</file>
+			</path>
+			<path>
+				<editType>add</editType>
+				<file>/trunk/test-integration/com/cilamp/serial</file>
+			</path>
+			<revision>26</revision>
+			<user>mattia.battiston@gmail.com</user>
+		</item>
+		<kind>svn</kind>
+		<revision>
+			<module>https://ci-lamp.googlecode.com/svn/trunk</module>
+			<revision>28</revision>
+		</revision>
+	</changeSet>
+	<culprit>
+		<absoluteUrl>http://localhost:8090/user/mattia.battiston@gmail.com</absoluteUrl>
+		<fullName>mattia.battiston@gmail.com</fullName>
+	</culprit>
+</freeStyleBuild>
