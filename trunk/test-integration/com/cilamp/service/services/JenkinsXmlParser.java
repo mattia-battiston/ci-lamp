@@ -2,6 +2,9 @@ package com.cilamp.service.services;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -20,10 +23,17 @@ public class JenkinsXmlParser {
     Document dom = new SAXReader().read(url);
 
     Element build = dom.getRootElement();
-    Element building = build.element("building");
-    Element result = build.element("result");
 
-    System.out.println(building.getText());
+    Element result = build.element("result");
     System.out.println(result.getData());
+
+    Set<String> users = new HashSet<String>();
+    Element changeSet = build.element("changeSet");
+    List<Element> elements = changeSet.elements("item");
+    for (Element item : elements) {
+      users.add(item.element("user").getText());
+    }
+    System.out.println(users);
+
   }
 }
