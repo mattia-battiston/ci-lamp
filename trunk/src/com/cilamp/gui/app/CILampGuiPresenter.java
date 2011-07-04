@@ -32,9 +32,6 @@ public class CILampGuiPresenter {
     this.eventBus = eventBus;
 
     bindListenersToView();
-
-    // TODO move this where initializing the app
-    eventBus.addHandler(LampTurnedOnEvent.TYPE, new LampTurnedOnHandler(view));
   }
 
   private void bindListenersToView() {

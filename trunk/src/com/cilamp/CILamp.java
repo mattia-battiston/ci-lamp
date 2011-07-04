@@ -1,8 +1,12 @@
 package com.cilamp;
 
+import com.cilamp.event.LampTurnedOffEvent;
+import com.cilamp.event.LampTurnedOnEvent;
 import com.cilamp.event.base.EventBus;
 import com.cilamp.gui.app.CILampGui;
 import com.cilamp.gui.app.CILampGuiPresenter;
+import com.cilamp.gui.app.LampTurnedOffHandler;
+import com.cilamp.gui.app.LampTurnedOnHandler;
 import com.cilamp.gui.tray.CILampTrayService;
 
 public class CILamp {
@@ -22,10 +26,15 @@ public class CILamp {
   }
 
   public void initializeApplication() {
-    mainGui.initialize(new CILampGui(), eventBus);
+    CILampGui view = new CILampGui();
+    mainGui.initialize(view, eventBus);
 
     trayService.setMainGui(mainGui);
     trayService.init();
+
+    eventBus.addHandler(LampTurnedOnEvent.TYPE, new LampTurnedOnHandler(view));
+    eventBus
+        .addHandler(LampTurnedOffEvent.TYPE, new LampTurnedOffHandler(view));
   }
 
   public void setTrayService(CILampTrayService trayService) {
