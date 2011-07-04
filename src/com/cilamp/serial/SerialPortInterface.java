@@ -24,6 +24,7 @@ public class SerialPortInterface {
     try {
       initialize();
     } catch (Exception e) {
+      // TODO manage this exception, fire ErrorEvent and notify user
       throw new RuntimeException(e.getMessage(), e);
     }
   }
