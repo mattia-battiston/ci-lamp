@@ -1,5 +1,6 @@
 package com.cilamp.gui.app;
 
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -12,11 +13,14 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import com.cilamp.event.LampTurnedOffEvent;
+import com.cilamp.event.LampTurnedOnEvent;
+import com.cilamp.event.base.EventBus;
 import com.cilamp.service.services.LampService;
 
 public class CILampGuiPresenterTest {
 
-  private CILampGuiPresenter presenter;
+  private CILampGuiPresenter presenter = new CILampGuiPresenter();
 
   @Mock
   private CILampGuiPresenter.View view;
@@ -30,13 +34,16 @@ public class CILampGuiPresenterTest {
   @Mock
   private LampService lampService;
 
+  @Mock
+  private EventBus eventBus;
+
   @Before
   public void before() {
     MockitoAnnotations.initMocks(this);
 
     mockView();
-    presenter = new CILampGuiPresenter(view);
     presenter.setLampService(lampService);
+    presenter.initialize(view, eventBus);
   }
 
   @Test
@@ -48,11 +55,27 @@ public class CILampGuiPresenterTest {
   }
 
   @Test
+  public void alarmOnFiresEvent() {
+    ActionListener alarmOnListener = getActionListenerForButton(alarmOnButton);
+    alarmOnListener.actionPerformed(null);
+
+    verify(eventBus).fireEvent(any(LampTurnedOnEvent.class));
+  }
+
+  @Test
   public void alarmOffCallsService() {
     ActionListener alarmOffListener = getActionListenerForButton(alarmOffButton);
     alarmOffListener.actionPerformed(null);
 
     verify(lampService).turnAlarmOff();
+  }
+
+  @Test
+  public void alarmOffFiresEvent() {
+    ActionListener alarmOnListener = getActionListenerForButton(alarmOnButton);
+    alarmOnListener.actionPerformed(null);
+
+    verify(eventBus).fireEvent(any(LampTurnedOffEvent.class));
   }
 
   @Test
