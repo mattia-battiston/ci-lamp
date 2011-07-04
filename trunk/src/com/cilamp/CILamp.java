@@ -1,5 +1,6 @@
 package com.cilamp;
 
+import com.cilamp.event.base.EventBus;
 import com.cilamp.gui.app.CILampGui;
 import com.cilamp.gui.app.CILampGuiPresenter;
 import com.cilamp.gui.tray.CILampTrayService;
@@ -19,6 +20,10 @@ public class CILamp {
   }
 
   public void initializeApplication() {
+    EventBus eventBus = new EventBus();
+
+    mainGui.setEventBus(eventBus);
+
     trayService.setMainGui(mainGui);
     trayService.init();
   }
