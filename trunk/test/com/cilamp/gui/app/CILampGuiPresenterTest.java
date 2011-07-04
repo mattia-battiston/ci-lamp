@@ -72,7 +72,7 @@ public class CILampGuiPresenterTest {
 
   @Test
   public void alarmOffFiresEvent() {
-    ActionListener alarmOnListener = getActionListenerForButton(alarmOnButton);
+    ActionListener alarmOnListener = getActionListenerForButton(alarmOffButton);
     alarmOnListener.actionPerformed(null);
 
     verify(eventBus).fireEvent(any(LampTurnedOffEvent.class));

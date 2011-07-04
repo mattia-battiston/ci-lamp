@@ -4,6 +4,7 @@ import java.awt.Button;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import com.cilamp.event.LampTurnedOffEvent;
 import com.cilamp.event.LampTurnedOnEvent;
 import com.cilamp.event.base.EventBus;
 import com.cilamp.service.services.LampService;
@@ -50,10 +51,7 @@ public class CILampGuiPresenter {
       @Override
       public void actionPerformed(ActionEvent e) {
         lampService.turnAlarmOff();
-        // TODO fire AlarmTurnedOn event; alarmOff button will be listening for
-        // it and it will enable itself
-        view.getAlarmOnButton().setEnabled(true);
-        view.getAlarmOffButton().setEnabled(false);
+        eventBus.fireEvent(new LampTurnedOffEvent());
       }
     });
     view.getAlarmOffButton().setEnabled(false);
