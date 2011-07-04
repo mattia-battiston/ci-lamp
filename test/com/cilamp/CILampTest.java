@@ -1,5 +1,6 @@
 package com.cilamp;
 
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.verify;
 
 import org.junit.Before;
@@ -7,6 +8,7 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import com.cilamp.event.base.EventBus;
 import com.cilamp.gui.app.CILampGuiPresenter;
 import com.cilamp.gui.tray.CILampTrayService;
 
@@ -40,6 +42,13 @@ public class CILampTest {
     ciLamp.initializeApplication();
 
     verify(ciLampTrayService).setMainGui(ciLampGui);
+  }
+
+  @Test
+  public void mainGuiIsPassedTheEventBusTo() {
+    ciLamp.initializeApplication();
+
+    verify(ciLampGui).setEventBus(any(EventBus.class));
   }
 
 }

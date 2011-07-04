@@ -4,6 +4,7 @@ import java.awt.Button;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import com.cilamp.event.base.EventBus;
 import com.cilamp.service.services.LampService;
 
 public class CILampGuiPresenter {
@@ -11,6 +12,8 @@ public class CILampGuiPresenter {
   private final View view;
 
   private LampService lampService = new LampService();
+
+  private EventBus eventBus;
 
   interface View {
     Button getAlarmOnButton();
@@ -59,6 +62,10 @@ public class CILampGuiPresenter {
 
   public void setLampService(LampService lampService) {
     this.lampService = lampService;
+  }
+
+  public void setEventBus(EventBus eventBus) {
+    this.eventBus = eventBus;
   }
 
 }
