@@ -4,18 +4,19 @@ import java.awt.Button;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import com.cilamp.event.LampTurnedOnEvent;
 import com.cilamp.event.base.EventBus;
 import com.cilamp.service.services.LampService;
 
 public class CILampGuiPresenter {
 
-  private final View view;
+  private View view;
 
   private LampService lampService = new LampService();
 
   private EventBus eventBus;
 
-  interface View {
+  public interface View {
     Button getAlarmOnButton();
 
     Button getAlarmOffButton();
@@ -25,9 +26,14 @@ public class CILampGuiPresenter {
     void hide();
   }
 
-  public CILampGuiPresenter(View view) {
+  public void initialize(View view, EventBus eventBus) {
     this.view = view;
+    this.eventBus = eventBus;
+
     bindListenersToView();
+
+    // TODO move this where initializing the app
+    eventBus.addHandler(LampTurnedOnEvent.TYPE, new LampTurnedOnHandler(view));
   }
 
   private void bindListenersToView() {
@@ -35,10 +41,7 @@ public class CILampGuiPresenter {
       @Override
       public void actionPerformed(ActionEvent e) {
         lampService.turnAlarmOn();
-        // TODO fire AlarmTurnedOn event; alarmOff button will be listening for
-        // it and it will enable itself
-        view.getAlarmOnButton().setEnabled(false);
-        view.getAlarmOffButton().setEnabled(true);
+        eventBus.fireEvent(new LampTurnedOnEvent());
       }
     });
     view.getAlarmOnButton().setEnabled(true);
@@ -62,10 +65,6 @@ public class CILampGuiPresenter {
 
   public void setLampService(LampService lampService) {
     this.lampService = lampService;
-  }
-
-  public void setEventBus(EventBus eventBus) {
-    this.eventBus = eventBus;
   }
 
 }

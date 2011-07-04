@@ -9,20 +9,20 @@ public class CILamp {
 
   private CILampTrayService trayService;
   private CILampGuiPresenter mainGui;
+  private EventBus eventBus;
 
   public static void main(String[] args) {
     new CILamp().initializeApplication();
   }
 
   public CILamp() {
+    eventBus = new EventBus();
     trayService = new CILampTrayService();
-    mainGui = new CILampGuiPresenter(new CILampGui());
+    mainGui = new CILampGuiPresenter();
   }
 
   public void initializeApplication() {
-    EventBus eventBus = new EventBus();
-
-    mainGui.setEventBus(eventBus);
+    mainGui.initialize(new CILampGui(), eventBus);
 
     trayService.setMainGui(mainGui);
     trayService.init();
@@ -34,6 +34,10 @@ public class CILamp {
 
   public void setMainGui(CILampGuiPresenter mainGui) {
     this.mainGui = mainGui;
+  }
+
+  public void setEventBus(EventBus eventBus) {
+    this.eventBus = eventBus;
   }
 
 }
