@@ -2,9 +2,14 @@ package com.cilamp.gui.app;
 
 import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.fail;
+import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyInt;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Matchers.contains;
+import static org.mockito.Matchers.startsWith;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -13,7 +18,9 @@ import java.awt.Container;
 import java.util.List;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.border.TitledBorder;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -21,6 +28,7 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import com.cilamp.gui.factory.LabelFactory;
 import com.cilamp.gui.factory.PanelFactory;
 import com.cilamp.gui.util.UIManagerUtils;
 
@@ -32,14 +40,29 @@ public class CILampGuiTest {
   private JFrame app;
 
   @Mock
-  private JPanel contentPanel;
+  private Container mainPanel;
+
+  @Mock
+  private JLabel logoLabel;
+
+  @Mock
+  private JPanel actionsPanel;
+
+  @Mock
+  private JPanel buildStatusPanel;
+
+  private JLabel buildResultTitle;
+
+  private JLabel buildResultLabel;
 
   @Before
   public void before() {
     MockitoAnnotations.initMocks(this);
 
-    mockAppContent();
+    mockMainPanel();
     mockLookAndFeel();
+    mockPanelFactory();
+    mockLabelFactory();
     ciLampGui.setApp(app);
   }
 
@@ -88,23 +111,92 @@ public class CILampGuiTest {
   }
 
   @Test
+  public void putLogoStringAtTheTop() {
+    initializeCiLampGui();
+
+    verify(logoLabel).setText(contains("Continuous Integration Lamp"));
+  }
+
+  @Test
+  public void logoStringIsBold() {
+    initializeCiLampGui();
+
+    verify(logoLabel).setText(startsWith("<html><b>"));
+  }
+
+  @Test
+  public void actionPanelIsTitled() {
+    initializeCiLampGui();
+
+    verify(actionsPanel).setBorder(any(TitledBorder.class));
+  }
+
+  @Test
   public void alarmOnIsDrawn() {
-    ciLampGui.initialize();
+    initializeCiLampGui();
 
     assertNotNull(getButtonAddedToPanel("Alarm ON"));
   }
 
   @Test
   public void alarmOffIsDrawn() {
-    ciLampGui.initialize();
+    initializeCiLampGui();
 
     assertNotNull(getButtonAddedToPanel("Alarm OFF"));
+  }
+
+  @Test
+  public void buildStatusIsTitled() {
+    initializeCiLampGui();
+
+    verify(buildStatusPanel).setBorder(any(TitledBorder.class));
+  }
+
+  @Test
+  public void buildResultLabelsAreDrawn() {
+    initializeCiLampGui();
+
+    verify(buildResultTitle).setText("Last build result:");
+    verify(buildResultLabel).setText("UNKNOWN");
+  }
+
+  private void initializeCiLampGui() {
+    ciLampGui.initialize();
+
+    ArgumentCaptor<JPanel> panelCaptor = ArgumentCaptor.forClass(JPanel.class);
+    verify(mainPanel, times(2)).add(panelCaptor.capture(), anyString());
+    List<JPanel> allPanelsAddedToMainPanel = panelCaptor.getAllValues();
+    JPanel northPanel = allPanelsAddedToMainPanel.get(0);
+    JPanel centerPanel = allPanelsAddedToMainPanel.get(1);
+
+    ArgumentCaptor<JLabel> labelCaptor = ArgumentCaptor.forClass(JLabel.class);
+    verify(northPanel).add(labelCaptor.capture());
+    logoLabel = labelCaptor.getValue();
+
+    panelCaptor = ArgumentCaptor.forClass(JPanel.class);
+    verify(centerPanel, times(2)).add(panelCaptor.capture(), anyString());
+    List<JPanel> allPanelsAddedToCenterPanel = panelCaptor.getAllValues();
+    actionsPanel = allPanelsAddedToCenterPanel.get(0);
+    buildStatusPanel = allPanelsAddedToCenterPanel.get(1);
+
+    panelCaptor = ArgumentCaptor.forClass(JPanel.class);
+    verify(buildStatusPanel).add(panelCaptor.capture());
+    List<JPanel> allLabelPanelsAddedToBuildStatusPanel = panelCaptor
+        .getAllValues();
+    JPanel buildResultPanel = allLabelPanelsAddedToBuildStatusPanel.get(0);
+
+    labelCaptor = ArgumentCaptor.forClass(JLabel.class);
+    verify(buildResultPanel, atLeastOnce()).add(labelCaptor.capture());
+    List<JLabel> buildResultLabels = labelCaptor.getAllValues();
+    buildResultTitle = buildResultLabels.get(0);
+    buildResultLabel = buildResultLabels.get(1);
+
   }
 
   private Button getButtonAddedToPanel(String label) {
     ArgumentCaptor<Button> buttonsCaptor = ArgumentCaptor
         .forClass(Button.class);
-    verify(contentPanel, atLeastOnce()).add(buttonsCaptor.capture());
+    verify(actionsPanel, atLeastOnce()).add(buttonsCaptor.capture());
     List<Button> buttonsAddedToPanel = buttonsCaptor.getAllValues();
     for (Button button : buttonsAddedToPanel) {
       if (label.equals(button.getLabel()))
@@ -114,20 +206,49 @@ public class CILampGuiTest {
     return null;
   }
 
-  private Container mockAppContent() {
-    PanelFactory panelFactory = mock(PanelFactory.class);
-    when(panelFactory.createPanel()).thenReturn(contentPanel);
-    ciLampGui.setPanelFactory(panelFactory);
+  // private Container mockAppContent() {
+  // PanelFactory panelFactory = mock(PanelFactory.class);
+  // when(panelFactory.createPanel()).thenReturn(contentPanel);
+  // ciLampGui.setPanelFactory(panelFactory);
+  //
+  // LabelFactory labelFactory = mock(LabelFactory.class);
+  // JLabel label = mock(JLabel.class);
+  // when(labelFactory.createLabel()).thenReturn(label);
+  // ciLampGui.setLabelFactory(labelFactory);
+  //
+  // Container mainContainer = mock(Container.class);
+  // when(app.getContentPane()).thenReturn(mainContainer);
+  // return mainContainer;
+  // }
 
-    Container mainContainer = mock(Container.class);
-    when(app.getContentPane()).thenReturn(mainContainer);
-    return mainContainer;
+  private void mockPanelFactory() {
+    PanelFactory panelFactory = new PanelFactory() {
+      @Override
+      public JPanel createPanel() {
+        return mock(JPanel.class);
+      }
+    };
+    ciLampGui.setPanelFactory(panelFactory);
+  }
+
+  private void mockLabelFactory() {
+    LabelFactory labelFactory = new LabelFactory() {
+      @Override
+      public JLabel createLabel() {
+        return mock(JLabel.class);
+      }
+    };
+    ciLampGui.setLabelFactory(labelFactory);
   }
 
   private UIManagerUtils mockLookAndFeel() {
     UIManagerUtils uiManagerUtils = mock(UIManagerUtils.class);
     ciLampGui.setUiManagerUtils(uiManagerUtils);
     return uiManagerUtils;
+  }
+
+  private void mockMainPanel() {
+    when(app.getContentPane()).thenReturn(mainPanel);
   }
 
 }
