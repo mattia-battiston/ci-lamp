@@ -26,6 +26,8 @@ public class JenkinsXmlParser {
 
     Element result = build.element("result");
     System.out.println(result.getData());
+    System.out.println(build.element("number").getData());
+    System.out.println(build.element("url").getData());
 
     Set<String> users = new HashSet<String>();
     Element changeSet = build.element("changeSet");
