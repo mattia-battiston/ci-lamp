@@ -1,11 +1,17 @@
 package com.cilamp.gui.app;
 
+import java.awt.BorderLayout;
 import java.awt.Button;
 import java.awt.Container;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
 
+import javax.swing.BorderFactory;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import com.cilamp.gui.factory.LabelFactory;
 import com.cilamp.gui.factory.PanelFactory;
 import com.cilamp.gui.util.UIManagerUtils;
 
@@ -14,6 +20,8 @@ public class CILampGui implements CILampGuiPresenter.View {
   private JFrame app = new JFrame();
 
   private PanelFactory panelFactory = new PanelFactory();
+
+  private LabelFactory labelFactory = new LabelFactory();
 
   private Button alarmOnButton;
 
@@ -26,7 +34,7 @@ public class CILampGui implements CILampGuiPresenter.View {
   }
 
   public void initialize() {
-    app.setSize(200, 200);
+    app.setSize(300, 200);
     app.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     uiManagerUtils.setSystemLookAndFeel();
 
@@ -35,12 +43,40 @@ public class CILampGui implements CILampGuiPresenter.View {
   }
 
   private void drawGui() {
-    Container container = app.getContentPane();
-    JPanel content = panelFactory.createPanel();
-    container.add(content);
+    Container mainPanel = app.getContentPane();
+    mainPanel.setLayout(new BorderLayout());
+    JPanel northPanel = panelFactory.createPanel();
+    JPanel centerPanel = panelFactory.createPanel();
+    mainPanel.add(northPanel, BorderLayout.NORTH);
+    mainPanel.add(centerPanel, BorderLayout.CENTER);
 
-    addAlarmOnButton(content);
-    addAlarmOffButton(content);
+    JLabel appTitle = labelFactory.createLabel();
+    appTitle.setText("<html><b>Continuous Integration Lamp");
+    northPanel.add(appTitle);
+
+    centerPanel.setLayout(new BorderLayout());
+    JPanel actionsPanel = panelFactory.createPanel();
+    JPanel buildStatusPanel = panelFactory.createPanel();
+    centerPanel.add(actionsPanel, BorderLayout.NORTH);
+    centerPanel.add(buildStatusPanel, BorderLayout.CENTER);
+
+    actionsPanel.setBorder(BorderFactory.createTitledBorder("Actions"));
+    addAlarmOnButton(actionsPanel);
+    addAlarmOffButton(actionsPanel);
+
+    buildStatusPanel.setLayout(new GridLayout(1, 1));
+    buildStatusPanel
+        .setBorder(BorderFactory.createTitledBorder("Build Status"));
+
+    JPanel lastBuildResultPanel = panelFactory.createPanel();
+    lastBuildResultPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+    JLabel lastBuildResultTitle = labelFactory.createLabel();
+    lastBuildResultTitle.setText("Last build result:");
+    JLabel lastBuildResultValue = labelFactory.createLabel();
+    lastBuildResultValue.setText("UNKNOWN");
+    lastBuildResultPanel.add(lastBuildResultTitle);
+    lastBuildResultPanel.add(lastBuildResultValue);
+    buildStatusPanel.add(lastBuildResultPanel);
   }
 
   private void addAlarmOnButton(JPanel content) {
@@ -83,6 +119,10 @@ public class CILampGui implements CILampGuiPresenter.View {
 
   public void setUiManagerUtils(UIManagerUtils uiManagerUtils) {
     this.uiManagerUtils = uiManagerUtils;
+  }
+
+  public void setLabelFactory(LabelFactory labelFactory) {
+    this.labelFactory = labelFactory;
   }
 
 }
