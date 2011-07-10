@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import com.cilamp.gui.factory.PanelFactory;
+import com.cilamp.gui.util.UIManagerUtils;
 
 public class CILampGui implements CILampGuiPresenter.View {
 
@@ -18,6 +19,8 @@ public class CILampGui implements CILampGuiPresenter.View {
 
   private Button alarmOffButton;
 
+  private UIManagerUtils uiManagerUtils = new UIManagerUtils();
+
   public CILampGui() {
     initialize();
   }
@@ -25,6 +28,7 @@ public class CILampGui implements CILampGuiPresenter.View {
   public void initialize() {
     app.setSize(200, 200);
     app.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+    uiManagerUtils.setSystemLookAndFeel();
 
     drawGui();
     hide();
@@ -75,6 +79,10 @@ public class CILampGui implements CILampGuiPresenter.View {
 
   public void setPanelFactory(PanelFactory panelFactory) {
     this.panelFactory = panelFactory;
+  }
+
+  public void setUiManagerUtils(UIManagerUtils uiManagerUtils) {
+    this.uiManagerUtils = uiManagerUtils;
   }
 
 }

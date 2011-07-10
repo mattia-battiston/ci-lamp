@@ -22,6 +22,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import com.cilamp.gui.factory.PanelFactory;
+import com.cilamp.gui.util.UIManagerUtils;
 
 public class CILampGuiTest {
 
@@ -38,6 +39,7 @@ public class CILampGuiTest {
     MockitoAnnotations.initMocks(this);
 
     mockAppContent();
+    mockLookAndFeel();
     ciLampGui.setApp(app);
   }
 
@@ -60,6 +62,15 @@ public class CILampGuiTest {
     ciLampGui.initialize();
 
     verify(app).setVisible(false);
+  }
+
+  @Test
+  public void setsDefaultSystemLookAndFeel() {
+    UIManagerUtils mockLookAndFeel = mockLookAndFeel();
+
+    ciLampGui.initialize();
+
+    verify(mockLookAndFeel).setSystemLookAndFeel();
   }
 
   @Test
@@ -111,6 +122,12 @@ public class CILampGuiTest {
     Container mainContainer = mock(Container.class);
     when(app.getContentPane()).thenReturn(mainContainer);
     return mainContainer;
+  }
+
+  private UIManagerUtils mockLookAndFeel() {
+    UIManagerUtils uiManagerUtils = mock(UIManagerUtils.class);
+    ciLampGui.setUiManagerUtils(uiManagerUtils);
+    return uiManagerUtils;
   }
 
 }
