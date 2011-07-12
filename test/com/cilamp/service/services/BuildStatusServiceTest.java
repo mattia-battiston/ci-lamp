@@ -1,12 +1,15 @@
 package com.cilamp.service.services;
 
+import static junit.framework.Assert.assertTrue;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
+import java.util.Set;
 
 import org.dom4j.Document;
 import org.dom4j.Element;
@@ -78,6 +81,35 @@ public class BuildStatusServiceTest {
     Build buildStatus = buildStatusService.getLastCompletedBuildStatus();
 
     assertThat(buildStatus.getUrl(), is("www.jenkins.com/myBuild"));
+  }
+
+  @Test
+  public void readAllCommitters() {
+    setCommitters("user1", "user2", "user1", "user3");
+
+    Build buildStatus = buildStatusService.getLastCompletedBuildStatus();
+
+    Set<String> committers = buildStatus.getCommitters();
+    assertThat(committers.size(), is(3));
+    assertTrue(committers.contains("user1"));
+    assertTrue(committers.contains("user2"));
+    assertTrue(committers.contains("user3"));
+  }
+
+  private void setCommitters(String... committersNames) {
+    ArrayList<Element> committers = new ArrayList<Element>();
+    for (String committerName : committersNames) {
+      committers.add(committer(committerName));
+    }
+    when(changeSet.elements("item")).thenReturn(committers);
+  }
+
+  private Element committer(String name) {
+    Element item = mock(Element.class);
+    Element user = mock(Element.class);
+    when(item.element("user")).thenReturn(user);
+    when(user.getText()).thenReturn(name);
+    return item;
   }
 
   private void setUrl(String data) {
