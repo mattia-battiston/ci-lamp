@@ -73,7 +73,7 @@ public class CILampGui implements CILampGuiPresenter.View {
     JLabel lastBuildResultTitle = labelFactory.createLabel();
     lastBuildResultTitle.setText("Last build result:");
     JLabel lastBuildResultValue = labelFactory.createLabel();
-    lastBuildResultValue.setText("UNKNOWN");
+    lastBuildResultValue.setText("");
     lastBuildResultPanel.add(lastBuildResultTitle);
     lastBuildResultPanel.add(lastBuildResultValue);
     buildStatusPanel.add(lastBuildResultPanel);
