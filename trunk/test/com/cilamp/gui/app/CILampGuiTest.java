@@ -157,11 +157,10 @@ public class CILampGuiTest {
   }
 
   @Test
-  public void buildResultLabelsAreDrawn() {
+  public void buildResultLabelIsInitialized() {
     initializeCiLampGui();
 
-    verify(buildResultTitle).setText("Last build result:");
-    verify(buildResultLabel).setText("UNKNOWN");
+    verify(buildResultLabel).setText("");
   }
 
   private void initializeCiLampGui() {
