@@ -1,7 +1,6 @@
 package com.cilamp.service.services;
 
 import static junit.framework.Assert.assertTrue;
-import static junit.framework.Assert.fail;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.anyString;
@@ -67,6 +66,15 @@ public class BuildStatusServiceTest {
   }
 
   @Test
+  public void emptyResultWhenNotAvailable() {
+    noResult();
+
+    Build buildStatus = buildStatusService.getLastCompletedBuildStatus();
+
+    assertThat(buildStatus.getStatus(), is(""));
+  }
+
+  @Test
   public void readNumberFromDom() {
     setNumber("123");
 
@@ -76,12 +84,30 @@ public class BuildStatusServiceTest {
   }
 
   @Test
+  public void emptyNumberWhenNotAvailable() {
+    noNumber();
+
+    Build buildStatus = buildStatusService.getLastCompletedBuildStatus();
+
+    assertThat(buildStatus.getNumber(), is(""));
+  }
+
+  @Test
   public void readUrlFromDom() {
     setUrl("www.jenkins.com/myBuild");
 
     Build buildStatus = buildStatusService.getLastCompletedBuildStatus();
 
     assertThat(buildStatus.getUrl(), is("www.jenkins.com/myBuild"));
+  }
+
+  @Test
+  public void emptyUrlWhenNotAvailable() {
+    noUrl();
+
+    Build buildStatus = buildStatusService.getLastCompletedBuildStatus();
+
+    assertThat(buildStatus.getUrl(), is(""));
   }
 
   @Test
@@ -105,11 +131,6 @@ public class BuildStatusServiceTest {
 
     Set<String> committers = buildStatus.getCommitters();
     assertThat(committers.size(), is(0));
-  }
-
-  @Test
-  public void errorMessageWhenInformationIsNotAvailableForTheBuild() {
-    fail("TODO");
   }
 
   private void setCommitters(String... committersNames) {
@@ -142,6 +163,18 @@ public class BuildStatusServiceTest {
 
   private void setResult(String data) {
     when(result.getText()).thenReturn(data);
+  }
+
+  private void noResult() {
+    when(build.element("result")).thenReturn(null);
+  }
+
+  private void noNumber() {
+    when(build.element("number")).thenReturn(null);
+  }
+
+  private void noUrl() {
+    when(build.element("url")).thenReturn(null);
   }
 
   private void mockDom() {

@@ -20,9 +20,6 @@ public class BuildStatusService {
   private Document dom;
 
   public Build getLastCompletedBuildStatus() {
-
-    // TODO what do we do if information is not present?
-
     Build build = new Build();
 
     dom = domRetriever.getDom(buildDataUrl);
@@ -59,7 +56,10 @@ public class BuildStatusService {
   }
 
   private String getDataFromDom(String elementName) {
-    return dom.getRootElement().element(elementName).getText();
+    Element element = dom.getRootElement().element(elementName);
+    if (element == null)
+      return "";
+    return element.getText();
   }
 
   public void setBuildDataUrl(String buildDataUrl) {
