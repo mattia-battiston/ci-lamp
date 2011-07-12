@@ -65,13 +65,13 @@ public class CILampGui implements CILampGuiPresenter.View {
     addAlarmOffButton(actionsPanel);
 
     buildStatusPanel.setLayout(new GridLayout(1, 1));
-    buildStatusPanel
-        .setBorder(BorderFactory.createTitledBorder("Build Status"));
+    buildStatusPanel.setBorder(BorderFactory
+        .createTitledBorder("Last Completed Build"));
 
     JPanel lastBuildResultPanel = panelFactory.createPanel();
     lastBuildResultPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
     JLabel lastBuildResultTitle = labelFactory.createLabel();
-    lastBuildResultTitle.setText("Last build result:");
+    lastBuildResultTitle.setText("Result:");
     JLabel lastBuildResultValue = labelFactory.createLabel();
     lastBuildResultValue.setText("");
     lastBuildResultPanel.add(lastBuildResultTitle);
