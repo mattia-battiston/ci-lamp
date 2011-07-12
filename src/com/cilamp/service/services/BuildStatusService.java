@@ -1,5 +1,6 @@
 package com.cilamp.service.services;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -34,12 +35,15 @@ public class BuildStatusService {
     return build;
   }
 
+  @SuppressWarnings("unchecked")
   private Set<String> getCommitters() {
     Set<String> committers = new HashSet<String>();
     Element changeSet = dom.getRootElement().element("changeSet");
-    @SuppressWarnings("unchecked")
-    List<Element> elements = changeSet.elements("item");
-    for (Element item : elements) {
+    List<Element> items = changeSet.elements("item");
+    if (items == null)
+      return Collections.EMPTY_SET;
+
+    for (Element item : items) {
       committers.add(item.element("user").getText());
     }
     return committers;

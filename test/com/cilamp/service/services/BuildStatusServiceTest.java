@@ -1,6 +1,7 @@
 package com.cilamp.service.services;
 
 import static junit.framework.Assert.assertTrue;
+import static junit.framework.Assert.fail;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.anyString;
@@ -96,12 +97,31 @@ public class BuildStatusServiceTest {
     assertTrue(committers.contains("user3"));
   }
 
+  @Test
+  public void emptyCommittersWhenNoOneCommitted() {
+    noChanges();
+
+    Build buildStatus = buildStatusService.getLastCompletedBuildStatus();
+
+    Set<String> committers = buildStatus.getCommitters();
+    assertThat(committers.size(), is(0));
+  }
+
+  @Test
+  public void errorMessageWhenInformationIsNotAvailableForTheBuild() {
+    fail("TODO");
+  }
+
   private void setCommitters(String... committersNames) {
     ArrayList<Element> committers = new ArrayList<Element>();
     for (String committerName : committersNames) {
       committers.add(committer(committerName));
     }
     when(changeSet.elements("item")).thenReturn(committers);
+  }
+
+  private void noChanges() {
+    when(changeSet.elements("item")).thenReturn(null);
   }
 
   private Element committer(String name) {
