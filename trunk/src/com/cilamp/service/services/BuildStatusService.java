@@ -1,6 +1,11 @@
 package com.cilamp.service.services;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import org.dom4j.Document;
+import org.dom4j.Element;
 
 import com.cilamp.model.Build;
 
@@ -24,8 +29,20 @@ public class BuildStatusService {
     build.setStatus(getDataFromDom("result"));
     build.setNumber(getDataFromDom("number"));
     build.setUrl(getDataFromDom("url"));
+    build.setCommitters(getCommitters());
 
     return build;
+  }
+
+  private Set<String> getCommitters() {
+    Set<String> committers = new HashSet<String>();
+    Element changeSet = dom.getRootElement().element("changeSet");
+    @SuppressWarnings("unchecked")
+    List<Element> elements = changeSet.elements("item");
+    for (Element item : elements) {
+      committers.add(item.element("user").getText());
+    }
+    return committers;
   }
 
   private String getDataFromDom(String elementName) {

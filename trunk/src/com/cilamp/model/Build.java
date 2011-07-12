@@ -1,6 +1,6 @@
 package com.cilamp.model;
 
-import java.util.List;
+import java.util.Set;
 
 public class Build {
 
@@ -10,7 +10,7 @@ public class Build {
 
   private String url;
 
-  private List<String> committers;
+  private Set<String> committers;
 
   public String getNumber() {
     return number;
@@ -36,11 +36,11 @@ public class Build {
     this.url = url;
   }
 
-  public List<String> getCommitters() {
+  public Set<String> getCommitters() {
     return committers;
   }
 
-  public void setCommitters(List<String> committers) {
+  public void setCommitters(Set<String> committers) {
     this.committers = committers;
   }
 
