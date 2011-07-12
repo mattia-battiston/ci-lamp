@@ -39,14 +39,23 @@ public class BuildStatusService {
   private Set<String> getCommitters() {
     Set<String> committers = new HashSet<String>();
     Element changeSet = dom.getRootElement().element("changeSet");
-    List<Element> items = changeSet.elements("item");
-    if (items == null)
+    List<Element> changes = changeSet.elements("item");
+    if (noChanges(changes))
       return Collections.EMPTY_SET;
 
-    for (Element item : items) {
+    return getUsersOfChanges(committers, changes);
+  }
+
+  private Set<String> getUsersOfChanges(Set<String> committers,
+      List<Element> changes) {
+    for (Element item : changes) {
       committers.add(item.element("user").getText());
     }
     return committers;
+  }
+
+  private boolean noChanges(List<Element> changes) {
+    return changes == null;
   }
 
   private String getDataFromDom(String elementName) {
