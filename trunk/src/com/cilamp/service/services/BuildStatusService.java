@@ -1,5 +1,7 @@
 package com.cilamp.service.services;
 
+import org.dom4j.Document;
+
 import com.cilamp.model.Build;
 
 public class BuildStatusService {
@@ -9,11 +11,25 @@ public class BuildStatusService {
 
   private DomRetriever domRetriever;
 
+  private Document dom;
+
   public Build getLastCompletedBuildStatus() {
 
-    domRetriever.getDom(buildDataUrl);
+    // TODO what do we do if information is not present?
 
-    return new Build();
+    Build build = new Build();
+
+    dom = domRetriever.getDom(buildDataUrl);
+
+    build.setStatus(getDataFromDom("result"));
+    build.setNumber(getDataFromDom("number"));
+    build.setUrl(getDataFromDom("url"));
+
+    return build;
+  }
+
+  private String getDataFromDom(String elementName) {
+    return dom.getRootElement().element(elementName).getText();
   }
 
   public void setBuildDataUrl(String buildDataUrl) {

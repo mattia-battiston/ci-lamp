@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Build {
 
-  private Integer number;
+  private String number;
 
   private String status;
 
@@ -12,11 +12,11 @@ public class Build {
 
   private List<String> committers;
 
-  public Integer getNumber() {
+  public String getNumber() {
     return number;
   }
 
-  public void setNumber(Integer number) {
+  public void setNumber(String number) {
     this.number = number;
   }
 

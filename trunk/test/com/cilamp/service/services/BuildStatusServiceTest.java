@@ -62,8 +62,34 @@ public class BuildStatusServiceTest {
     assertThat(buildStatus.getStatus(), is("SUCCESS"));
   }
 
+  @Test
+  public void readNumberFromDom() {
+    setNumber("123");
+
+    Build buildStatus = buildStatusService.getLastCompletedBuildStatus();
+
+    assertThat(buildStatus.getNumber(), is("123"));
+  }
+
+  @Test
+  public void readUrlFromDom() {
+    setUrl("www.jenkins.com/myBuild");
+
+    Build buildStatus = buildStatusService.getLastCompletedBuildStatus();
+
+    assertThat(buildStatus.getUrl(), is("www.jenkins.com/myBuild"));
+  }
+
+  private void setUrl(String data) {
+    when(url.getText()).thenReturn(data);
+  }
+
+  private void setNumber(String data) {
+    when(number.getText()).thenReturn(data);
+  }
+
   private void setResult(String data) {
-    when(result.getData()).thenReturn(data);
+    when(result.getText()).thenReturn(data);
   }
 
   private void mockDom() {
