@@ -51,9 +51,13 @@ public class CILampGuiTest {
   @Mock
   private JPanel buildStatusPanel;
 
-  private JLabel buildResultTitle;
-
   private JLabel buildResultLabel;
+
+  private JLabel buildNumberLabel;
+
+  private JLabel buildUrlLabel;
+
+  private JLabel buildCommittersLabel;
 
   private ArgumentCaptor<JPanel> panelCaptor;
 
@@ -163,6 +167,27 @@ public class CILampGuiTest {
     verify(buildResultLabel).setText("");
   }
 
+  @Test
+  public void buildNumberLabelIsInitialized() {
+    initializeCiLampGui();
+
+    verify(buildNumberLabel).setText("");
+  }
+
+  @Test
+  public void buildUrlLabelIsInitialized() {
+    initializeCiLampGui();
+
+    verify(buildUrlLabel).setText("");
+  }
+
+  @Test
+  public void buildCommittersLabelIsInitialized() {
+    initializeCiLampGui();
+
+    verify(buildCommittersLabel).setText("");
+  }
+
   private void initializeCiLampGui() {
     ciLampGui.initialize();
 
@@ -176,17 +201,10 @@ public class CILampGuiTest {
   }
 
   private void captureBuildResultLabels() {
-    panelCaptor = ArgumentCaptor.forClass(JPanel.class);
-    verify(buildStatusPanel).add(panelCaptor.capture());
-    List<JPanel> allLabelPanelsAddedToBuildStatusPanel = panelCaptor
-        .getAllValues();
-    JPanel buildResultPanel = allLabelPanelsAddedToBuildStatusPanel.get(0);
-
-    labelCaptor = ArgumentCaptor.forClass(JLabel.class);
-    verify(buildResultPanel, atLeastOnce()).add(labelCaptor.capture());
-    List<JLabel> buildResultLabels = labelCaptor.getAllValues();
-    buildResultTitle = buildResultLabels.get(0);
-    buildResultLabel = buildResultLabels.get(1);
+    buildResultLabel = ciLampGui.getBuildResultLabel();
+    buildNumberLabel = ciLampGui.getBuildNumberLabel();
+    buildUrlLabel = ciLampGui.getBuildUrlLabel();
+    buildCommittersLabel = ciLampGui.getBuildCommittersLabel();
   }
 
   private void captureCenterPanels(JPanel centerPanel) {
