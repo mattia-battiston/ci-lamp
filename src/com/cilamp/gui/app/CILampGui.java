@@ -39,7 +39,7 @@ public class CILampGui implements CILampGuiPresenter.View {
   }
 
   public void initialize() {
-    app.setSize(300, 200);
+    app.setSize(300, 230);
     app.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     uiManagerUtils.setSystemLookAndFeel();
 
@@ -69,7 +69,7 @@ public class CILampGui implements CILampGuiPresenter.View {
     addAlarmOnButton(actionsPanel);
     addAlarmOffButton(actionsPanel);
 
-    buildStatusPanel.setLayout(new GridLayout(1, 4));
+    buildStatusPanel.setLayout(new GridLayout(4, 1));
     buildStatusPanel.setBorder(BorderFactory
         .createTitledBorder("Last Completed Build"));
 
