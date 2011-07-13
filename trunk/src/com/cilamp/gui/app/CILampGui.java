@@ -29,6 +29,11 @@ public class CILampGui implements CILampGuiPresenter.View {
 
   private UIManagerUtils uiManagerUtils = new UIManagerUtils();
 
+  private JLabel buildResultLabel;
+  private JLabel buildNumberLabel;
+  private JLabel buildUrlLabel;
+  private JLabel buildCommittersLabel;
+
   public CILampGui() {
     initialize();
   }
@@ -64,19 +69,63 @@ public class CILampGui implements CILampGuiPresenter.View {
     addAlarmOnButton(actionsPanel);
     addAlarmOffButton(actionsPanel);
 
-    buildStatusPanel.setLayout(new GridLayout(1, 1));
+    buildStatusPanel.setLayout(new GridLayout(1, 4));
     buildStatusPanel.setBorder(BorderFactory
         .createTitledBorder("Last Completed Build"));
 
+    drawBuildResultLabel(buildStatusPanel);
+    drawBuildNumberLabel(buildStatusPanel);
+    drawBuildUrlLabel(buildStatusPanel);
+    drawBuildCommittersLabel(buildStatusPanel);
+  }
+
+  private void drawBuildUrlLabel(JPanel buildStatusPanel) {
+    JPanel lastBuildUrlPanel = panelFactory.createPanel();
+    lastBuildUrlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+    buildStatusPanel.add(lastBuildUrlPanel);
+    JLabel buildUrlTitle = labelFactory.createLabel();
+    buildUrlTitle.setText("Url:");
+    buildUrlLabel = labelFactory.createLabel();
+    buildUrlLabel.setText("");
+    lastBuildUrlPanel.add(buildUrlTitle);
+    lastBuildUrlPanel.add(buildUrlLabel);
+  }
+
+  private void drawBuildCommittersLabel(JPanel buildStatusPanel) {
+    JPanel lastBuildCommittersPanel = panelFactory.createPanel();
+    lastBuildCommittersPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+    buildStatusPanel.add(lastBuildCommittersPanel);
+    JLabel buildCommittersTitle = labelFactory.createLabel();
+    buildCommittersTitle.setText("Committers:");
+    buildCommittersLabel = labelFactory.createLabel();
+    buildCommittersLabel.setText("");
+    lastBuildCommittersPanel.add(buildCommittersTitle);
+    lastBuildCommittersPanel.add(buildCommittersLabel);
+  }
+
+  private void drawBuildNumberLabel(JPanel buildStatusPanel) {
+    JPanel lastBuildNumberPanel = panelFactory.createPanel();
+    lastBuildNumberPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+    buildStatusPanel.add(lastBuildNumberPanel);
+    JLabel buildNumberTitle = labelFactory.createLabel();
+    buildNumberTitle.setText("Number:");
+    buildNumberLabel = labelFactory.createLabel();
+    buildNumberLabel.setText("");
+    lastBuildNumberPanel.add(buildNumberTitle);
+    lastBuildNumberPanel.add(buildNumberLabel);
+  }
+
+  private JPanel drawBuildResultLabel(JPanel buildStatusPanel) {
     JPanel lastBuildResultPanel = panelFactory.createPanel();
     lastBuildResultPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-    JLabel lastBuildResultTitle = labelFactory.createLabel();
-    lastBuildResultTitle.setText("Result:");
-    JLabel lastBuildResultValue = labelFactory.createLabel();
-    lastBuildResultValue.setText("");
-    lastBuildResultPanel.add(lastBuildResultTitle);
-    lastBuildResultPanel.add(lastBuildResultValue);
     buildStatusPanel.add(lastBuildResultPanel);
+    JLabel buildResultTitle = labelFactory.createLabel();
+    buildResultTitle.setText("Result:");
+    buildResultLabel = labelFactory.createLabel();
+    buildResultLabel.setText("");
+    lastBuildResultPanel.add(buildResultTitle);
+    lastBuildResultPanel.add(buildResultLabel);
+    return lastBuildResultPanel;
   }
 
   private void addAlarmOnButton(JPanel content) {
@@ -123,6 +172,22 @@ public class CILampGui implements CILampGuiPresenter.View {
 
   public void setLabelFactory(LabelFactory labelFactory) {
     this.labelFactory = labelFactory;
+  }
+
+  public JLabel getBuildResultLabel() {
+    return buildResultLabel;
+  }
+
+  public JLabel getBuildNumberLabel() {
+    return buildNumberLabel;
+  }
+
+  public JLabel getBuildUrlLabel() {
+    return buildUrlLabel;
+  }
+
+  public JLabel getBuildCommittersLabel() {
+    return buildCommittersLabel;
   }
 
 }
