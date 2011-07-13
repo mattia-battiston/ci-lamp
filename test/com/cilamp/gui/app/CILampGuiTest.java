@@ -61,8 +61,6 @@ public class CILampGuiTest {
 
   private ArgumentCaptor<JPanel> panelCaptor;
 
-  private ArgumentCaptor<JLabel> labelCaptor;
-
   @Before
   public void before() {
     MockitoAnnotations.initMocks(this);
