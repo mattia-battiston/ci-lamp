@@ -172,6 +172,11 @@ public class CILampGui implements CILampGuiPresenter.View {
     return alarmOffButton;
   }
 
+  @Override
+  public Button getRefreshButton() {
+    return refreshButton;
+  }
+
   public void setApp(JFrame app) {
     this.app = app;
   }
