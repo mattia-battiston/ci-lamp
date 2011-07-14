@@ -47,8 +47,6 @@ public class CILampGui implements CILampGuiPresenter.View {
 
     drawGui();
     hide();
-
-    app.setVisible(true);
   }
 
   private void drawGui() {
