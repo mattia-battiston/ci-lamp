@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import com.cilamp.event.LampTurnedOffEvent;
 import com.cilamp.event.LampTurnedOnEvent;
 import com.cilamp.event.base.EventBus;
+import com.cilamp.service.services.BuildStatusService;
 import com.cilamp.service.services.LampService;
 
 public class CILampGuiPresenter {
@@ -14,6 +15,8 @@ public class CILampGuiPresenter {
   private View view;
 
   private LampService lampService = new LampService();
+
+  private BuildStatusService buildStatusService = new BuildStatusService();
 
   private EventBus eventBus;
 
@@ -57,6 +60,13 @@ public class CILampGuiPresenter {
       }
     });
     view.getAlarmOffButton().setEnabled(false);
+
+    view.getRefreshButton().addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        buildStatusService.getLastCompletedBuildStatus();
+      }
+    });
   }
 
   public void show() {
@@ -65,6 +75,10 @@ public class CILampGuiPresenter {
 
   public void setLampService(LampService lampService) {
     this.lampService = lampService;
+  }
+
+  public void setBuildStatusService(BuildStatusService buildStatusService) {
+    this.buildStatusService = buildStatusService;
   }
 
 }

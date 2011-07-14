@@ -16,6 +16,7 @@ import org.mockito.MockitoAnnotations;
 import com.cilamp.event.LampTurnedOffEvent;
 import com.cilamp.event.LampTurnedOnEvent;
 import com.cilamp.event.base.EventBus;
+import com.cilamp.service.services.BuildStatusService;
 import com.cilamp.service.services.LampService;
 
 public class CILampGuiPresenterTest {
@@ -32,7 +33,13 @@ public class CILampGuiPresenterTest {
   private Button alarmOffButton;
 
   @Mock
+  private Button refreshButton;
+
+  @Mock
   private LampService lampService;
+
+  @Mock
+  private BuildStatusService buildStatusService;
 
   @Mock
   private EventBus eventBus;
@@ -43,6 +50,7 @@ public class CILampGuiPresenterTest {
 
     mockView();
     presenter.setLampService(lampService);
+    presenter.setBuildStatusService(buildStatusService);
     presenter.initialize(view, eventBus);
   }
 
@@ -79,6 +87,14 @@ public class CILampGuiPresenterTest {
   }
 
   @Test
+  public void refreshCallsService() {
+    ActionListener refreshListener = getActionListenerForButton(refreshButton);
+    refreshListener.actionPerformed(null);
+
+    verify(buildStatusService).getLastCompletedBuildStatus();
+  }
+
+  @Test
   public void showShowsTheView() {
     presenter.show();
 
@@ -95,6 +111,7 @@ public class CILampGuiPresenterTest {
   private void mockView() {
     when(view.getAlarmOnButton()).thenReturn(alarmOnButton);
     when(view.getAlarmOffButton()).thenReturn(alarmOffButton);
+    when(view.getRefreshButton()).thenReturn(refreshButton);
   }
 
 }
