@@ -141,14 +141,14 @@ public class CILampGuiTest {
   public void alarmOnIsDrawn() {
     initializeCiLampGui();
 
-    assertNotNull(getButtonAddedToPanel("Alarm ON"));
+    assertNotNull(getButtonAddedToActionPanel("Alarm ON"));
   }
 
   @Test
   public void alarmOffIsDrawn() {
     initializeCiLampGui();
 
-    assertNotNull(getButtonAddedToPanel("Alarm OFF"));
+    assertNotNull(getButtonAddedToActionPanel("Alarm OFF"));
   }
 
   @Test
@@ -184,6 +184,13 @@ public class CILampGuiTest {
     initializeCiLampGui();
 
     verify(buildCommittersLabel).setText("");
+  }
+
+  @Test
+  public void refreshButtonIsShown() {
+    initializeCiLampGui();
+
+    assertNotNull(getButtonAddedToBuildPanel("REFRESH"));
   }
 
   private void initializeCiLampGui() {
@@ -226,10 +233,23 @@ public class CILampGuiTest {
     return allPanelsAddedToMainPanel;
   }
 
-  private Button getButtonAddedToPanel(String label) {
+  private Button getButtonAddedToActionPanel(String label) {
+    return getButtonAddedToPanel(actionsPanel, label);
+  }
+
+  private Object getButtonAddedToBuildPanel(String label) {
+    ArgumentCaptor<JPanel> panelCaptor = ArgumentCaptor.forClass(JPanel.class);
+    verify(buildStatusPanel, atLeastOnce()).add(panelCaptor.capture());
+    List<JPanel> allPanelsAddedToBuildStatusPanel = panelCaptor.getAllValues();
+    JPanel refreshPanel = allPanelsAddedToBuildStatusPanel
+        .get(allPanelsAddedToBuildStatusPanel.size() - 1);
+    return getButtonAddedToPanel(refreshPanel, label);
+  }
+
+  private Button getButtonAddedToPanel(JPanel panel, String label) {
     ArgumentCaptor<Button> buttonsCaptor = ArgumentCaptor
         .forClass(Button.class);
-    verify(actionsPanel, atLeastOnce()).add(buttonsCaptor.capture());
+    verify(panel, atLeastOnce()).add(buttonsCaptor.capture());
     List<Button> buttonsAddedToPanel = buttonsCaptor.getAllValues();
     for (Button button : buttonsAddedToPanel) {
       if (label.equals(button.getLabel()))

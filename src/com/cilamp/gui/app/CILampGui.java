@@ -27,6 +27,8 @@ public class CILampGui implements CILampGuiPresenter.View {
 
   private Button alarmOffButton;
 
+  private Button refreshButton;
+
   private UIManagerUtils uiManagerUtils = new UIManagerUtils();
 
   private JLabel buildResultLabel;
@@ -39,12 +41,14 @@ public class CILampGui implements CILampGuiPresenter.View {
   }
 
   public void initialize() {
-    app.setSize(300, 230);
+    app.setSize(300, 300);
     app.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     uiManagerUtils.setSystemLookAndFeel();
 
     drawGui();
     hide();
+
+    app.setVisible(true);
   }
 
   private void drawGui() {
@@ -69,7 +73,7 @@ public class CILampGui implements CILampGuiPresenter.View {
     addAlarmOnButton(actionsPanel);
     addAlarmOffButton(actionsPanel);
 
-    buildStatusPanel.setLayout(new GridLayout(4, 1));
+    buildStatusPanel.setLayout(new GridLayout(5, 1));
     buildStatusPanel.setBorder(BorderFactory
         .createTitledBorder("Last Completed Build"));
 
@@ -77,6 +81,8 @@ public class CILampGui implements CILampGuiPresenter.View {
     drawBuildNumberLabel(buildStatusPanel);
     drawBuildUrlLabel(buildStatusPanel);
     drawBuildCommittersLabel(buildStatusPanel);
+    addRefreshButton(buildStatusPanel);
+
   }
 
   private void drawBuildUrlLabel(JPanel buildStatusPanel) {
@@ -126,6 +132,14 @@ public class CILampGui implements CILampGuiPresenter.View {
     lastBuildResultPanel.add(buildResultTitle);
     lastBuildResultPanel.add(buildResultLabel);
     return lastBuildResultPanel;
+  }
+
+  private void addRefreshButton(JPanel buildStatusPanel) {
+    JPanel refreshButtonPanel = panelFactory.createPanel();
+    refreshButtonPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+    buildStatusPanel.add(refreshButtonPanel);
+    refreshButton = new Button("REFRESH");
+    refreshButtonPanel.add(refreshButton);
   }
 
   private void addAlarmOnButton(JPanel content) {
