@@ -1,5 +1,6 @@
 package com.cilamp.gui.app;
 
+import static junit.framework.Assert.fail;
 import static org.mockito.Mockito.verify;
 
 import org.junit.Before;
@@ -37,4 +38,25 @@ public class BuildStatusLoadedHandlerTest {
 
     verify(view).setBuildResult("SUCCESS");
   }
+
+  @Test
+  public void displayBuildNumber() {
+    fail("TODO");
+  }
+
+  @Test
+  public void displayBuildUrl() {
+    fail("TODO");
+  }
+
+  @Test
+  public void displayBuildCommitters() {
+    fail("TODO");
+  }
+
+  @Test
+  public void displayMessageWhenNoCommitters() {
+    fail("TODO");
+  }
+
 }
