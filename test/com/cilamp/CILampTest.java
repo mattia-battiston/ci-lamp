@@ -9,9 +9,11 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import com.cilamp.event.BuildStatusLoadedEvent;
 import com.cilamp.event.LampTurnedOffEvent;
 import com.cilamp.event.LampTurnedOnEvent;
 import com.cilamp.event.base.EventBus;
+import com.cilamp.gui.app.BuildStatusLoadedHandler;
 import com.cilamp.gui.app.CILampGui;
 import com.cilamp.gui.app.CILampGuiPresenter;
 import com.cilamp.gui.app.LampTurnedOffHandler;
@@ -77,4 +79,11 @@ public class CILampTest {
         any(LampTurnedOffHandler.class));
   }
 
+  @Test
+  public void setHandlerForBuildStatusLoadedEvent() {
+    ciLamp.initializeApplication();
+
+    verify(bus).addHandler(eq(BuildStatusLoadedEvent.TYPE),
+        any(BuildStatusLoadedHandler.class));
+  }
 }
