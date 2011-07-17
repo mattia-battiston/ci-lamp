@@ -39,7 +39,7 @@ public class BuildStatusService {
   }
 
   private void notifyEveryoneBuildHasBeenLoaded(Build build) {
-    eventBus.fireEvent(new BuildStatusLoadedEvent());
+    eventBus.fireEvent(new BuildStatusLoadedEvent(build));
   }
 
   @SuppressWarnings("unchecked")
