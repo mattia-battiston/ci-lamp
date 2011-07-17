@@ -2,17 +2,21 @@ package com.cilamp.gui.app;
 
 import com.cilamp.event.BuildStatusLoadedEvent;
 import com.cilamp.event.BuildStatusLoadedEventHandler;
+import com.cilamp.gui.app.CILampGuiPresenter.View;
+import com.cilamp.model.Build;
 
 public class BuildStatusLoadedHandler implements BuildStatusLoadedEventHandler {
 
-  public BuildStatusLoadedHandler(CILampGui view) {
-    // TODO Auto-generated constructor stub
+  private final View view;
+
+  public BuildStatusLoadedHandler(CILampGuiPresenter.View view) {
+    this.view = view;
   }
 
   @Override
   public void onBuildStatusLoaded(BuildStatusLoadedEvent buildStatusLoadedEvent) {
-    // TODO Auto-generated method stub
+    Build build = buildStatusLoadedEvent.getBuild();
 
+    view.setBuildResult(build.getStatus());
   }
-
 }

@@ -193,6 +193,15 @@ public class CILampGuiTest {
     assertNotNull(getButtonAddedToBuildPanel("REFRESH"));
   }
 
+  @Test
+  public void setBuildResultDisplaysResult() {
+    initializeCiLampGui();
+
+    ciLampGui.setBuildResult("SUCCESS");
+
+    verify(buildResultLabel).setText("SUCCESS");
+  }
+
   private void initializeCiLampGui() {
     ciLampGui.initialize();
 

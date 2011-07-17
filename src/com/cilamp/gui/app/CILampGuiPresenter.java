@@ -27,8 +27,7 @@ public class CILampGuiPresenter {
 
     Button getRefreshButton();
 
-    // TODO add methods to update labels
-    // void setBuildResult();
+    void setBuildResult(String result);
 
     void show();
 
