@@ -175,6 +175,11 @@ public class CILampGui implements CILampGuiPresenter.View {
     return refreshButton;
   }
 
+  @Override
+  public void setBuildResult(String result) {
+    buildResultLabel.setText(result);
+  }
+
   public void setApp(JFrame app) {
     this.app = app;
   }
