@@ -10,7 +10,7 @@ import org.mockito.MockitoAnnotations;
 import com.cilamp.event.BuildStatusLoadedEvent;
 import com.cilamp.model.Build;
 
-public class BuildStatusLoaderHandlerTest {
+public class BuildStatusLoadedHandlerTest {
 
   private BuildStatusLoadedHandler handler;
 
