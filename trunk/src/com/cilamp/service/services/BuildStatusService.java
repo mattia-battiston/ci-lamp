@@ -17,7 +17,7 @@ public class BuildStatusService {
   // TODO get this from some properties service, investigate
   private String buildDataUrl = "http://localhost:8090/job/CILamp/lastCompletedBuild/api/xml";
 
-  private DomRetriever domRetriever;
+  private DomRetriever domRetriever = new DomRetriever();
 
   private Document dom;
 
