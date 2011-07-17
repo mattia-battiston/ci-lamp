@@ -8,6 +8,8 @@ import java.util.Set;
 import org.dom4j.Document;
 import org.dom4j.Element;
 
+import com.cilamp.event.BuildStatusLoadedEvent;
+import com.cilamp.event.base.EventBus;
 import com.cilamp.model.Build;
 
 public class BuildStatusService {
@@ -19,6 +21,8 @@ public class BuildStatusService {
 
   private Document dom;
 
+  private EventBus eventBus;
+
   public Build getLastCompletedBuildStatus() {
     Build build = new Build();
 
@@ -29,7 +33,13 @@ public class BuildStatusService {
     build.setUrl(getDataFromDom("url"));
     build.setCommitters(getCommitters());
 
+    notifyEveryoneBuildHasBeenLoaded(build);
+
     return build;
+  }
+
+  private void notifyEveryoneBuildHasBeenLoaded(Build build) {
+    eventBus.fireEvent(new BuildStatusLoadedEvent());
   }
 
   @SuppressWarnings("unchecked")
@@ -69,6 +79,10 @@ public class BuildStatusService {
   public void setDomRetriever(DomRetriever domRetriever) {
     this.domRetriever = domRetriever;
 
+  }
+
+  public void setEventBus(EventBus eventBus) {
+    this.eventBus = eventBus;
   }
 
 }

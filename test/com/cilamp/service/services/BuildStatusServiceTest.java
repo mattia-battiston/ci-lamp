@@ -3,7 +3,7 @@ package com.cilamp.service.services;
 import static junit.framework.Assert.assertTrue;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
-import static org.junit.Assert.fail;
+import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -19,6 +19,8 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import com.cilamp.event.BuildStatusLoadedEvent;
+import com.cilamp.event.base.EventBus;
 import com.cilamp.model.Build;
 
 public class BuildStatusServiceTest {
@@ -40,12 +42,16 @@ public class BuildStatusServiceTest {
   @Mock
   Element changeSet;
 
+  @Mock
+  private EventBus eventBus;
+
   @Before
   public void before() {
     MockitoAnnotations.initMocks(this);
 
     buildStatusService.setDomRetriever(domRetriever);
     mockDom();
+    buildStatusService.setEventBus(eventBus);
   }
 
   @Test
@@ -136,7 +142,9 @@ public class BuildStatusServiceTest {
 
   @Test
   public void firesEventAfterLoadingData() {
-    fail("TODO");
+    buildStatusService.getLastCompletedBuildStatus();
+
+    verify(eventBus).fireEvent(any(BuildStatusLoadedEvent.class));
   }
 
   private void setCommitters(String... committersNames) {
