@@ -10,6 +10,7 @@ import org.dom4j.Element;
 
 import com.cilamp.event.BuildStatusLoadedEvent;
 import com.cilamp.event.base.EventBus;
+import com.cilamp.event.base.EventBusInstance;
 import com.cilamp.model.Build;
 
 public class BuildStatusService {
@@ -21,7 +22,7 @@ public class BuildStatusService {
 
   private Document dom;
 
-  private EventBus eventBus;
+  private EventBus eventBus = EventBusInstance.getEventBus();
 
   public Build getLastCompletedBuildStatus() {
     Build build = new Build();

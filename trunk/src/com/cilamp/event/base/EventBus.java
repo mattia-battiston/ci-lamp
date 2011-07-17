@@ -10,6 +10,10 @@ public class EventBus {
 
   private final HashMap<CILampEvent.Type<?>, ArrayList<?>> handlersMap = new HashMap<CILampEvent.Type<?>, ArrayList<?>>();
 
+  public EventBus() {
+    EventBusInstance.setEventBus(this);
+  }
+
   public <H extends CILampEventHandler> void addHandler(
       CILampEvent.Type<H> type, H handler) {
     ArrayList<H> handlers = getOrInitialize(type);
