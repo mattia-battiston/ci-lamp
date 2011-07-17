@@ -16,6 +16,7 @@ import org.dom4j.Document;
 import org.dom4j.Element;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
@@ -145,6 +146,21 @@ public class BuildStatusServiceTest {
     buildStatusService.getLastCompletedBuildStatus();
 
     verify(eventBus).fireEvent(any(BuildStatusLoadedEvent.class));
+  }
+
+  @Test
+  public void buildDataAreAttachedToTheEventFired() {
+    Build buildStatus = buildStatusService.getLastCompletedBuildStatus();
+
+    BuildStatusLoadedEvent event = getEventFired();
+    assertThat(event.getBuild(), is(buildStatus));
+  }
+
+  private BuildStatusLoadedEvent getEventFired() {
+    ArgumentCaptor<BuildStatusLoadedEvent> eventCaptor = ArgumentCaptor
+        .forClass(BuildStatusLoadedEvent.class);
+    verify(eventBus).fireEvent(eventCaptor.capture());
+    return eventCaptor.getValue();
   }
 
   private void setCommitters(String... committersNames) {

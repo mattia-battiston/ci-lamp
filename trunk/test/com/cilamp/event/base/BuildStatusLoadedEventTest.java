@@ -7,10 +7,12 @@ import org.junit.Test;
 
 import com.cilamp.event.BuildStatusLoadedEvent;
 import com.cilamp.event.BuildStatusLoadedEventHandler;
+import com.cilamp.model.Build;
 
 public class BuildStatusLoadedEventTest {
 
-  private BuildStatusLoadedEvent buildStatusLoadedEvent = new BuildStatusLoadedEvent();
+  private BuildStatusLoadedEvent buildStatusLoadedEvent = new BuildStatusLoadedEvent(
+      new Build());
 
   @Test
   public void dispatchToEventHandler() {
