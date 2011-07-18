@@ -5,6 +5,8 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.awt.Component;
+import java.awt.TrayIcon;
+import java.awt.TrayIcon.MessageType;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -35,10 +37,12 @@ public class ErrorReporterServiceTest {
     service.setDialogManager(dialogManager);
     service.initialize(view, trayService);
     mockView();
+    mockTrayService();
   }
 
   @Test
-  public void showAlertToNotifyErrors() {
+  public void showAlertWhenViewIsVisible() {
+    viewIsVisible();
     Exception testError = new Exception("There was a test error");
 
     service.notifyError(testError);
@@ -49,9 +53,33 @@ public class ErrorReporterServiceTest {
             "Following error occured, view the log file for more details:\nThere was a test error");
   }
 
+  @Test
+  public void showTrayMessageWhenViewIsNotVisible() {
+    viewIsNotVisible();
+    Exception testError = new Exception("There was a test error");
+
+    service.notifyError(testError);
+
+    verify(trayService.getTrayIcon()).displayMessage("Error occured",
+        "There was a test error", MessageType.ERROR);
+  }
+
+  private void viewIsNotVisible() {
+    when(view.isShown()).thenReturn(false);
+  }
+
+  private void viewIsVisible() {
+    when(view.isShown()).thenReturn(true);
+  }
+
   private void mockView() {
     Component parentComponent = mock(Component.class);
     when(view.getParentComponent()).thenReturn(parentComponent);
+  }
+
+  private void mockTrayService() {
+    TrayIcon trayIcon = mock(TrayIcon.class);
+    when(trayService.getTrayIcon()).thenReturn(trayIcon);
   }
 
 }

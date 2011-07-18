@@ -1,5 +1,7 @@
 package com.cilamp.service.services;
 
+import java.awt.TrayIcon.MessageType;
+
 import com.cilamp.gui.app.CILampGuiPresenter;
 import com.cilamp.gui.tray.CILampTrayService;
 import com.cilamp.gui.util.DialogManager;
@@ -17,10 +19,15 @@ public class ErrorReporterService {
   }
 
   public void notifyError(Throwable e) {
-    dialogManager.showMessageDialog(
-        view.getParentComponent(),
-        "Following error occured, view the log file for more details:\n"
-            + e.getMessage());
+    if (view.isShown()) {
+      dialogManager.showMessageDialog(
+          view.getParentComponent(),
+          "Following error occured, view the log file for more details:\n"
+              + e.getMessage());
+    } else {
+      trayService.getTrayIcon().displayMessage("Error occured", e.getMessage(),
+          MessageType.ERROR);
+    }
   }
 
   public void setDialogManager(DialogManager dialogManager) {

@@ -44,6 +44,8 @@ public class CILampGuiPresenter {
     void hide();
 
     Component getParentComponent();
+
+    Boolean isShown();
   }
 
   public void initialize(View view, EventBus eventBus,
