@@ -20,11 +20,22 @@ public class BuildStatusService {
 
   private DomRetriever domRetriever = new DomRetriever();
 
+  private ErrorReporterService errorReporterService = new ErrorReporterService();
+
   private Document dom;
 
   private EventBus eventBus = EventBusInstance.getEventBus();
 
   public Build getLastCompletedBuildStatus() {
+    try {
+      return doGetLastCompletedBuildStatus();
+    } catch (Exception e) {
+      errorReporterService.notifyError(e);
+      throw new RuntimeException(e);
+    }
+  }
+
+  private Build doGetLastCompletedBuildStatus() {
     Build build = new Build();
 
     dom = domRetriever.getDom(buildDataUrl);
@@ -84,6 +95,10 @@ public class BuildStatusService {
 
   public void setEventBus(EventBus eventBus) {
     this.eventBus = eventBus;
+  }
+
+  public void setErrorReporterService(ErrorReporterService errorReporterService) {
+    this.errorReporterService = errorReporterService;
   }
 
 }

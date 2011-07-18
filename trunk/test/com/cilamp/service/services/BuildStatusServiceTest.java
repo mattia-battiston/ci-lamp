@@ -30,6 +30,10 @@ public class BuildStatusServiceTest {
 
   @Mock
   private DomRetriever domRetriever;
+
+  @Mock
+  private ErrorReporterService errorReporterService;
+
   @Mock
   Document dom;
   @Mock
@@ -53,6 +57,7 @@ public class BuildStatusServiceTest {
     buildStatusService.setDomRetriever(domRetriever);
     mockDom();
     buildStatusService.setEventBus(eventBus);
+    buildStatusService.setErrorReporterService(errorReporterService);
   }
 
   @Test
@@ -154,6 +159,21 @@ public class BuildStatusServiceTest {
 
     BuildStatusLoadedEvent event = getEventFired();
     assertThat(event.getBuild(), is(buildStatus));
+  }
+
+  @Test(expected = Throwable.class)
+  public void anyExceptionIsReported() {
+    Throwable exception = throwExceptionWhenLoadingBuild();
+
+    buildStatusService.getLastCompletedBuildStatus();
+
+    verify(errorReporterService).notifyError(exception);
+  }
+
+  private Throwable throwExceptionWhenLoadingBuild() {
+    RuntimeException exception = new RuntimeException("test exception");
+    when(domRetriever.getDom(anyString())).thenThrow(exception);
+    return exception;
   }
 
   private BuildStatusLoadedEvent getEventFired() {
