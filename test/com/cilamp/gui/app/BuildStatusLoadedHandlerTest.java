@@ -66,7 +66,7 @@ public class BuildStatusLoadedHandlerTest {
 
     handler.onBuildStatusLoaded(buildStatusLoadedEvent);
 
-    verify(view).setBuildCommitters("user1, user2, user3");
+    verify(view).setBuildCommitters("user2, user1, user3");
   }
 
   @Test
