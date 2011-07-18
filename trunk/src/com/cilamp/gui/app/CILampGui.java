@@ -202,6 +202,11 @@ public class CILampGui implements CILampGuiPresenter.View {
     return app;
   }
 
+  @Override
+  public Boolean isShown() {
+    return app.isVisible();
+  }
+
   public void setApp(JFrame app) {
     this.app = app;
   }
