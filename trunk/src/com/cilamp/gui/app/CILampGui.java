@@ -182,17 +182,18 @@ public class CILampGui implements CILampGuiPresenter.View {
 
   @Override
   public void setBuildNumber(String number) {
-    // TODO Auto-generated method stub
+    buildNumberLabel.setText(number);
   }
 
   @Override
   public void setBuildUrl(String url) {
-    // TODO Auto-generated method stub
+    // TODO this would be a link that opens browser when clicked
+    buildUrlLabel.setText(url);
   }
 
   @Override
   public void setBuildCommitters(String committers) {
-    // TODO Auto-generated method stub
+    buildCommittersLabel.setText(committers);
   }
 
   public void setApp(JFrame app) {
