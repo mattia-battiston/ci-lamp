@@ -1,5 +1,6 @@
 package com.cilamp.model;
 
+import java.util.HashSet;
 import java.util.Set;
 
 public class Build {
@@ -10,7 +11,7 @@ public class Build {
 
   private String url;
 
-  private Set<String> committers;
+  private Set<String> committers = new HashSet<String>();
 
   public String getNumber() {
     return number;
