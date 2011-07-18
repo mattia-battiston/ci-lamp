@@ -79,6 +79,8 @@ public class CILampGuiPresenter {
     view.getRefreshButton().addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
+        // TODO extract this to a task that is scheduled by the timer, and fire
+        // event from here instead of from inside the service
         try {
           buildStatusService.getLastCompletedBuildStatus();
         } catch (Exception exception) {

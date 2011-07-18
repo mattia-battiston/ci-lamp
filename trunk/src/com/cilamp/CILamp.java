@@ -1,5 +1,7 @@
 package com.cilamp;
 
+import java.util.Timer;
+
 import com.cilamp.event.BuildStatusLoadedEvent;
 import com.cilamp.event.LampTurnedOffEvent;
 import com.cilamp.event.LampTurnedOnEvent;
@@ -14,10 +16,14 @@ import com.cilamp.service.services.ErrorReporterService;
 
 public class CILamp {
 
+  private static final long PERIOD = 10000L;
+  private static final long FIRST_TIME_DELAY = 1000L;
+
   private CILampTrayService trayService;
   private CILampGuiPresenter mainGui;
   private EventBus eventBus;
   private ErrorReporterService errorReporter;
+  private Timer timer;
 
   public static void main(String[] args) {
     new CILamp().initializeApplication();
@@ -28,6 +34,7 @@ public class CILamp {
     trayService = new CILampTrayService();
     mainGui = new CILampGuiPresenter();
     errorReporter = new ErrorReporterService();
+    timer = new Timer();
   }
 
   public void initializeApplication() {
@@ -43,6 +50,8 @@ public class CILamp {
         .addHandler(LampTurnedOffEvent.TYPE, new LampTurnedOffHandler(view));
     eventBus.addHandler(BuildStatusLoadedEvent.TYPE,
         new BuildStatusLoadedHandler(view));
+
+    timer.schedule(null, FIRST_TIME_DELAY, PERIOD);
   }
 
   public void setTrayService(CILampTrayService trayService) {
@@ -59,6 +68,10 @@ public class CILamp {
 
   public void setErrorReporter(ErrorReporterService errorReporter) {
     this.errorReporter = errorReporter;
+  }
+
+  public void setTimer(Timer timer) {
+    this.timer = timer;
   }
 
 }
