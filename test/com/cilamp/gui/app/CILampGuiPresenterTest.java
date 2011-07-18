@@ -17,6 +17,7 @@ import com.cilamp.event.LampTurnedOffEvent;
 import com.cilamp.event.LampTurnedOnEvent;
 import com.cilamp.event.base.EventBus;
 import com.cilamp.service.services.BuildStatusService;
+import com.cilamp.service.services.ErrorReporterService;
 import com.cilamp.service.services.LampService;
 
 public class CILampGuiPresenterTest {
@@ -44,6 +45,9 @@ public class CILampGuiPresenterTest {
   @Mock
   private EventBus eventBus;
 
+  @Mock
+  private ErrorReporterService errorReporterService;
+
   @Before
   public void before() {
     MockitoAnnotations.initMocks(this);
@@ -51,6 +55,7 @@ public class CILampGuiPresenterTest {
     mockView();
     presenter.setLampService(lampService);
     presenter.setBuildStatusService(buildStatusService);
+    presenter.setErrorReporterService(errorReporterService);
     presenter.initialize(view, eventBus);
   }
 
@@ -94,11 +99,27 @@ public class CILampGuiPresenterTest {
     verify(buildStatusService).getLastCompletedBuildStatus();
   }
 
+  @Test(expected = RuntimeException.class)
+  public void exceptionsRefreshingAreReported() {
+    RuntimeException exception = throwExceptionWhenLoadingBuild();
+
+    ActionListener refreshListener = getActionListenerForButton(refreshButton);
+    refreshListener.actionPerformed(null);
+
+    verify(errorReporterService).notifyError(exception);
+  }
+
   @Test
   public void showShowsTheView() {
     presenter.show();
 
     verify(view).show();
+  }
+
+  private RuntimeException throwExceptionWhenLoadingBuild() {
+    RuntimeException exception = new RuntimeException("test exception");
+    when(buildStatusService.getLastCompletedBuildStatus()).thenThrow(exception);
+    return exception;
   }
 
   private ActionListener getActionListenerForButton(Button button) {
