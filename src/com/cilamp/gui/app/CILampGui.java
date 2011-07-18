@@ -183,19 +183,16 @@ public class CILampGui implements CILampGuiPresenter.View {
   @Override
   public void setBuildNumber(String number) {
     // TODO Auto-generated method stub
-    throw new RuntimeException("TODO");
   }
 
   @Override
   public void setBuildUrl(String url) {
     // TODO Auto-generated method stub
-    throw new RuntimeException("TODO");
   }
 
   @Override
   public void setBuildCommitters(String committers) {
     // TODO Auto-generated method stub
-    throw new RuntimeException("TODO");
   }
 
   public void setApp(JFrame app) {
