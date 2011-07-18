@@ -51,6 +51,7 @@ public class CILamp {
     eventBus.addHandler(BuildStatusLoadedEvent.TYPE,
         new BuildStatusLoadedHandler(view));
 
+    // TODO schedule a BuildStatusCheckTask
     timer.schedule(null, FIRST_TIME_DELAY, PERIOD);
   }
 
