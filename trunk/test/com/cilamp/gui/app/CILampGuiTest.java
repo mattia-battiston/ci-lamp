@@ -202,6 +202,34 @@ public class CILampGuiTest {
     verify(buildResultLabel).setText("SUCCESS");
   }
 
+  @Test
+  public void setBuildNumberDisplaysNumber() {
+    initializeCiLampGui();
+
+    ciLampGui.setBuildNumber("123");
+
+    verify(buildNumberLabel).setText("123");
+
+  }
+
+  @Test
+  public void setBuildUrlDisplaysUrl() {
+    initializeCiLampGui();
+
+    ciLampGui.setBuildUrl("www.build.com");
+
+    verify(buildUrlLabel).setText("www.build.com");
+  }
+
+  @Test
+  public void setBuildCommittersDisplaysCommitters() {
+    initializeCiLampGui();
+
+    ciLampGui.setBuildCommitters("user1, user2");
+
+    verify(buildCommittersLabel).setText("user1, user2");
+  }
+
   private void initializeCiLampGui() {
     ciLampGui.initialize();
 
