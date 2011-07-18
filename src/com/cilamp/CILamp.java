@@ -10,12 +10,14 @@ import com.cilamp.gui.app.CILampGuiPresenter;
 import com.cilamp.gui.app.LampTurnedOffHandler;
 import com.cilamp.gui.app.LampTurnedOnHandler;
 import com.cilamp.gui.tray.CILampTrayService;
+import com.cilamp.service.services.ErrorReporterService;
 
 public class CILamp {
 
   private CILampTrayService trayService;
   private CILampGuiPresenter mainGui;
   private EventBus eventBus;
+  private ErrorReporterService errorReporter;
 
   public static void main(String[] args) {
     new CILamp().initializeApplication();
@@ -25,11 +27,13 @@ public class CILamp {
     eventBus = new EventBus();
     trayService = new CILampTrayService();
     mainGui = new CILampGuiPresenter();
+    errorReporter = new ErrorReporterService();
   }
 
   public void initializeApplication() {
     CILampGui view = new CILampGui();
-    mainGui.initialize(view, eventBus);
+    errorReporter.initialize(view, trayService);
+    mainGui.initialize(view, eventBus, errorReporter);
 
     trayService.setMainGui(mainGui);
     trayService.init();
@@ -51,6 +55,10 @@ public class CILamp {
 
   public void setEventBus(EventBus eventBus) {
     this.eventBus = eventBus;
+  }
+
+  public void setErrorReporter(ErrorReporterService errorReporter) {
+    this.errorReporter = errorReporter;
   }
 
 }

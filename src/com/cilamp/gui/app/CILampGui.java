@@ -2,6 +2,7 @@ package com.cilamp.gui.app;
 
 import java.awt.BorderLayout;
 import java.awt.Button;
+import java.awt.Component;
 import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
@@ -194,6 +195,11 @@ public class CILampGui implements CILampGuiPresenter.View {
   @Override
   public void setBuildCommitters(String committers) {
     buildCommittersLabel.setText(committers);
+  }
+
+  @Override
+  public Component getParentComponent() {
+    return app;
   }
 
   public void setApp(JFrame app) {

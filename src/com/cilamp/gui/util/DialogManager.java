@@ -1,11 +1,13 @@
 package com.cilamp.gui.util;
 
+import java.awt.Component;
+
 import javax.swing.JOptionPane;
 
 public class DialogManager {
 
-  public void showMessageDialog(String message) {
-    JOptionPane.showMessageDialog(null, message);
+  public void showMessageDialog(Component parentComponent, String message) {
+    JOptionPane.showMessageDialog(parentComponent, message);
   }
 
 }

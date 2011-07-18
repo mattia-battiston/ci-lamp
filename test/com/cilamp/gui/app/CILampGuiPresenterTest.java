@@ -55,8 +55,7 @@ public class CILampGuiPresenterTest {
     mockView();
     presenter.setLampService(lampService);
     presenter.setBuildStatusService(buildStatusService);
-    presenter.setErrorReporterService(errorReporterService);
-    presenter.initialize(view, eventBus);
+    presenter.initialize(view, eventBus, errorReporterService);
   }
 
   @Test

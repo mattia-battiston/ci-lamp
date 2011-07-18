@@ -1,6 +1,7 @@
 package com.cilamp.gui.app;
 
 import java.awt.Button;
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -19,7 +20,7 @@ public class CILampGuiPresenter {
 
   private BuildStatusService buildStatusService = new BuildStatusService();
 
-  private ErrorReporterService errorReporterService = new ErrorReporterService();
+  private ErrorReporterService errorReporterService;
 
   private EventBus eventBus;
 
@@ -41,11 +42,15 @@ public class CILampGuiPresenter {
     void show();
 
     void hide();
+
+    Component getParentComponent();
   }
 
-  public void initialize(View view, EventBus eventBus) {
+  public void initialize(View view, EventBus eventBus,
+      ErrorReporterService errorReporterService) {
     this.view = view;
     this.eventBus = eventBus;
+    this.errorReporterService = errorReporterService;
 
     bindListenersToView();
   }
@@ -92,10 +97,6 @@ public class CILampGuiPresenter {
 
   public void setBuildStatusService(BuildStatusService buildStatusService) {
     this.buildStatusService = buildStatusService;
-  }
-
-  public void setErrorReporterService(ErrorReporterService errorReporterService) {
-    this.errorReporterService = errorReporterService;
   }
 
 }
