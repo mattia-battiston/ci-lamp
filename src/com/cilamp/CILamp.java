@@ -1,6 +1,7 @@
 package com.cilamp;
 
 import java.util.Timer;
+import java.util.TimerTask;
 
 import com.cilamp.event.BuildStatusLoadedEvent;
 import com.cilamp.event.LampTurnedOffEvent;
@@ -12,6 +13,7 @@ import com.cilamp.gui.app.CILampGuiPresenter;
 import com.cilamp.gui.app.LampTurnedOffHandler;
 import com.cilamp.gui.app.LampTurnedOnHandler;
 import com.cilamp.gui.tray.CILampTrayService;
+import com.cilamp.service.services.BuildStatusService;
 import com.cilamp.service.services.ErrorReporterService;
 
 public class CILamp {
@@ -24,6 +26,7 @@ public class CILamp {
   private EventBus eventBus;
   private ErrorReporterService errorReporter;
   private Timer timer;
+  private BuildStatusService buildStatusService;
 
   public static void main(String[] args) {
     new CILamp().initializeApplication();
@@ -35,6 +38,7 @@ public class CILamp {
     mainGui = new CILampGuiPresenter();
     errorReporter = new ErrorReporterService();
     timer = new Timer();
+    buildStatusService = new BuildStatusService();
   }
 
   public void initializeApplication() {
@@ -51,8 +55,18 @@ public class CILamp {
     eventBus.addHandler(BuildStatusLoadedEvent.TYPE,
         new BuildStatusLoadedHandler(view));
 
-    // TODO schedule a BuildStatusCheckTask
-    timer.schedule(null, FIRST_TIME_DELAY, PERIOD);
+    timer.schedule(new TimerTask() {
+      @Override
+      public void run() {
+        try {
+          System.out.println("Checking build");
+          buildStatusService.getLastCompletedBuildStatus();
+        } catch (Exception exception) {
+          errorReporter.notifyError(exception);
+          // TODO add log here
+        }
+      }
+    }, FIRST_TIME_DELAY, PERIOD);
   }
 
   public void setTrayService(CILampTrayService trayService) {
@@ -73,6 +87,10 @@ public class CILamp {
 
   public void setTimer(Timer timer) {
     this.timer = timer;
+  }
+
+  public void setBuildStatusService(BuildStatusService buildStatusService) {
+    this.buildStatusService = buildStatusService;
   }
 
 }
