@@ -8,6 +8,7 @@ import com.cilamp.event.LampTurnedOffEvent;
 import com.cilamp.event.LampTurnedOnEvent;
 import com.cilamp.event.base.EventBus;
 import com.cilamp.service.services.BuildStatusService;
+import com.cilamp.service.services.ErrorReporterService;
 import com.cilamp.service.services.LampService;
 
 public class CILampGuiPresenter {
@@ -17,6 +18,8 @@ public class CILampGuiPresenter {
   private LampService lampService = new LampService();
 
   private BuildStatusService buildStatusService = new BuildStatusService();
+
+  private ErrorReporterService errorReporterService = new ErrorReporterService();
 
   private EventBus eventBus;
 
@@ -69,7 +72,12 @@ public class CILampGuiPresenter {
     view.getRefreshButton().addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        buildStatusService.getLastCompletedBuildStatus();
+        try {
+          buildStatusService.getLastCompletedBuildStatus();
+        } catch (Exception exception) {
+          errorReporterService.notifyError(exception);
+          throw new RuntimeException(exception);
+        }
       }
     });
   }
@@ -84,6 +92,10 @@ public class CILampGuiPresenter {
 
   public void setBuildStatusService(BuildStatusService buildStatusService) {
     this.buildStatusService = buildStatusService;
+  }
+
+  public void setErrorReporterService(ErrorReporterService errorReporterService) {
+    this.errorReporterService = errorReporterService;
   }
 
 }
