@@ -19,6 +19,7 @@ import com.cilamp.gui.app.CILampGuiPresenter;
 import com.cilamp.gui.app.LampTurnedOffHandler;
 import com.cilamp.gui.app.LampTurnedOnHandler;
 import com.cilamp.gui.tray.CILampTrayService;
+import com.cilamp.service.services.ErrorReporterService;
 
 public class CILampTest {
 
@@ -31,6 +32,9 @@ public class CILampTest {
   @Mock
   private EventBus bus;
 
+  @Mock
+  private ErrorReporterService errorReporterService;
+
   private CILamp ciLamp = new CILamp();
 
   @Before
@@ -40,6 +44,7 @@ public class CILampTest {
     ciLamp.setMainGui(ciLampGui);
     ciLamp.setTrayService(ciLampTrayService);
     ciLamp.setEventBus(bus);
+    ciLamp.setErrorReporter(errorReporterService);
   }
 
   @Test
@@ -57,10 +62,19 @@ public class CILampTest {
   }
 
   @Test
+  public void initializeErrorReporter() {
+    ciLamp.initializeApplication();
+
+    verify(errorReporterService).initialize(any(CILampGuiPresenter.View.class),
+        eq(ciLampTrayService));
+  }
+
+  @Test
   public void mainGuiIsInitialized() {
     ciLamp.initializeApplication();
 
-    verify(ciLampGui).initialize(any(CILampGui.class), eq(bus));
+    verify(ciLampGui).initialize(any(CILampGui.class), eq(bus),
+        eq(errorReporterService));
   }
 
   @Test

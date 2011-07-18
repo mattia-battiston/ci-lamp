@@ -82,4 +82,8 @@ public class CILampTrayService {
     this.trayMenu = trayMenu;
   }
 
+  public TrayIcon getTrayIcon() {
+    return trayIcon;
+  }
+
 }
