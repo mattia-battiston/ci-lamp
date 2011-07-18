@@ -4,6 +4,9 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.verify;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -35,6 +38,9 @@ public class CILampTest {
   @Mock
   private ErrorReporterService errorReporterService;
 
+  @Mock
+  private Timer timer;
+
   private CILamp ciLamp = new CILamp();
 
   @Before
@@ -45,6 +51,7 @@ public class CILampTest {
     ciLamp.setTrayService(ciLampTrayService);
     ciLamp.setEventBus(bus);
     ciLamp.setErrorReporter(errorReporterService);
+    ciLamp.setTimer(timer);
   }
 
   @Test
@@ -99,5 +106,12 @@ public class CILampTest {
 
     verify(bus).addHandler(eq(BuildStatusLoadedEvent.TYPE),
         any(BuildStatusLoadedHandler.class));
+  }
+
+  @Test
+  public void scheduleBuildStatusReader() {
+    ciLamp.initializeApplication();
+
+    verify(timer).schedule(any(TimerTask.class), eq(1000L), eq(10000L));
   }
 }

@@ -34,6 +34,7 @@ public class BuildStatusService {
     build.setUrl(getDataFromDom("url"));
     build.setCommitters(getCommitters());
 
+    // TODO this event should be fired at the upper level (presenter)
     notifyEveryoneBuildHasBeenLoaded(build);
 
     return build;
