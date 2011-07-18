@@ -1,7 +1,9 @@
 package com.cilamp.gui.app;
 
-import static junit.framework.Assert.fail;
 import static org.mockito.Mockito.verify;
+
+import java.util.Arrays;
+import java.util.HashSet;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -41,22 +43,38 @@ public class BuildStatusLoadedHandlerTest {
 
   @Test
   public void displayBuildNumber() {
-    fail("TODO");
+    build.setNumber("123");
+
+    handler.onBuildStatusLoaded(buildStatusLoadedEvent);
+
+    verify(view).setBuildNumber("123");
   }
 
   @Test
   public void displayBuildUrl() {
-    fail("TODO");
+    build.setUrl("www.build.com");
+
+    handler.onBuildStatusLoaded(buildStatusLoadedEvent);
+
+    verify(view).setBuildUrl("www.build.com");
   }
 
   @Test
   public void displayBuildCommitters() {
-    fail("TODO");
+    build.setCommitters(new HashSet<String>(Arrays.asList("user1", "user2",
+        "user3")));
+
+    handler.onBuildStatusLoaded(buildStatusLoadedEvent);
+
+    verify(view).setBuildCommitters("user1, user2, user3");
   }
 
   @Test
-  public void displayMessageWhenNoCommitters() {
-    fail("TODO");
-  }
+  public void emptyCommittersWhenNoCommitters() {
+    build.setCommitters(new HashSet<String>());
 
+    handler.onBuildStatusLoaded(buildStatusLoadedEvent);
+
+    verify(view).setBuildCommitters("");
+  }
 }

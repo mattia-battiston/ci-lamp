@@ -29,6 +29,12 @@ public class CILampGuiPresenter {
 
     void setBuildResult(String result);
 
+    void setBuildNumber(String number);
+
+    void setBuildUrl(String url);
+
+    void setBuildCommitters(String committers);
+
     void show();
 
     void hide();
