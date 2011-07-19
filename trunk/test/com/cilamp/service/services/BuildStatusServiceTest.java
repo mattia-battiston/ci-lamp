@@ -32,6 +32,9 @@ public class BuildStatusServiceTest {
   private DomRetriever domRetriever;
 
   @Mock
+  private PropertiesService propertiesService;
+
+  @Mock
   Document dom;
   @Mock
   Element build;
@@ -54,15 +57,17 @@ public class BuildStatusServiceTest {
     buildStatusService.setDomRetriever(domRetriever);
     mockDom();
     buildStatusService.setEventBus(eventBus);
+    buildStatusService.setPropertieService(propertiesService);
   }
 
   @Test
-  public void retrievesDomOfUrl() {
-    buildStatusService.setBuildDataUrl("www.buildurl.com");
+  public void retrievesDomOfUrlSetInProperties() {
+    mockProperties("www.jenkins.com", "BUILD");
 
     buildStatusService.getLastCompletedBuildStatus();
 
-    verify(domRetriever).getDom("www.buildurl.com");
+    verify(domRetriever).getDom(
+        "www.jenkins.com/job/BUILD/lastCompletedBuild/api/xml");
   }
 
   @Test
@@ -216,6 +221,11 @@ public class BuildStatusServiceTest {
     when(build.element("url")).thenReturn(url);
     when(build.element("changeSet")).thenReturn(changeSet);
     when(changeSet.elements("item")).thenReturn(new ArrayList<Element>());
+  }
+
+  private void mockProperties(String endpoint, String buildName) {
+    when(propertiesService.getEndpoint()).thenReturn(endpoint);
+    when(propertiesService.getJobName()).thenReturn(buildName);
   }
 
 }
