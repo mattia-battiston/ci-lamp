@@ -24,6 +24,8 @@ public class BuildStatusService {
 
   private EventBus eventBus = EventBusInstance.getEventBus();
 
+  private PropertiesService propertiesService;
+
   public Build getLastCompletedBuildStatus() {
     Build build = new Build();
 
@@ -85,6 +87,10 @@ public class BuildStatusService {
 
   public void setEventBus(EventBus eventBus) {
     this.eventBus = eventBus;
+  }
+
+  public void setPropertieService(PropertiesService propertiesService) {
+    this.propertiesService = propertiesService;
   }
 
 }
