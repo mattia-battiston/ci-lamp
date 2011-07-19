@@ -1,0 +1,3 @@
+# copy and paste this file to cilamp.properties and set correct values
+endpoint=http://localhost:8080
+jobname=MY_BUILD_NAME
