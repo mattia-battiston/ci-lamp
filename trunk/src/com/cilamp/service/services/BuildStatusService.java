@@ -15,9 +15,6 @@ import com.cilamp.model.Build;
 
 public class BuildStatusService {
 
-  // TODO get this from some properties service, investigate
-  private String buildDataUrl = "http://localhost:8090/job/CILamp/lastCompletedBuild/api/xml";
-
   private DomRetriever domRetriever = new DomRetriever();
 
   private Document dom;
@@ -29,7 +26,7 @@ public class BuildStatusService {
   public Build getLastCompletedBuildStatus() {
     Build build = new Build();
 
-    dom = domRetriever.getDom(buildDataUrl);
+    dom = domRetriever.getDom(buildDataUrl());
 
     build.setStatus(getDataFromDom("result"));
     build.setNumber(getDataFromDom("number"));
@@ -40,6 +37,14 @@ public class BuildStatusService {
     notifyEveryoneBuildHasBeenLoaded(build);
 
     return build;
+  }
+
+  private String buildDataUrl() {
+    StringBuffer url = new StringBuffer();
+    url.append(propertiesService.getEndpoint()).append("/job/")
+        .append(propertiesService.getJobName());
+    url.append("/lastCompletedBuild/api/xml");
+    return url.toString();
   }
 
   private void notifyEveryoneBuildHasBeenLoaded(Build build) {
@@ -74,10 +79,6 @@ public class BuildStatusService {
     if (element == null)
       return "";
     return element.getText();
-  }
-
-  public void setBuildDataUrl(String buildDataUrl) {
-    this.buildDataUrl = buildDataUrl;
   }
 
   public void setDomRetriever(DomRetriever domRetriever) {
