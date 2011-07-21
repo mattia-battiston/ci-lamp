@@ -2,12 +2,17 @@ package com.cilamp.gui.app;
 
 import java.util.Set;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.cilamp.event.BuildStatusLoadedEvent;
 import com.cilamp.event.BuildStatusLoadedEventHandler;
 import com.cilamp.gui.app.CILampGuiPresenter.View;
 import com.cilamp.model.Build;
 
 public class BuildStatusLoadedHandler implements BuildStatusLoadedEventHandler {
+
+  final Logger log = LoggerFactory.getLogger(BuildStatusLoadedHandler.class);
 
   private final View view;
 
@@ -17,6 +22,7 @@ public class BuildStatusLoadedHandler implements BuildStatusLoadedEventHandler {
 
   @Override
   public void onBuildStatusLoaded(BuildStatusLoadedEvent buildStatusLoadedEvent) {
+    log.info("build loaded, refreshing view");
     Build build = buildStatusLoadedEvent.getBuild();
 
     view.setBuildResult(build.getStatus());
