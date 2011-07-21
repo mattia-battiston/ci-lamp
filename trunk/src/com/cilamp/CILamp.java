@@ -3,6 +3,9 @@ package com.cilamp;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.cilamp.event.BuildStatusLoadedEvent;
 import com.cilamp.event.LampTurnedOffEvent;
 import com.cilamp.event.LampTurnedOnEvent;
@@ -18,6 +21,8 @@ import com.cilamp.service.services.ErrorReporterService;
 import com.cilamp.service.services.PropertiesService;
 
 public class CILamp {
+
+  final Logger log = LoggerFactory.getLogger(CILamp.class);
 
   private static final long FIRST_TIME_DELAY = 1000L;
 
@@ -44,6 +49,8 @@ public class CILamp {
   }
 
   public void initializeApplication() {
+    log.info("Starting CILamp");
+
     CILampGui view = new CILampGui();
     errorReporter.initialize(view, trayService);
     mainGui.initialize(view, eventBus, errorReporter);
@@ -57,6 +64,8 @@ public class CILamp {
     eventBus.addHandler(BuildStatusLoadedEvent.TYPE,
         new BuildStatusLoadedHandler(view));
 
+    log.info("going to check the build every {} ms",
+        propertiesService.getRefreshPeriod());
     timer.schedule(new TimerTask() {
       @Override
       public void run() {
@@ -65,7 +74,7 @@ public class CILamp {
           buildStatusService.getLastCompletedBuildStatus();
         } catch (Exception exception) {
           errorReporter.notifyError(exception);
-          // TODO add log here
+          log.error("Error retrieving build information", exception);
         }
       }
     }, FIRST_TIME_DELAY, propertiesService.getRefreshPeriod());
