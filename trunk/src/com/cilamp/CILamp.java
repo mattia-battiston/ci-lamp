@@ -40,6 +40,7 @@ public class CILamp {
     errorReporter = new ErrorReporterService();
     timer = new Timer();
     buildStatusService = new BuildStatusService();
+    propertiesService = new PropertiesService();
   }
 
   public void initializeApplication() {
