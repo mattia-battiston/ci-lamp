@@ -1,3 +1,10 @@
 # copy and paste this file to cilamp.properties and set correct values
+
+#what's the endpoint of your CI server?
 endpoint=http://localhost:8080
+
+#what's the name of your job on the CI server?
 jobname=MY_BUILD_NAME
+
+#how often do you want to check the status of your build?
+refreshperiod=10000
