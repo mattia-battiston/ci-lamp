@@ -21,7 +21,7 @@ public class BuildStatusService {
 
   private EventBus eventBus = EventBusInstance.getEventBus();
 
-  private PropertiesService propertiesService;
+  private PropertiesService propertiesService = new PropertiesService();
 
   public Build getLastCompletedBuildStatus() {
     String url = buildDataUrl();
