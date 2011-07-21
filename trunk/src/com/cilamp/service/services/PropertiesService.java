@@ -4,7 +4,12 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Properties;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class PropertiesService {
+
+  final static Logger log = LoggerFactory.getLogger(PropertiesService.class);
 
   private static Properties properties = new Properties();
 
@@ -13,9 +18,11 @@ public class PropertiesService {
   }
 
   private static void initialize() {
+    log.info("initializing properties...");
     URL url = ClassLoader.getSystemResource("cilamp.properties");
     try {
       properties.load(url.openStream());
+      log.info("properties read: {}", properties);
     } catch (IOException e) {
       throw new RuntimeException(e.getMessage(), e);
     }
