@@ -7,13 +7,18 @@ import java.util.Set;
 
 import org.dom4j.Document;
 import org.dom4j.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import com.cilamp.CILamp;
 import com.cilamp.event.BuildStatusLoadedEvent;
 import com.cilamp.event.base.EventBus;
 import com.cilamp.event.base.EventBusInstance;
 import com.cilamp.model.Build;
 
 public class BuildStatusService {
+
+  final Logger log = LoggerFactory.getLogger(CILamp.class);
 
   private DomRetriever domRetriever = new DomRetriever();
 
@@ -25,7 +30,7 @@ public class BuildStatusService {
 
   public Build getLastCompletedBuildStatus() {
     String url = buildDataUrl();
-    // TODO log url here
+    log.info("retrieving build information at {}", url);
 
     Build build = new Build();
 

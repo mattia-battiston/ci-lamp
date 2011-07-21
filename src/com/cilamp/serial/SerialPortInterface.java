@@ -9,7 +9,13 @@ import gnu.io.UnsupportedCommOperationException;
 import java.io.IOException;
 import java.io.OutputStream;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class SerialPortInterface {
+
+  // TODO use log properly
+  final Logger log = LoggerFactory.getLogger(SerialPortInterface.class);
 
   private static SerialPortInterface instance;
 
