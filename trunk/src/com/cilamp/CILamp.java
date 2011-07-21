@@ -15,10 +15,10 @@ import com.cilamp.gui.app.LampTurnedOnHandler;
 import com.cilamp.gui.tray.CILampTrayService;
 import com.cilamp.service.services.BuildStatusService;
 import com.cilamp.service.services.ErrorReporterService;
+import com.cilamp.service.services.PropertiesService;
 
 public class CILamp {
 
-  private static final long PERIOD = 10000L;
   private static final long FIRST_TIME_DELAY = 1000L;
 
   private CILampTrayService trayService;
@@ -27,6 +27,7 @@ public class CILamp {
   private ErrorReporterService errorReporter;
   private Timer timer;
   private BuildStatusService buildStatusService;
+  private PropertiesService propertiesService;
 
   public static void main(String[] args) {
     new CILamp().initializeApplication();
@@ -66,7 +67,7 @@ public class CILamp {
           // TODO add log here
         }
       }
-    }, FIRST_TIME_DELAY, PERIOD);
+    }, FIRST_TIME_DELAY, propertiesService.getRefreshPeriod());
   }
 
   public void setTrayService(CILampTrayService trayService) {
@@ -91,6 +92,10 @@ public class CILamp {
 
   public void setBuildStatusService(BuildStatusService buildStatusService) {
     this.buildStatusService = buildStatusService;
+  }
+
+  public void setPropertiesService(PropertiesService propertiesService) {
+    this.propertiesService = propertiesService;
   }
 
 }

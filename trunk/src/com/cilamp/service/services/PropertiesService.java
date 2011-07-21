@@ -29,4 +29,7 @@ public class PropertiesService {
     return properties.getProperty("jobname");
   }
 
+  public Long getRefreshPeriod() {
+    return Long.parseLong(properties.getProperty("refreshperiod"));
+  }
 }

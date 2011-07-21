@@ -27,6 +27,7 @@ import com.cilamp.gui.app.LampTurnedOnHandler;
 import com.cilamp.gui.tray.CILampTrayService;
 import com.cilamp.service.services.BuildStatusService;
 import com.cilamp.service.services.ErrorReporterService;
+import com.cilamp.service.services.PropertiesService;
 
 public class CILampTest {
 
@@ -48,6 +49,9 @@ public class CILampTest {
   @Mock
   private BuildStatusService buildStatusService;
 
+  @Mock
+  private PropertiesService propertiesService;
+
   private CILamp ciLamp = new CILamp();
 
   @Before
@@ -60,6 +64,7 @@ public class CILampTest {
     ciLamp.setErrorReporter(errorReporterService);
     ciLamp.setTimer(timer);
     ciLamp.setBuildStatusService(buildStatusService);
+    ciLamp.setPropertiesService(propertiesService);
   }
 
   @Test
@@ -118,9 +123,11 @@ public class CILampTest {
 
   @Test
   public void scheduleBuildStatusReader() {
+    mockBuildCheckPeriodProperty(999L);
+
     ciLamp.initializeApplication();
 
-    verify(timer).schedule(any(TimerTask.class), eq(1000L), eq(10000L));
+    verify(timer).schedule(any(TimerTask.class), eq(1000L), eq(999L));
   }
 
   @Test
@@ -142,6 +149,10 @@ public class CILampTest {
     task.run();
 
     verify(errorReporterService).notifyError(exception);
+  }
+
+  private void mockBuildCheckPeriodProperty(long buildCheckPeriod) {
+    when(propertiesService.getRefreshPeriod()).thenReturn(buildCheckPeriod);
   }
 
   private RuntimeException throwExceptionWhenExecutingTask() {

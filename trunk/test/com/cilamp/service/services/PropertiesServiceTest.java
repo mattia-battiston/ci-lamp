@@ -24,4 +24,9 @@ public class PropertiesServiceTest {
     assertNotNull(propertiesService.getJobName());
   }
 
+  @Test
+  public void readRefreshPeriod() {
+    assertNotNull(propertiesService.getRefreshPeriod());
+  }
+
 }

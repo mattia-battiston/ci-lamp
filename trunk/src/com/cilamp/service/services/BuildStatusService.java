@@ -24,9 +24,12 @@ public class BuildStatusService {
   private PropertiesService propertiesService;
 
   public Build getLastCompletedBuildStatus() {
+    String url = buildDataUrl();
+    // TODO log url here
+
     Build build = new Build();
 
-    dom = domRetriever.getDom(buildDataUrl());
+    dom = domRetriever.getDom(url);
 
     build.setStatus(getDataFromDom("result"));
     build.setNumber(getDataFromDom("number"));
