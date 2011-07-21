@@ -5,6 +5,9 @@ import java.awt.PopupMenu;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.cilamp.gui.app.CILampGuiPresenter;
 import com.cilamp.gui.factory.PopupMenuFactory;
 import com.cilamp.service.services.ShutdownService;
@@ -12,6 +15,8 @@ import com.cilamp.service.services.ShutdownService;
 public class CILampTrayMenu {
 
   // TODO use MenuView and MenuPresenter
+
+  final Logger log = LoggerFactory.getLogger(CILampTrayMenu.class);
 
   private PopupMenuFactory popupMenuFactory = new PopupMenuFactory();
   private ShutdownService shutdownService = new ShutdownService();
@@ -31,6 +36,7 @@ public class CILampTrayMenu {
     exit.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent event) {
+        log.info("Going to shut down");
         shutdownService.shutdown();
       }
     });
