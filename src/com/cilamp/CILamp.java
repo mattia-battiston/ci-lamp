@@ -64,6 +64,10 @@ public class CILamp {
     eventBus.addHandler(BuildStatusLoadedEvent.TYPE,
         new BuildStatusLoadedHandler(view));
 
+    scheduleBuildChecker();
+  }
+
+  private void scheduleBuildChecker() {
     log.info("going to check the build every {} ms",
         propertiesService.getRefreshPeriod());
     timer.schedule(new TimerTask() {
