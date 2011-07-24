@@ -5,6 +5,7 @@ import static org.hamcrest.Matchers.is;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyLong;
 import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -22,11 +23,12 @@ import com.cilamp.event.ErrorEvent;
 import com.cilamp.event.LampTurnedOffEvent;
 import com.cilamp.event.LampTurnedOnEvent;
 import com.cilamp.event.base.EventBus;
-import com.cilamp.gui.app.RefreshViewAfterBuildStatusLoadedHandler;
 import com.cilamp.gui.app.CILampGui;
 import com.cilamp.gui.app.CILampGuiPresenter;
 import com.cilamp.gui.app.LampTurnedOffHandler;
 import com.cilamp.gui.app.LampTurnedOnHandler;
+import com.cilamp.gui.app.NotifyLampAfterBuildStatusLoadedHandler;
+import com.cilamp.gui.app.RefreshViewAfterBuildStatusLoadedHandler;
 import com.cilamp.gui.tray.CILampTrayService;
 import com.cilamp.service.services.BuildStatusService;
 import com.cilamp.service.services.ErrorReporterService;
@@ -116,11 +118,19 @@ public class CILampTest {
   }
 
   @Test
-  public void setHandlerForBuildStatusLoadedEvent() {
+  public void setHandlerToRefreshTheViewAfterBuildIsLoaded() {
     ciLamp.initializeApplication();
 
-    verify(bus).addHandler(eq(BuildStatusLoadedEvent.TYPE),
+    verify(bus, atLeastOnce()).addHandler(eq(BuildStatusLoadedEvent.TYPE),
         any(RefreshViewAfterBuildStatusLoadedHandler.class));
+  }
+
+  @Test
+  public void setHandlerToNotifyTheLampAdterBuildIsLoaded() {
+    ciLamp.initializeApplication();
+
+    verify(bus, atLeastOnce()).addHandler(eq(BuildStatusLoadedEvent.TYPE),
+        any(NotifyLampAfterBuildStatusLoadedHandler.class));
   }
 
   @Test
