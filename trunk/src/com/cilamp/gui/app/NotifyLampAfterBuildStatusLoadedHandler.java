@@ -14,7 +14,7 @@ public class NotifyLampAfterBuildStatusLoadedHandler implements
   final Logger log = LoggerFactory
       .getLogger(NotifyLampAfterBuildStatusLoadedHandler.class);
 
-  private LampService lampService;
+  private LampService lampService = new LampService();
 
   @Override
   public void onBuildStatusLoaded(BuildStatusLoadedEvent buildStatusLoadedEvent) {

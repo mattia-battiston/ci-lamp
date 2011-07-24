@@ -83,6 +83,7 @@ public class CILamp {
           log.info("Checking build status");
           buildStatusService.getLastCompletedBuildStatus();
         } catch (Exception exception) {
+          // TODO alarm should go on in case of error
           log.error("Error retrieving build information", exception);
           eventBus.fireEvent(new ErrorEvent(exception));
         }
