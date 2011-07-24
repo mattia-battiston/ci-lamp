@@ -1,5 +1,7 @@
 package com.cilamp;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyLong;
 import static org.mockito.Matchers.eq;
@@ -155,7 +157,8 @@ public class CILampTest {
     TimerTask task = getTaskScheduled();
     task.run();
 
-    verify(errorReporterService).notifyError(exception);
+    ErrorEvent eventFired = errorEventIsFired();
+    assertThat((RuntimeException) eventFired.getError(), is(exception));
   }
 
   private void mockBuildCheckPeriodProperty(long buildCheckPeriod) {
@@ -172,6 +175,14 @@ public class CILampTest {
     ArgumentCaptor<TimerTask> task = ArgumentCaptor.forClass(TimerTask.class);
     verify(timer).schedule(task.capture(), anyLong(), anyLong());
     return task.getValue();
+  }
+
+  private ErrorEvent errorEventIsFired() {
+    ArgumentCaptor<ErrorEvent> eventController = ArgumentCaptor
+        .forClass(ErrorEvent.class);
+    verify(bus).fireEvent(eventController.capture());
+    ErrorEvent eventFired = eventController.getValue();
+    return eventFired;
   }
 
 }
