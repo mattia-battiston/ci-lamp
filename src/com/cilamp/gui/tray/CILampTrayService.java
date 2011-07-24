@@ -57,7 +57,6 @@ public class CILampTrayService {
 
   private void addApplicationTrayIcon() throws AWTException {
     SystemTray tray = systemTrayFactory.getSystemTray();
-    // TODO get this image from classpath
     Image image = Toolkit.getDefaultToolkit().getImage("CILavaLamp-icon.png");
     trayIcon = trayIconFactory.createTrayIcon(image);
     trayIcon.setToolTip("CI Lamp");
