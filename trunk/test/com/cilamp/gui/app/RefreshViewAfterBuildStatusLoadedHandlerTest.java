@@ -14,9 +14,9 @@ import com.cilamp.event.BuildStatusLoadedEvent;
 import com.cilamp.model.Build;
 import com.cilamp.service.services.LampService;
 
-public class BuildStatusLoadedHandlerTest {
+public class RefreshViewAfterBuildStatusLoadedHandlerTest {
 
-  private BuildStatusLoadedHandler handler;
+  private RefreshViewAfterBuildStatusLoadedHandler handler;
 
   @Mock
   private CILampGuiPresenter.View view;
@@ -32,7 +32,7 @@ public class BuildStatusLoadedHandlerTest {
   public void before() {
     MockitoAnnotations.initMocks(this);
 
-    handler = new BuildStatusLoadedHandler(view);
+    handler = new RefreshViewAfterBuildStatusLoadedHandler(view);
     buildStatusLoadedEvent = new BuildStatusLoadedEvent(build);
     handler.setLampService(lampService);
   }

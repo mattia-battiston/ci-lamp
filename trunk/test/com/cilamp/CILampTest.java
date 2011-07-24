@@ -22,7 +22,7 @@ import com.cilamp.event.ErrorEvent;
 import com.cilamp.event.LampTurnedOffEvent;
 import com.cilamp.event.LampTurnedOnEvent;
 import com.cilamp.event.base.EventBus;
-import com.cilamp.gui.app.BuildStatusLoadedHandler;
+import com.cilamp.gui.app.RefreshViewAfterBuildStatusLoadedHandler;
 import com.cilamp.gui.app.CILampGui;
 import com.cilamp.gui.app.CILampGuiPresenter;
 import com.cilamp.gui.app.LampTurnedOffHandler;
@@ -120,7 +120,7 @@ public class CILampTest {
     ciLamp.initializeApplication();
 
     verify(bus).addHandler(eq(BuildStatusLoadedEvent.TYPE),
-        any(BuildStatusLoadedHandler.class));
+        any(RefreshViewAfterBuildStatusLoadedHandler.class));
   }
 
   @Test
