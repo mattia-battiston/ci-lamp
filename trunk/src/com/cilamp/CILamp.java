@@ -80,9 +80,8 @@ public class CILamp {
           System.out.println("Checking build");
           buildStatusService.getLastCompletedBuildStatus();
         } catch (Exception exception) {
-          // TODO fire ErrorEvent instead of calling errorReporter directly
-          errorReporter.notifyError(exception);
           log.error("Error retrieving build information", exception);
+          eventBus.fireEvent(new ErrorEvent(exception));
         }
       }
     }, FIRST_TIME_DELAY, propertiesService.getRefreshPeriod());

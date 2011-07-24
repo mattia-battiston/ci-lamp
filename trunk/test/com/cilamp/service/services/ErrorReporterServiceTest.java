@@ -13,6 +13,7 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import com.cilamp.event.ErrorEvent;
 import com.cilamp.gui.app.CILampGuiPresenter.View;
 import com.cilamp.gui.tray.CILampTrayService;
 import com.cilamp.gui.util.DialogManager;
@@ -43,9 +44,10 @@ public class ErrorReporterServiceTest {
   @Test
   public void showAlertWhenViewIsVisible() {
     viewIsVisible();
-    Exception testError = new Exception("There was a test error");
+    ErrorEvent testError = new ErrorEvent(new Exception(
+        "There was a test error"));
 
-    service.notifyError(testError);
+    service.onError(testError);
 
     verify(dialogManager)
         .showMessageDialog(
@@ -56,9 +58,10 @@ public class ErrorReporterServiceTest {
   @Test
   public void showTrayMessageWhenViewIsNotVisible() {
     viewIsNotVisible();
-    Exception testError = new Exception("There was a test error");
+    ErrorEvent testError = new ErrorEvent(new Exception(
+        "There was a test error"));
 
-    service.notifyError(testError);
+    service.onError(testError);
 
     verify(trayService.getTrayIcon()).displayMessage("Error occured",
         "There was a test error", MessageType.ERROR);

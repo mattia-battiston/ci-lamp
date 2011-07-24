@@ -32,7 +32,7 @@ public class ErrorReporterService implements ErrorEventHandler {
   }
 
   // TODO this would be private, or removed and implemened in onError
-  public void notifyError(Throwable e) {
+  private void notifyError(Throwable e) {
     if (view.isShown()) {
       log.info("reporting error as message dialog: " + e.getMessage());
       dialogManager.showMessageDialog(
