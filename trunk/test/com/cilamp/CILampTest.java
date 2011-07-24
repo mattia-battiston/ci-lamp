@@ -16,6 +16,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import com.cilamp.event.BuildStatusLoadedEvent;
+import com.cilamp.event.ErrorEvent;
 import com.cilamp.event.LampTurnedOffEvent;
 import com.cilamp.event.LampTurnedOnEvent;
 import com.cilamp.event.base.EventBus;
@@ -93,8 +94,7 @@ public class CILampTest {
   public void mainGuiIsInitialized() {
     ciLamp.initializeApplication();
 
-    verify(ciLampGui).initialize(any(CILampGui.class), eq(bus),
-        eq(errorReporterService));
+    verify(ciLampGui).initialize(any(CILampGui.class), eq(bus));
   }
 
   @Test
@@ -119,6 +119,13 @@ public class CILampTest {
 
     verify(bus).addHandler(eq(BuildStatusLoadedEvent.TYPE),
         any(BuildStatusLoadedHandler.class));
+  }
+
+  @Test
+  public void setErrorEventHandler() {
+    ciLamp.initializeApplication();
+
+    verify(bus).addHandler(eq(ErrorEvent.TYPE), eq(errorReporterService));
   }
 
   @Test

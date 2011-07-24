@@ -6,11 +6,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.cilamp.CILamp;
+import com.cilamp.event.ErrorEvent;
+import com.cilamp.event.ErrorEventHandler;
 import com.cilamp.gui.app.CILampGuiPresenter;
 import com.cilamp.gui.tray.CILampTrayService;
 import com.cilamp.gui.util.DialogManager;
 
-public class ErrorReporterService {
+public class ErrorReporterService implements ErrorEventHandler {
 
   final Logger log = LoggerFactory.getLogger(CILamp.class);
 
@@ -24,6 +26,12 @@ public class ErrorReporterService {
     this.trayService = trayService;
   }
 
+  @Override
+  public void onError(ErrorEvent errorEvent) {
+    notifyError(errorEvent.getError());
+  }
+
+  // TODO this would be private, or removed and implemened in onError
   public void notifyError(Throwable e) {
     if (view.isShown()) {
       log.info("reporting error as message dialog: " + e.getMessage());
