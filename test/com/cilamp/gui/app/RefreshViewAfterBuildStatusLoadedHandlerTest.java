@@ -12,7 +12,6 @@ import org.mockito.MockitoAnnotations;
 
 import com.cilamp.event.BuildStatusLoadedEvent;
 import com.cilamp.model.Build;
-import com.cilamp.service.services.LampService;
 
 public class RefreshViewAfterBuildStatusLoadedHandlerTest {
 
@@ -20,9 +19,6 @@ public class RefreshViewAfterBuildStatusLoadedHandlerTest {
 
   @Mock
   private CILampGuiPresenter.View view;
-
-  @Mock
-  private LampService lampService;
 
   private BuildStatusLoadedEvent buildStatusLoadedEvent;
 
@@ -34,7 +30,6 @@ public class RefreshViewAfterBuildStatusLoadedHandlerTest {
 
     handler = new RefreshViewAfterBuildStatusLoadedHandler(view);
     buildStatusLoadedEvent = new BuildStatusLoadedEvent(build);
-    handler.setLampService(lampService);
   }
 
   @Test
@@ -83,21 +78,4 @@ public class RefreshViewAfterBuildStatusLoadedHandlerTest {
     verify(view).setBuildCommitters("");
   }
 
-  @Test
-  public void notifyLampWhenBuildFailed() {
-    build.setStatus("FAILED");
-
-    handler.onBuildStatusLoaded(buildStatusLoadedEvent);
-
-    verify(lampService).turnAlarmOn();
-  }
-
-  @Test
-  public void notifyLampWhenBuildSucceded() {
-    build.setStatus("SUCCESS");
-
-    handler.onBuildStatusLoaded(buildStatusLoadedEvent);
-
-    verify(lampService).turnAlarmOff();
-  }
 }
