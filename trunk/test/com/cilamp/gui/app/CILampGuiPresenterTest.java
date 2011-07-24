@@ -3,6 +3,7 @@ package com.cilamp.gui.app;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -74,6 +75,17 @@ public class CILampGuiPresenterTest {
   }
 
   @Test
+  public void exceptionsOnAlarmOnAreReported() {
+    Throwable error = throwExceptionTurningAlarmOn();
+
+    ActionListener alarmOnListener = getActionListenerForButton(alarmOnButton);
+    alarmOnListener.actionPerformed(null);
+
+    ErrorEvent eventFired = errorEventIsFired();
+    assertThat(eventFired.getError(), is(error));
+  }
+
+  @Test
   public void alarmOffCallsService() {
     ActionListener alarmOffListener = getActionListenerForButton(alarmOffButton);
     alarmOffListener.actionPerformed(null);
@@ -87,6 +99,17 @@ public class CILampGuiPresenterTest {
     alarmOnListener.actionPerformed(null);
 
     verify(eventBus).fireEvent(any(LampTurnedOffEvent.class));
+  }
+
+  @Test
+  public void exceptionsOnAlarmOffAreReported() {
+    Throwable error = throwExceptionTurningAlarmOff();
+
+    ActionListener alarmOnListener = getActionListenerForButton(alarmOffButton);
+    alarmOnListener.actionPerformed(null);
+
+    ErrorEvent eventFired = errorEventIsFired();
+    assertThat(eventFired.getError(), is(error));
   }
 
   @Test
@@ -121,6 +144,18 @@ public class CILampGuiPresenterTest {
     verify(eventBus).fireEvent(eventController.capture());
     ErrorEvent eventFired = eventController.getValue();
     return eventFired;
+  }
+
+  private Throwable throwExceptionTurningAlarmOff() {
+    RuntimeException exception = new RuntimeException("TEST");
+    doThrow(exception).when(lampService).turnAlarmOff();
+    return exception;
+  }
+
+  private Throwable throwExceptionTurningAlarmOn() {
+    RuntimeException exception = new RuntimeException("TEST");
+    doThrow(exception).when(lampService).turnAlarmOn();
+    return exception;
   }
 
   private RuntimeException throwExceptionWhenLoadingBuild() {
