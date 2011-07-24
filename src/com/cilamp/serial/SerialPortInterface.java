@@ -14,7 +14,11 @@ import org.slf4j.LoggerFactory;
 
 public class SerialPortInterface {
 
-  // TODO use log properly
+  private static final int BIT_RATE = 9600;
+  private static final int DATABITS = SerialPort.DATABITS_8;
+  private static final int STOPBITS = SerialPort.STOPBITS_1;
+  private static final int PARITY = SerialPort.PARITY_NONE;
+
   final Logger log = LoggerFactory.getLogger(SerialPortInterface.class);
 
   private static SerialPortInterface instance;
@@ -30,7 +34,6 @@ public class SerialPortInterface {
     try {
       initialize();
     } catch (Exception e) {
-      // TODO manage this exception, fire ErrorEvent and notify user
       throw new RuntimeException(e.getMessage(), e);
     }
   }
@@ -40,24 +43,25 @@ public class SerialPortInterface {
   private OutputStream serialPortOutputStream;
 
   public void initialize() throws Exception {
+    log.info("initializing communication with serial port {}", SERIAL_PORT_NAME);
     SerialPort serialPort = retrieveSerialPort();
     serialPortOutputStream = serialPort.getOutputStream();
+    log.info("communication with serial port has been initialized");
   }
 
   private SerialPort retrieveSerialPort() throws NoSuchPortException,
       PortInUseException, UnsupportedCommOperationException {
+    log.info("looking for serial port {}", SERIAL_PORT_NAME);
     CommPortIdentifier commPortIdentifier = CommPortIdentifier
         .getPortIdentifier(SERIAL_PORT_NAME);
     ensurePortIsAvailable(commPortIdentifier);
-
-    // TODO use real log
-    System.out.println("Found port COM1");
+    log.info("serial port {} found and available, opening communication",
+        SERIAL_PORT_NAME);
 
     SerialPort serialPort = (SerialPort) commPortIdentifier
         .open("CILamp", 2000);
-    // TODO understand these parameters
-    serialPort.setSerialPortParams(9600, SerialPort.DATABITS_8,
-        SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
+    serialPort.setSerialPortParams(BIT_RATE, DATABITS, STOPBITS, PARITY);
+    log.info("communication opened");
     return serialPort;
   }
 
@@ -76,6 +80,7 @@ public class SerialPortInterface {
 
   public void sendCommand(String command) {
     try {
+      log.info("sending command to port {}: [{}]", SERIAL_PORT_NAME, command);
       serialPortOutputStream.write(command.getBytes());
     } catch (IOException e) {
       throw new RuntimeException(e.getMessage(), e);
