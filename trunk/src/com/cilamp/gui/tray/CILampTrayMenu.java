@@ -8,6 +8,8 @@ import java.awt.event.ActionListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.cilamp.event.ErrorEvent;
+import com.cilamp.event.base.EventBus;
 import com.cilamp.gui.app.CILampGuiPresenter;
 import com.cilamp.gui.factory.PopupMenuFactory;
 import com.cilamp.service.services.ShutdownService;
@@ -20,8 +22,10 @@ public class CILampTrayMenu {
 
   private PopupMenuFactory popupMenuFactory = new PopupMenuFactory();
   private ShutdownService shutdownService = new ShutdownService();
+  private EventBus eventBus;
 
-  public PopupMenu init(final CILampGuiPresenter mainGui) {
+  public PopupMenu init(final CILampGuiPresenter mainGui, EventBus eventBus) {
+    this.eventBus = eventBus;
     PopupMenu popupMenu = popupMenuFactory.createPopupMenu();
 
     addOpen(mainGui, popupMenu);
@@ -36,8 +40,13 @@ public class CILampTrayMenu {
     exit.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent event) {
-        log.info("Going to shut down");
-        shutdownService.shutdown();
+        try {
+          log.info("Going to shut down");
+          shutdownService.shutdown();
+        } catch (Exception exception) {
+          log.error("Error  shutting down the application", exception);
+          eventBus.fireEvent(new ErrorEvent(exception));
+        }
       }
     });
     popupMenu.add(exit);

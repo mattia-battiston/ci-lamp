@@ -8,6 +8,8 @@ import java.awt.TrayIcon;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import com.cilamp.event.base.EventBus;
+import com.cilamp.event.base.EventBusInstance;
 import com.cilamp.gui.app.CILampGuiPresenter;
 import com.cilamp.gui.factory.SystemTrayFactory;
 import com.cilamp.gui.factory.TrayIconFactory;
@@ -19,6 +21,8 @@ public class CILampTrayService {
   private SystemTrayFactory systemTrayFactory = new SystemTrayFactory();
   private TrayIconFactory trayIconFactory = new TrayIconFactory();
   private CILampTrayMenu trayMenu = new CILampTrayMenu();
+
+  private EventBus eventBus = EventBusInstance.getEventBus();
 
   private TrayIcon trayIcon;
 
@@ -48,7 +52,7 @@ public class CILampTrayService {
   }
 
   private void initRightClickMenuOnTrayIcon() {
-    trayIcon.setPopupMenu(trayMenu.init(mainGui));
+    trayIcon.setPopupMenu(trayMenu.init(mainGui, eventBus));
   }
 
   private void addApplicationTrayIcon() throws AWTException {

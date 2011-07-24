@@ -1,5 +1,8 @@
 package com.cilamp.gui.tray;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -14,6 +17,8 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import com.cilamp.event.ErrorEvent;
+import com.cilamp.event.base.EventBus;
 import com.cilamp.gui.app.CILampGuiPresenter;
 import com.cilamp.gui.factory.PopupMenuFactory;
 import com.cilamp.service.services.ShutdownService;
@@ -37,6 +42,9 @@ public class CILampTrayMenuTest {
   @Mock
   private MenuItem openMenuItem;
 
+  @Mock
+  private EventBus eventBus;
+
   @Before
   public void before() {
     MockitoAnnotations.initMocks(this);
@@ -49,21 +57,21 @@ public class CILampTrayMenuTest {
 
   @Test
   public void menuHasExitItem() {
-    PopupMenu popupMenu = menu.init(mainGui);
+    PopupMenu popupMenu = menu.init(mainGui, eventBus);
 
     verify(popupMenu).add(exitMenuItem);
   }
 
   @Test
   public void menuHasOpenItem() {
-    PopupMenu popupMenu = menu.init(mainGui);
+    PopupMenu popupMenu = menu.init(mainGui, eventBus);
 
     verify(popupMenu).add(openMenuItem);
   }
 
   @Test
   public void exitStopsTheApplication() {
-    menu.init(mainGui);
+    menu.init(mainGui, eventBus);
 
     ActionListener exitActionListener = getActionListenerJustAddedTo(exitMenuItem);
     exitActionListener.actionPerformed(null);
@@ -72,8 +80,34 @@ public class CILampTrayMenuTest {
   }
 
   @Test
+  public void exceptionsShuttingDownTheApplicationAreReported() {
+    Throwable error = throwExceptionShuttingDownApplication();
+    menu.init(mainGui, eventBus);
+
+    ActionListener alarmOnListener = getActionListenerJustAddedTo(exitMenuItem);
+    alarmOnListener.actionPerformed(null);
+
+    ErrorEvent eventFired = errorEventIsFired();
+    assertThat(eventFired.getError(), is(error));
+  }
+
+  private ErrorEvent errorEventIsFired() {
+    ArgumentCaptor<ErrorEvent> eventController = ArgumentCaptor
+        .forClass(ErrorEvent.class);
+    verify(eventBus).fireEvent(eventController.capture());
+    ErrorEvent eventFired = eventController.getValue();
+    return eventFired;
+  }
+
+  private Throwable throwExceptionShuttingDownApplication() {
+    RuntimeException exception = new RuntimeException("TEST");
+    doThrow(exception).when(shutdownService).shutdown();
+    return exception;
+  }
+
+  @Test
   public void openShowsTheMainGui() {
-    menu.init(mainGui);
+    menu.init(mainGui, eventBus);
 
     ActionListener openActionListener = getActionListenerJustAddedTo(openMenuItem);
     openActionListener.actionPerformed(null);
