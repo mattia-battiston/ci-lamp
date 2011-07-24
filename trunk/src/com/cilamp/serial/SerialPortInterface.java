@@ -12,6 +12,8 @@ import java.io.OutputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.cilamp.service.services.PropertiesService;
+
 public class SerialPortInterface {
 
   private static final int BIT_RATE = 9600;
@@ -20,6 +22,8 @@ public class SerialPortInterface {
   private static final int PARITY = SerialPort.PARITY_NONE;
 
   final Logger log = LoggerFactory.getLogger(SerialPortInterface.class);
+
+  private static PropertiesService propertiesService = new PropertiesService();
 
   private static SerialPortInterface instance;
 
@@ -38,11 +42,11 @@ public class SerialPortInterface {
     }
   }
 
-  // TODO get this from properties file
-  private static final String SERIAL_PORT_NAME = "COM3";
+  private String SERIAL_PORT_NAME;
   private OutputStream serialPortOutputStream;
 
-  public void initialize() throws Exception {
+  private void initialize() throws Exception {
+    SERIAL_PORT_NAME = propertiesService.getSerialPortName();
     log.info("initializing communication with serial port {}", SERIAL_PORT_NAME);
     SerialPort serialPort = retrieveSerialPort();
     serialPortOutputStream = serialPort.getOutputStream();
@@ -93,6 +97,10 @@ public class SerialPortInterface {
 
   public void setSerialPortOutputStream(OutputStream serialPortOutputStream) {
     this.serialPortOutputStream = serialPortOutputStream;
+  }
+
+  public static void setPropertiesService(PropertiesService propertiesService) {
+    SerialPortInterface.propertiesService = propertiesService;
   }
 
 }

@@ -29,4 +29,9 @@ public class PropertiesServiceTest {
     assertNotNull(propertiesService.getRefreshPeriod());
   }
 
+  @Test
+  public void readSerialPortName() {
+    assertNotNull(propertiesService.getSerialPortName());
+  }
+
 }

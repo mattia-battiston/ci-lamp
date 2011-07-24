@@ -39,4 +39,8 @@ public class PropertiesService {
   public Long getRefreshPeriod() {
     return Long.parseLong(properties.getProperty("refreshperiod"));
   }
+
+  public String getSerialPortName() {
+    return properties.getProperty("serialportname");
+  }
 }
