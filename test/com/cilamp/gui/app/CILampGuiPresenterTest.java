@@ -1,5 +1,7 @@
 package com.cilamp.gui.app;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -13,11 +15,11 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import com.cilamp.event.ErrorEvent;
 import com.cilamp.event.LampTurnedOffEvent;
 import com.cilamp.event.LampTurnedOnEvent;
 import com.cilamp.event.base.EventBus;
 import com.cilamp.service.services.BuildStatusService;
-import com.cilamp.service.services.ErrorReporterService;
 import com.cilamp.service.services.LampService;
 
 public class CILampGuiPresenterTest {
@@ -45,9 +47,6 @@ public class CILampGuiPresenterTest {
   @Mock
   private EventBus eventBus;
 
-  @Mock
-  private ErrorReporterService errorReporterService;
-
   @Before
   public void before() {
     MockitoAnnotations.initMocks(this);
@@ -55,7 +54,7 @@ public class CILampGuiPresenterTest {
     mockView();
     presenter.setLampService(lampService);
     presenter.setBuildStatusService(buildStatusService);
-    presenter.initialize(view, eventBus, errorReporterService);
+    presenter.initialize(view, eventBus);
   }
 
   @Test
@@ -98,14 +97,15 @@ public class CILampGuiPresenterTest {
     verify(buildStatusService).getLastCompletedBuildStatus();
   }
 
-  @Test(expected = RuntimeException.class)
+  @Test
   public void exceptionsRefreshingAreReported() {
     RuntimeException exception = throwExceptionWhenLoadingBuild();
 
     ActionListener refreshListener = getActionListenerForButton(refreshButton);
     refreshListener.actionPerformed(null);
 
-    verify(errorReporterService).notifyError(exception);
+    ErrorEvent eventFired = errorEventIsFired();
+    assertThat((RuntimeException) eventFired.getError(), is(exception));
   }
 
   @Test
@@ -113,6 +113,14 @@ public class CILampGuiPresenterTest {
     presenter.show();
 
     verify(view).show();
+  }
+
+  private ErrorEvent errorEventIsFired() {
+    ArgumentCaptor<ErrorEvent> eventController = ArgumentCaptor
+        .forClass(ErrorEvent.class);
+    verify(eventBus).fireEvent(eventController.capture());
+    ErrorEvent eventFired = eventController.getValue();
+    return eventFired;
   }
 
   private RuntimeException throwExceptionWhenLoadingBuild() {

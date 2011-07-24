@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.cilamp.event.BuildStatusLoadedEvent;
+import com.cilamp.event.ErrorEvent;
 import com.cilamp.event.LampTurnedOffEvent;
 import com.cilamp.event.LampTurnedOnEvent;
 import com.cilamp.event.base.EventBus;
@@ -52,8 +53,7 @@ public class CILamp {
     log.info("Starting CILamp");
 
     CILampGui view = new CILampGui();
-    errorReporter.initialize(view, trayService);
-    mainGui.initialize(view, eventBus, errorReporter);
+    mainGui.initialize(view, eventBus);
 
     trayService.setMainGui(mainGui);
     trayService.init();
@@ -63,6 +63,9 @@ public class CILamp {
         .addHandler(LampTurnedOffEvent.TYPE, new LampTurnedOffHandler(view));
     eventBus.addHandler(BuildStatusLoadedEvent.TYPE,
         new BuildStatusLoadedHandler(view));
+
+    errorReporter.initialize(view, trayService);
+    eventBus.addHandler(ErrorEvent.TYPE, errorReporter);
 
     scheduleBuildChecker();
   }
@@ -77,6 +80,7 @@ public class CILamp {
           System.out.println("Checking build");
           buildStatusService.getLastCompletedBuildStatus();
         } catch (Exception exception) {
+          // TODO fire ErrorEvent instead of calling errorReporter directly
           errorReporter.notifyError(exception);
           log.error("Error retrieving build information", exception);
         }

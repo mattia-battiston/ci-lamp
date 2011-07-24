@@ -5,22 +5,25 @@ import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.cilamp.event.ErrorEvent;
 import com.cilamp.event.LampTurnedOffEvent;
 import com.cilamp.event.LampTurnedOnEvent;
 import com.cilamp.event.base.EventBus;
 import com.cilamp.service.services.BuildStatusService;
-import com.cilamp.service.services.ErrorReporterService;
 import com.cilamp.service.services.LampService;
 
 public class CILampGuiPresenter {
+
+  final Logger log = LoggerFactory.getLogger(CILampGuiPresenter.class);
 
   private View view;
 
   private LampService lampService = new LampService();
 
   private BuildStatusService buildStatusService = new BuildStatusService();
-
-  private ErrorReporterService errorReporterService;
 
   private EventBus eventBus;
 
@@ -48,11 +51,9 @@ public class CILampGuiPresenter {
     Boolean isShown();
   }
 
-  public void initialize(View view, EventBus eventBus,
-      ErrorReporterService errorReporterService) {
+  public void initialize(View view, EventBus eventBus) {
     this.view = view;
     this.eventBus = eventBus;
-    this.errorReporterService = errorReporterService;
 
     bindListenersToView();
   }
@@ -82,8 +83,8 @@ public class CILampGuiPresenter {
         try {
           buildStatusService.getLastCompletedBuildStatus();
         } catch (Exception exception) {
-          errorReporterService.notifyError(exception);
-          throw new RuntimeException(exception);
+          log.error("Error retrieving build information", exception);
+          eventBus.fireEvent(new ErrorEvent(exception));
         }
       }
     });
