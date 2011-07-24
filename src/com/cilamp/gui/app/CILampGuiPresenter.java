@@ -62,8 +62,13 @@ public class CILampGuiPresenter {
     view.getAlarmOnButton().addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        lampService.turnAlarmOn();
-        eventBus.fireEvent(new LampTurnedOnEvent());
+        try {
+          lampService.turnAlarmOn();
+          eventBus.fireEvent(new LampTurnedOnEvent());
+        } catch (Exception exception) {
+          log.error("Error turning alarm ON", exception);
+          eventBus.fireEvent(new ErrorEvent(exception));
+        }
       }
     });
     view.getAlarmOnButton().setEnabled(true);
@@ -71,8 +76,13 @@ public class CILampGuiPresenter {
     view.getAlarmOffButton().addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        lampService.turnAlarmOff();
-        eventBus.fireEvent(new LampTurnedOffEvent());
+        try {
+          lampService.turnAlarmOff();
+          eventBus.fireEvent(new LampTurnedOffEvent());
+        } catch (Exception exception) {
+          log.error("Error turning alarm OFF", exception);
+          eventBus.fireEvent(new ErrorEvent(exception));
+        }
       }
     });
     view.getAlarmOffButton().setEnabled(false);
