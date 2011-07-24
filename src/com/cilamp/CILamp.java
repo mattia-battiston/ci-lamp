@@ -77,7 +77,7 @@ public class CILamp {
       @Override
       public void run() {
         try {
-          System.out.println("Checking build");
+          log.info("Checking build status");
           buildStatusService.getLastCompletedBuildStatus();
         } catch (Exception exception) {
           log.error("Error retrieving build information", exception);
