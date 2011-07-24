@@ -8,3 +8,6 @@ jobname=MY_BUILD_NAME
 
 #how often do you want to check the status of your build?
 refreshperiod=10000
+
+#what serial port is your lamp connected to?
+serialportname=COM1

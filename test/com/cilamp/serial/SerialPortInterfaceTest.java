@@ -27,6 +27,8 @@ import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
+import com.cilamp.service.services.PropertiesService;
+
 @RunWith(PowerMockRunner.class)
 @PrepareForTest({ CommPortIdentifier.class })
 public class SerialPortInterfaceTest {
@@ -42,16 +44,7 @@ public class SerialPortInterfaceTest {
     MockitoAnnotations.initMocks(this);
 
     mockSerialPort();
-  }
-
-  private void mockSerialPort() throws NoSuchPortException, PortInUseException {
-    PowerMockito.mockStatic(CommPortIdentifier.class);
-    when(CommPortIdentifier.getPortIdentifier(anyString())).thenReturn(
-        commPortIdentifier);
-    when(commPortIdentifier.getPortType()).thenReturn(
-        CommPortIdentifier.PORT_SERIAL);
-    when(commPortIdentifier.isCurrentlyOwned()).thenReturn(false);
-    when(commPortIdentifier.open(anyString(), anyInt())).thenReturn(serialPort);
+    mockPortName("COM1");
   }
 
   @Test
@@ -90,6 +83,16 @@ public class SerialPortInterfaceTest {
       assertThat(e.getCause().getMessage(),
           containsString("Port is currently in use"));
     }
+  }
+
+  @Test
+  public void opensCorrectSerialPort() throws NoSuchPortException {
+    mockPortName("COM9");
+
+    new SerialPortInterface();
+
+    PowerMockito.verifyStatic();
+    CommPortIdentifier.getPortIdentifier("COM9");
   }
 
   @Test
@@ -139,4 +142,19 @@ public class SerialPortInterfaceTest {
     when(CommPortIdentifier.getPortIdentifier(anyString())).thenReturn(null);
   }
 
+  private void mockSerialPort() throws NoSuchPortException, PortInUseException {
+    PowerMockito.mockStatic(CommPortIdentifier.class);
+    when(CommPortIdentifier.getPortIdentifier(anyString())).thenReturn(
+        commPortIdentifier);
+    when(commPortIdentifier.getPortType()).thenReturn(
+        CommPortIdentifier.PORT_SERIAL);
+    when(commPortIdentifier.isCurrentlyOwned()).thenReturn(false);
+    when(commPortIdentifier.open(anyString(), anyInt())).thenReturn(serialPort);
+  }
+
+  private void mockPortName(String portName) {
+    PropertiesService propertiesService = mock(PropertiesService.class);
+    when(propertiesService.getSerialPortName()).thenReturn(portName);
+    SerialPortInterface.setPropertiesService(propertiesService);
+  }
 }
