@@ -11,15 +11,15 @@ import com.cilamp.gui.app.CILampGuiPresenter.View;
 import com.cilamp.model.Build;
 import com.cilamp.service.services.LampService;
 
-public class BuildStatusLoadedHandler implements BuildStatusLoadedEventHandler {
+public class RefreshViewAfterBuildStatusLoadedHandler implements BuildStatusLoadedEventHandler {
 
-  final Logger log = LoggerFactory.getLogger(BuildStatusLoadedHandler.class);
+  final Logger log = LoggerFactory.getLogger(RefreshViewAfterBuildStatusLoadedHandler.class);
 
   private final View view;
 
   private LampService lampService;
 
-  public BuildStatusLoadedHandler(CILampGuiPresenter.View view) {
+  public RefreshViewAfterBuildStatusLoadedHandler(CILampGuiPresenter.View view) {
     this.view = view;
   }
 
