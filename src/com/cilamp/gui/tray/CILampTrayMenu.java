@@ -16,8 +16,6 @@ import com.cilamp.service.services.ShutdownService;
 
 public class CILampTrayMenu {
 
-  // TODO use MenuView and MenuPresenter
-
   final Logger log = LoggerFactory.getLogger(CILampTrayMenu.class);
 
   private PopupMenuFactory popupMenuFactory = new PopupMenuFactory();
