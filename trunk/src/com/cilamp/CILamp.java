@@ -13,8 +13,8 @@ import com.cilamp.event.BuildFailedEvent;
 import com.cilamp.event.base.EventBus;
 import com.cilamp.gui.app.CILampGui;
 import com.cilamp.gui.app.CILampGuiPresenter;
-import com.cilamp.gui.app.LampTurnedOffHandler;
-import com.cilamp.gui.app.LampTurnedOnHandler;
+import com.cilamp.gui.app.BuildSucceededHandler;
+import com.cilamp.gui.app.BuildFailedHandler;
 import com.cilamp.gui.app.NotifyLampAfterBuildStatusLoadedHandler;
 import com.cilamp.gui.app.RefreshViewAfterBuildStatusLoadedHandler;
 import com.cilamp.gui.tray.CILampTrayService;
@@ -59,9 +59,9 @@ public class CILamp {
     trayService.setMainGui(mainGui);
     trayService.init();
 
-    eventBus.addHandler(BuildFailedEvent.TYPE, new LampTurnedOnHandler(view));
+    eventBus.addHandler(BuildFailedEvent.TYPE, new BuildFailedHandler(view));
     eventBus
-        .addHandler(BuildSucceededEvent.TYPE, new LampTurnedOffHandler(view));
+        .addHandler(BuildSucceededEvent.TYPE, new BuildSucceededHandler(view));
     eventBus.addHandler(BuildStatusLoadedEvent.TYPE,
         new RefreshViewAfterBuildStatusLoadedHandler(view));
     eventBus.addHandler(BuildStatusLoadedEvent.TYPE,
