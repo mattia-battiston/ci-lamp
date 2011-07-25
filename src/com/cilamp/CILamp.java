@@ -6,15 +6,15 @@ import java.util.TimerTask;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.cilamp.event.BuildStatusLoadedEvent;
-import com.cilamp.event.ErrorEvent;
-import com.cilamp.event.BuildSucceededEvent;
 import com.cilamp.event.BuildFailedEvent;
+import com.cilamp.event.BuildStatusLoadedEvent;
+import com.cilamp.event.BuildSucceededEvent;
+import com.cilamp.event.ErrorEvent;
 import com.cilamp.event.base.EventBus;
+import com.cilamp.gui.app.BuildFailedHandler;
+import com.cilamp.gui.app.BuildSucceededHandler;
 import com.cilamp.gui.app.CILampGui;
 import com.cilamp.gui.app.CILampGuiPresenter;
-import com.cilamp.gui.app.BuildSucceededHandler;
-import com.cilamp.gui.app.BuildFailedHandler;
 import com.cilamp.gui.app.NotifyLampAfterBuildStatusLoadedHandler;
 import com.cilamp.gui.app.RefreshViewAfterBuildStatusLoadedHandler;
 import com.cilamp.gui.tray.CILampTrayService;
@@ -60,8 +60,8 @@ public class CILamp {
     trayService.init();
 
     eventBus.addHandler(BuildFailedEvent.TYPE, new BuildFailedHandler(view));
-    eventBus
-        .addHandler(BuildSucceededEvent.TYPE, new BuildSucceededHandler(view));
+    eventBus.addHandler(BuildSucceededEvent.TYPE, new BuildSucceededHandler(
+        view));
     eventBus.addHandler(BuildStatusLoadedEvent.TYPE,
         new RefreshViewAfterBuildStatusLoadedHandler(view));
     eventBus.addHandler(BuildStatusLoadedEvent.TYPE,
@@ -83,7 +83,7 @@ public class CILamp {
           log.info("Checking build status");
           buildStatusService.getLastCompletedBuildStatus();
         } catch (Exception exception) {
-          // TODO alarm should go on in case of error
+          // TODO notify lamp of system error
           log.error("Error retrieving build information", exception);
           eventBus.fireEvent(new ErrorEvent(exception));
         }

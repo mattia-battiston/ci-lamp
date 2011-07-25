@@ -76,7 +76,7 @@ public class CILampGuiPresenterTest {
 
   @Test
   public void exceptionsOnBuildFailedAreReported() {
-    Throwable error = throwExceptionTurningAlarmOn();
+    Throwable error = throwExceptionNotifyingLampOfFailure();
 
     ActionListener buildFailedListener = getActionListenerForButton(buildFailedButton);
     buildFailedListener.actionPerformed(null);
@@ -103,7 +103,7 @@ public class CILampGuiPresenterTest {
 
   @Test
   public void exceptionsOnBuildSucceededAreReported() {
-    Throwable error = throwExceptionTurningAlarmOff();
+    Throwable error = throwExceptionNotifyingLampOfSuccess();
 
     ActionListener buildSucceededListener = getActionListenerForButton(buildSucceededButton);
     buildSucceededListener.actionPerformed(null);
@@ -146,13 +146,13 @@ public class CILampGuiPresenterTest {
     return eventFired;
   }
 
-  private Throwable throwExceptionTurningAlarmOff() {
+  private Throwable throwExceptionNotifyingLampOfSuccess() {
     RuntimeException exception = new RuntimeException("TEST");
     doThrow(exception).when(lampService).buildSucceeded();
     return exception;
   }
 
-  private Throwable throwExceptionTurningAlarmOn() {
+  private Throwable throwExceptionNotifyingLampOfFailure() {
     RuntimeException exception = new RuntimeException("TEST");
     doThrow(exception).when(lampService).buildFailed();
     return exception;

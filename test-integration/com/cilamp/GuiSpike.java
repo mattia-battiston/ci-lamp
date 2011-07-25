@@ -41,8 +41,8 @@ public class GuiSpike extends JFrame {
     centerPanel.add(buildStatusPanel, BorderLayout.CENTER);
 
     actionsPanel.setBorder(BorderFactory.createTitledBorder("Actions"));
-    actionsPanel.add(new JButton("Alarm ON"), BorderLayout.NORTH);
-    actionsPanel.add(new JButton("Alarm OFF"));
+    actionsPanel.add(new JButton("Build FAILED"), BorderLayout.NORTH);
+    actionsPanel.add(new JButton("Build SUCCESS"));
 
     buildStatusPanel.setLayout(new GridLayout(1, 1));
     buildStatusPanel

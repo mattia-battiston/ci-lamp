@@ -84,8 +84,8 @@ public class CILampTrayMenuTest {
     Throwable error = throwExceptionShuttingDownApplication();
     menu.init(mainGui, eventBus);
 
-    ActionListener alarmOnListener = getActionListenerJustAddedTo(exitMenuItem);
-    alarmOnListener.actionPerformed(null);
+    ActionListener actionListener = getActionListenerJustAddedTo(exitMenuItem);
+    actionListener.actionPerformed(null);
 
     ErrorEvent eventFired = errorEventIsFired();
     assertThat(eventFired.getError(), is(error));
