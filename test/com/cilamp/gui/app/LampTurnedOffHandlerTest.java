@@ -33,14 +33,14 @@ public class LampTurnedOffHandlerTest {
 
   @Test
   public void enableAlarmOnButtonWhenLampTurnsOff() {
-    handler.onLampTurnedOff(null);
+    handler.onBuildSucceeded(null);
 
     verify(alarmOnButton).setEnabled(true);
   }
 
   @Test
   public void disableAlarmOffButtonWhenLampTurnsOff() {
-    handler.onLampTurnedOff(null);
+    handler.onBuildSucceeded(null);
 
     verify(alarmOffButton).setEnabled(false);
   }

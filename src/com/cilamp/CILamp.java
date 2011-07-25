@@ -8,8 +8,8 @@ import org.slf4j.LoggerFactory;
 
 import com.cilamp.event.BuildStatusLoadedEvent;
 import com.cilamp.event.ErrorEvent;
-import com.cilamp.event.LampTurnedOffEvent;
-import com.cilamp.event.LampTurnedOnEvent;
+import com.cilamp.event.BuildSucceededEvent;
+import com.cilamp.event.BuildFailedEvent;
 import com.cilamp.event.base.EventBus;
 import com.cilamp.gui.app.CILampGui;
 import com.cilamp.gui.app.CILampGuiPresenter;
@@ -59,9 +59,9 @@ public class CILamp {
     trayService.setMainGui(mainGui);
     trayService.init();
 
-    eventBus.addHandler(LampTurnedOnEvent.TYPE, new LampTurnedOnHandler(view));
+    eventBus.addHandler(BuildFailedEvent.TYPE, new LampTurnedOnHandler(view));
     eventBus
-        .addHandler(LampTurnedOffEvent.TYPE, new LampTurnedOffHandler(view));
+        .addHandler(BuildSucceededEvent.TYPE, new LampTurnedOffHandler(view));
     eventBus.addHandler(BuildStatusLoadedEvent.TYPE,
         new RefreshViewAfterBuildStatusLoadedHandler(view));
     eventBus.addHandler(BuildStatusLoadedEvent.TYPE,
