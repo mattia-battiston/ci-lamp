@@ -142,12 +142,12 @@ public class CILampGui implements CILampGuiPresenter.View {
   }
 
   private void addBuildFailedButton(JPanel content) {
-    buildFailedButton = new Button("Alarm ON");
+    buildFailedButton = new Button("Build FAILED");
     content.add(buildFailedButton);
   }
 
   private void addBuildSucceededButton(JPanel content) {
-    buildSucceededButton = new Button("Alarm OFF");
+    buildSucceededButton = new Button("Build SUCCESS");
     content.add(buildSucceededButton);
   }
 

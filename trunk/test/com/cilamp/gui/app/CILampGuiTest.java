@@ -138,17 +138,17 @@ public class CILampGuiTest {
   }
 
   @Test
-  public void alarmOnIsDrawn() {
+  public void buildFailedIsDrawn() {
     initializeCiLampGui();
 
-    assertNotNull(getButtonAddedToActionPanel("Alarm ON"));
+    assertNotNull(getButtonAddedToActionPanel("Build FAILED"));
   }
 
   @Test
-  public void alarmOffIsDrawn() {
+  public void buildSucceededIsDrawn() {
     initializeCiLampGui();
 
-    assertNotNull(getButtonAddedToActionPanel("Alarm OFF"));
+    assertNotNull(getButtonAddedToActionPanel("Build SUCCESS"));
   }
 
   @Test
