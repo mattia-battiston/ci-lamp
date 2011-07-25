@@ -3,22 +3,19 @@ package com.cilamp.serial;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import com.cilamp.serial.SerialPortInterface;
-import com.cilamp.serial.SerialPortInterfaceProvider;
-
 public class SerialPortInterfaceIntegrationTest {
 
   private SerialPortInterface serialPortInterface = new SerialPortInterfaceProvider()
       .getSerialPortInterface();
 
   @Test
-  public void turnAlarmOn() {
+  public void buildFailed() {
     serialPortInterface.sendCommand("TURN_ALARM_ON");
   }
 
   @Ignore
   @Test
-  public void turnAlarmOff() {
+  public void buildSucceeded() {
     serialPortInterface.sendCommand("TURN_ALARM_OFF");
   }
 
