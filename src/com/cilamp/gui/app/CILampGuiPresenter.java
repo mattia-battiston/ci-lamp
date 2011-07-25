@@ -8,9 +8,9 @@ import java.awt.event.ActionListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.cilamp.event.ErrorEvent;
-import com.cilamp.event.BuildSucceededEvent;
 import com.cilamp.event.BuildFailedEvent;
+import com.cilamp.event.BuildSucceededEvent;
+import com.cilamp.event.ErrorEvent;
 import com.cilamp.event.base.EventBus;
 import com.cilamp.service.services.BuildStatusService;
 import com.cilamp.service.services.LampService;
@@ -66,7 +66,7 @@ public class CILampGuiPresenter {
           lampService.buildFailed();
           eventBus.fireEvent(new BuildFailedEvent());
         } catch (Exception exception) {
-          log.error("Error turning alarm ON", exception);
+          log.error("Error notifying lamp of build failure", exception);
           eventBus.fireEvent(new ErrorEvent(exception));
         }
       }
@@ -80,7 +80,7 @@ public class CILampGuiPresenter {
           lampService.buildSucceeded();
           eventBus.fireEvent(new BuildSucceededEvent());
         } catch (Exception exception) {
-          log.error("Error turning alarm OFF", exception);
+          log.error("Error notifying lamp of build success", exception);
           eventBus.fireEvent(new ErrorEvent(exception));
         }
       }
