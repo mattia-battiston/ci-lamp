@@ -63,7 +63,7 @@ public class CILampGuiPresenter {
       @Override
       public void actionPerformed(ActionEvent e) {
         try {
-          lampService.turnAlarmOn();
+          lampService.buildFailed();
           eventBus.fireEvent(new LampTurnedOnEvent());
         } catch (Exception exception) {
           log.error("Error turning alarm ON", exception);
@@ -77,7 +77,7 @@ public class CILampGuiPresenter {
       @Override
       public void actionPerformed(ActionEvent e) {
         try {
-          lampService.turnAlarmOff();
+          lampService.buildSucceeded();
           eventBus.fireEvent(new LampTurnedOffEvent());
         } catch (Exception exception) {
           log.error("Error turning alarm OFF", exception);

@@ -5,9 +5,9 @@ import org.slf4j.LoggerFactory;
 
 import com.cilamp.serial.SerialPortInterfaceProvider;
 
-public class AlarmOnCommand {
+public class BuildFailedCommand {
 
-  final Logger log = LoggerFactory.getLogger(AlarmOnCommand.class);
+  final Logger log = LoggerFactory.getLogger(BuildFailedCommand.class);
 
   private SerialPortInterfaceProvider serialPortInterfaceProvider = new SerialPortInterfaceProvider();
 
