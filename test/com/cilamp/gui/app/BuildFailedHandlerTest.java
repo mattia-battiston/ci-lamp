@@ -10,44 +10,44 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-public class LampTurnedOnHandlerTest {
+public class BuildFailedHandlerTest {
 
-  private LampTurnedOnHandler handler;
+  private BuildFailedHandler handler;
 
   @Mock
   private CILampGuiPresenter.View view;
 
   @Mock
-  private Button alarmOnButton;
+  private Button buildFailedButton;
 
   @Mock
-  private Button alarmOffButton;
+  private Button buildSucceededButton;
 
   @Before
   public void before() {
     MockitoAnnotations.initMocks(this);
 
-    handler = new LampTurnedOnHandler(view);
+    handler = new BuildFailedHandler(view);
     mockView();
   }
 
   @Test
-  public void enableAlarmOffButtonWhenLampTurnsOn() {
+  public void enableBuildSucceededButtonWhenBuildFails() {
     handler.onBuildFailed(null);
 
-    verify(alarmOffButton).setEnabled(true);
+    verify(buildSucceededButton).setEnabled(true);
   }
 
   @Test
-  public void disableAlarmOnButtonWhenLampTurnsOn() {
+  public void disableBuildFailedButtonWhenBuildFails() {
     handler.onBuildFailed(null);
 
-    verify(alarmOnButton).setEnabled(false);
+    verify(buildFailedButton).setEnabled(false);
   }
 
   private void mockView() {
-    when(view.getBuildFailedButton()).thenReturn(alarmOnButton);
-    when(view.getBuildSucceededButton()).thenReturn(alarmOffButton);
+    when(view.getBuildFailedButton()).thenReturn(buildFailedButton);
+    when(view.getBuildSucceededButton()).thenReturn(buildSucceededButton);
   }
 
 }

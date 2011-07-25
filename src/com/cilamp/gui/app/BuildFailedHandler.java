@@ -6,13 +6,13 @@ import org.slf4j.LoggerFactory;
 import com.cilamp.event.BuildFailedEvent;
 import com.cilamp.event.BuildFailedEventHandler;
 
-public class LampTurnedOnHandler implements BuildFailedEventHandler {
+public class BuildFailedHandler implements BuildFailedEventHandler {
 
-  final Logger log = LoggerFactory.getLogger(LampTurnedOnHandler.class);
+  final Logger log = LoggerFactory.getLogger(BuildFailedHandler.class);
 
   private CILampGuiPresenter.View view;
 
-  public LampTurnedOnHandler(CILampGuiPresenter.View view) {
+  public BuildFailedHandler(CILampGuiPresenter.View view) {
     this.view = view;
   }
 

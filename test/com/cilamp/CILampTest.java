@@ -25,8 +25,8 @@ import com.cilamp.event.BuildFailedEvent;
 import com.cilamp.event.base.EventBus;
 import com.cilamp.gui.app.CILampGui;
 import com.cilamp.gui.app.CILampGuiPresenter;
-import com.cilamp.gui.app.LampTurnedOffHandler;
-import com.cilamp.gui.app.LampTurnedOnHandler;
+import com.cilamp.gui.app.BuildSucceededHandler;
+import com.cilamp.gui.app.BuildFailedHandler;
 import com.cilamp.gui.app.NotifyLampAfterBuildStatusLoadedHandler;
 import com.cilamp.gui.app.RefreshViewAfterBuildStatusLoadedHandler;
 import com.cilamp.gui.tray.CILampTrayService;
@@ -106,7 +106,7 @@ public class CILampTest {
     ciLamp.initializeApplication();
 
     verify(bus).addHandler(eq(BuildFailedEvent.TYPE),
-        any(LampTurnedOnHandler.class));
+        any(BuildFailedHandler.class));
   }
 
   @Test
@@ -114,7 +114,7 @@ public class CILampTest {
     ciLamp.initializeApplication();
 
     verify(bus).addHandler(eq(BuildSucceededEvent.TYPE),
-        any(LampTurnedOffHandler.class));
+        any(BuildSucceededHandler.class));
   }
 
   @Test
