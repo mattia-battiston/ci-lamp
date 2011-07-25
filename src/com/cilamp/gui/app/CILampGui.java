@@ -24,9 +24,9 @@ public class CILampGui implements CILampGuiPresenter.View {
 
   private LabelFactory labelFactory = new LabelFactory();
 
-  private Button alarmOnButton;
+  private Button buildFailedButton;
 
-  private Button alarmOffButton;
+  private Button buildSucceededButton;
 
   private Button refreshButton;
 
@@ -69,8 +69,8 @@ public class CILampGui implements CILampGuiPresenter.View {
     centerPanel.add(buildStatusPanel, BorderLayout.CENTER);
 
     actionsPanel.setBorder(BorderFactory.createTitledBorder("Actions"));
-    addAlarmOnButton(actionsPanel);
-    addAlarmOffButton(actionsPanel);
+    addBuildFailedButton(actionsPanel);
+    addBuildSucceededButton(actionsPanel);
 
     buildStatusPanel.setLayout(new GridLayout(5, 1));
     buildStatusPanel.setBorder(BorderFactory
@@ -141,14 +141,14 @@ public class CILampGui implements CILampGuiPresenter.View {
     refreshButtonPanel.add(refreshButton);
   }
 
-  private void addAlarmOnButton(JPanel content) {
-    alarmOnButton = new Button("Alarm ON");
-    content.add(alarmOnButton);
+  private void addBuildFailedButton(JPanel content) {
+    buildFailedButton = new Button("Alarm ON");
+    content.add(buildFailedButton);
   }
 
-  private void addAlarmOffButton(JPanel content) {
-    alarmOffButton = new Button("Alarm OFF");
-    content.add(alarmOffButton);
+  private void addBuildSucceededButton(JPanel content) {
+    buildSucceededButton = new Button("Alarm OFF");
+    content.add(buildSucceededButton);
   }
 
   @Override
@@ -162,13 +162,13 @@ public class CILampGui implements CILampGuiPresenter.View {
   }
 
   @Override
-  public Button getAlarmOnButton() {
-    return alarmOnButton;
+  public Button getBuildFailedButton() {
+    return buildFailedButton;
   }
 
   @Override
-  public Button getAlarmOffButton() {
-    return alarmOffButton;
+  public Button getBuildSucceededButton() {
+    return buildSucceededButton;
   }
 
   @Override

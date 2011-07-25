@@ -46,8 +46,8 @@ public class LampTurnedOnHandlerTest {
   }
 
   private void mockView() {
-    when(view.getAlarmOnButton()).thenReturn(alarmOnButton);
-    when(view.getAlarmOffButton()).thenReturn(alarmOffButton);
+    when(view.getBuildFailedButton()).thenReturn(alarmOnButton);
+    when(view.getBuildSucceededButton()).thenReturn(alarmOffButton);
   }
 
 }

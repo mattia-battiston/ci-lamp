@@ -28,9 +28,9 @@ public class CILampGuiPresenter {
   private EventBus eventBus;
 
   public interface View {
-    Button getAlarmOnButton();
+    Button getBuildFailedButton();
 
-    Button getAlarmOffButton();
+    Button getBuildSucceededButton();
 
     Button getRefreshButton();
 
@@ -59,7 +59,7 @@ public class CILampGuiPresenter {
   }
 
   private void bindListenersToView() {
-    view.getAlarmOnButton().addActionListener(new ActionListener() {
+    view.getBuildFailedButton().addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
         try {
@@ -71,9 +71,9 @@ public class CILampGuiPresenter {
         }
       }
     });
-    view.getAlarmOnButton().setEnabled(true);
+    view.getBuildFailedButton().setEnabled(true);
 
-    view.getAlarmOffButton().addActionListener(new ActionListener() {
+    view.getBuildSucceededButton().addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
         try {
@@ -85,7 +85,7 @@ public class CILampGuiPresenter {
         }
       }
     });
-    view.getAlarmOffButton().setEnabled(false);
+    view.getBuildSucceededButton().setEnabled(false);
 
     view.getRefreshButton().addActionListener(new ActionListener() {
       @Override
