@@ -19,8 +19,8 @@ public class LampTurnedOnHandler implements BuildFailedEventHandler {
   @Override
   public void onBuildFailed(BuildFailedEvent event) {
     log.info("Lamp turned on, handling event");
-    view.getAlarmOnButton().setEnabled(false);
-    view.getAlarmOffButton().setEnabled(true);
+    view.getBuildFailedButton().setEnabled(false);
+    view.getBuildSucceededButton().setEnabled(true);
   }
 
 }

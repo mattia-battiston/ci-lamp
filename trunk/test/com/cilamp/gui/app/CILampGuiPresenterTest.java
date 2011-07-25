@@ -16,9 +16,9 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import com.cilamp.event.ErrorEvent;
-import com.cilamp.event.BuildSucceededEvent;
 import com.cilamp.event.BuildFailedEvent;
+import com.cilamp.event.BuildSucceededEvent;
+import com.cilamp.event.ErrorEvent;
 import com.cilamp.event.base.EventBus;
 import com.cilamp.service.services.BuildStatusService;
 import com.cilamp.service.services.LampService;
@@ -31,10 +31,10 @@ public class CILampGuiPresenterTest {
   private CILampGuiPresenter.View view;
 
   @Mock
-  private Button alarmOnButton;
+  private Button buildFailedButton;
 
   @Mock
-  private Button alarmOffButton;
+  private Button buildSucceededButton;
 
   @Mock
   private Button refreshButton;
@@ -59,54 +59,54 @@ public class CILampGuiPresenterTest {
   }
 
   @Test
-  public void alarmOnCallsService() {
-    ActionListener alarmOnListener = getActionListenerForButton(alarmOnButton);
-    alarmOnListener.actionPerformed(null);
+  public void buildFailedCallsService() {
+    ActionListener buildFailedListener = getActionListenerForButton(buildFailedButton);
+    buildFailedListener.actionPerformed(null);
 
     verify(lampService).buildFailed();
   }
 
   @Test
-  public void alarmOnFiresEvent() {
-    ActionListener alarmOnListener = getActionListenerForButton(alarmOnButton);
-    alarmOnListener.actionPerformed(null);
+  public void buildFailedFiresEvent() {
+    ActionListener buildFailedListener = getActionListenerForButton(buildFailedButton);
+    buildFailedListener.actionPerformed(null);
 
     verify(eventBus).fireEvent(any(BuildFailedEvent.class));
   }
 
   @Test
-  public void exceptionsOnAlarmOnAreReported() {
+  public void exceptionsOnBuildFailedAreReported() {
     Throwable error = throwExceptionTurningAlarmOn();
 
-    ActionListener alarmOnListener = getActionListenerForButton(alarmOnButton);
-    alarmOnListener.actionPerformed(null);
+    ActionListener buildFailedListener = getActionListenerForButton(buildFailedButton);
+    buildFailedListener.actionPerformed(null);
 
     ErrorEvent eventFired = errorEventIsFired();
     assertThat(eventFired.getError(), is(error));
   }
 
   @Test
-  public void alarmOffCallsService() {
-    ActionListener alarmOffListener = getActionListenerForButton(alarmOffButton);
-    alarmOffListener.actionPerformed(null);
+  public void buildSucceededCallsService() {
+    ActionListener buildSucceededListener = getActionListenerForButton(buildSucceededButton);
+    buildSucceededListener.actionPerformed(null);
 
     verify(lampService).buildSucceeded();
   }
 
   @Test
-  public void alarmOffFiresEvent() {
-    ActionListener alarmOnListener = getActionListenerForButton(alarmOffButton);
-    alarmOnListener.actionPerformed(null);
+  public void buildSucceededFiresEvent() {
+    ActionListener buildSucceededListener = getActionListenerForButton(buildSucceededButton);
+    buildSucceededListener.actionPerformed(null);
 
     verify(eventBus).fireEvent(any(BuildSucceededEvent.class));
   }
 
   @Test
-  public void exceptionsOnAlarmOffAreReported() {
+  public void exceptionsOnBuildSucceededAreReported() {
     Throwable error = throwExceptionTurningAlarmOff();
 
-    ActionListener alarmOnListener = getActionListenerForButton(alarmOffButton);
-    alarmOnListener.actionPerformed(null);
+    ActionListener buildSucceededListener = getActionListenerForButton(buildSucceededButton);
+    buildSucceededListener.actionPerformed(null);
 
     ErrorEvent eventFired = errorEventIsFired();
     assertThat(eventFired.getError(), is(error));
@@ -172,8 +172,8 @@ public class CILampGuiPresenterTest {
   }
 
   private void mockView() {
-    when(view.getAlarmOnButton()).thenReturn(alarmOnButton);
-    when(view.getAlarmOffButton()).thenReturn(alarmOffButton);
+    when(view.getBuildFailedButton()).thenReturn(buildFailedButton);
+    when(view.getBuildSucceededButton()).thenReturn(buildSucceededButton);
     when(view.getRefreshButton()).thenReturn(refreshButton);
   }
 
