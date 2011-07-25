@@ -12,9 +12,9 @@ import org.mockito.MockitoAnnotations;
 import com.cilamp.serial.SerialPortInterface;
 import com.cilamp.serial.SerialPortInterfaceProvider;
 
-public class AlarmOffCommandTest {
+public class BuildFailedCommandTest {
 
-  private AlarmOffCommand command = new AlarmOffCommand();
+  private BuildFailedCommand command = new BuildFailedCommand();
 
   @Mock
   private SerialPortInterface serialPortInterface;
@@ -30,7 +30,7 @@ public class AlarmOffCommandTest {
   public void sendsCommandToSerialPort() {
     command.execute();
 
-    verify(serialPortInterface).sendCommand("TURN_ALARM_OFF");
+    verify(serialPortInterface).sendCommand("TURN_ALARM_ON");
   }
 
   private void mockSerialPort() {

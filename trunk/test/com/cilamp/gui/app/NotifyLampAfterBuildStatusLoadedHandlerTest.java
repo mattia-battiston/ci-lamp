@@ -37,7 +37,7 @@ public class NotifyLampAfterBuildStatusLoadedHandlerTest {
 
     handler.onBuildStatusLoaded(buildStatusLoadedEvent);
 
-    verify(lampService).turnAlarmOff();
+    verify(lampService).buildSucceeded();
   }
 
   @Test
@@ -46,7 +46,7 @@ public class NotifyLampAfterBuildStatusLoadedHandlerTest {
 
     handler.onBuildStatusLoaded(buildStatusLoadedEvent);
 
-    verify(lampService).turnAlarmOn();
+    verify(lampService).buildFailed();
   }
 
   @Test
@@ -55,7 +55,7 @@ public class NotifyLampAfterBuildStatusLoadedHandlerTest {
 
     handler.onBuildStatusLoaded(buildStatusLoadedEvent);
 
-    verify(lampService).turnAlarmOn();
+    verify(lampService).buildFailed();
   }
 
 }

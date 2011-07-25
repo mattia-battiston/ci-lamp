@@ -22,9 +22,9 @@ public class NotifyLampAfterBuildStatusLoadedHandler implements
     Build build = buildStatusLoadedEvent.getBuild();
 
     if ("SUCCESS".equals(build.getStatus()))
-      lampService.turnAlarmOff();
+      lampService.buildSucceeded();
     else
-      lampService.turnAlarmOn();
+      lampService.buildFailed();
   }
 
   public void setLampService(LampService lampService) {

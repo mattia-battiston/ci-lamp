@@ -63,7 +63,7 @@ public class CILampGuiPresenterTest {
     ActionListener alarmOnListener = getActionListenerForButton(alarmOnButton);
     alarmOnListener.actionPerformed(null);
 
-    verify(lampService).turnAlarmOn();
+    verify(lampService).buildFailed();
   }
 
   @Test
@@ -90,7 +90,7 @@ public class CILampGuiPresenterTest {
     ActionListener alarmOffListener = getActionListenerForButton(alarmOffButton);
     alarmOffListener.actionPerformed(null);
 
-    verify(lampService).turnAlarmOff();
+    verify(lampService).buildSucceeded();
   }
 
   @Test
@@ -148,13 +148,13 @@ public class CILampGuiPresenterTest {
 
   private Throwable throwExceptionTurningAlarmOff() {
     RuntimeException exception = new RuntimeException("TEST");
-    doThrow(exception).when(lampService).turnAlarmOff();
+    doThrow(exception).when(lampService).buildSucceeded();
     return exception;
   }
 
   private Throwable throwExceptionTurningAlarmOn() {
     RuntimeException exception = new RuntimeException("TEST");
-    doThrow(exception).when(lampService).turnAlarmOn();
+    doThrow(exception).when(lampService).buildFailed();
     return exception;
   }
 

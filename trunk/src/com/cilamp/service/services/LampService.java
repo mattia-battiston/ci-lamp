@@ -1,16 +1,16 @@
 package com.cilamp.service.services;
 
-import com.cilamp.service.command.AlarmOffCommand;
-import com.cilamp.service.command.AlarmOnCommand;
+import com.cilamp.service.command.BuildSucceededCommand;
+import com.cilamp.service.command.BuildFailedCommand;
 
 public class LampService {
 
-  public void turnAlarmOn() {
-    new AlarmOnCommand().execute();
+  public void buildFailed() {
+    new BuildFailedCommand().execute();
   }
 
-  public void turnAlarmOff() {
-    new AlarmOffCommand().execute();
+  public void buildSucceeded() {
+    new BuildSucceededCommand().execute();
   }
 
 }
