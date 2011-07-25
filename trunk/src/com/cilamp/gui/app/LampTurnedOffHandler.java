@@ -3,10 +3,10 @@ package com.cilamp.gui.app;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.cilamp.event.LampTurnedOffEvent;
-import com.cilamp.event.LampTurnedOffEventHandler;
+import com.cilamp.event.BuildSucceededEvent;
+import com.cilamp.event.BuildSucceededEventHandler;
 
-public class LampTurnedOffHandler implements LampTurnedOffEventHandler {
+public class LampTurnedOffHandler implements BuildSucceededEventHandler {
 
   final Logger log = LoggerFactory.getLogger(LampTurnedOffHandler.class);
 
@@ -17,7 +17,7 @@ public class LampTurnedOffHandler implements LampTurnedOffEventHandler {
   }
 
   @Override
-  public void onLampTurnedOff(LampTurnedOffEvent lampTurnedOffEvent) {
+  public void onBuildSucceeded(BuildSucceededEvent lampTurnedOffEvent) {
     log.info("Lamp turned off, handling event");
     view.getAlarmOnButton().setEnabled(true);
     view.getAlarmOffButton().setEnabled(false);

@@ -17,8 +17,8 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import com.cilamp.event.ErrorEvent;
-import com.cilamp.event.LampTurnedOffEvent;
-import com.cilamp.event.LampTurnedOnEvent;
+import com.cilamp.event.BuildSucceededEvent;
+import com.cilamp.event.BuildFailedEvent;
 import com.cilamp.event.base.EventBus;
 import com.cilamp.service.services.BuildStatusService;
 import com.cilamp.service.services.LampService;
@@ -71,7 +71,7 @@ public class CILampGuiPresenterTest {
     ActionListener alarmOnListener = getActionListenerForButton(alarmOnButton);
     alarmOnListener.actionPerformed(null);
 
-    verify(eventBus).fireEvent(any(LampTurnedOnEvent.class));
+    verify(eventBus).fireEvent(any(BuildFailedEvent.class));
   }
 
   @Test
@@ -98,7 +98,7 @@ public class CILampGuiPresenterTest {
     ActionListener alarmOnListener = getActionListenerForButton(alarmOffButton);
     alarmOnListener.actionPerformed(null);
 
-    verify(eventBus).fireEvent(any(LampTurnedOffEvent.class));
+    verify(eventBus).fireEvent(any(BuildSucceededEvent.class));
   }
 
   @Test
