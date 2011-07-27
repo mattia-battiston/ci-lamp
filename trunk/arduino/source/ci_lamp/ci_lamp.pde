@@ -3,7 +3,7 @@
 #define BUILD_SUCCEEDED "BUILD_SUCCEEDED"
 
 const int RED_LIGHT = 10;
-const int GREEN_LIGHT = 12;
+const int GREEN_LIGHT = 9;
 
 String command;
 
@@ -12,6 +12,7 @@ void setup() {
   Serial.flush();
   log("Starting application");
   pinMode(RED_LIGHT, OUTPUT);
+  pinMode(GREEN_LIGHT, OUTPUT);
   command = IDLE;
 }
 
