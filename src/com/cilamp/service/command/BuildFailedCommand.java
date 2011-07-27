@@ -12,8 +12,8 @@ public class BuildFailedCommand {
   private SerialPortInterfaceProvider serialPortInterfaceProvider = new SerialPortInterfaceProvider();
 
   public void execute() {
-    log.info("Sending command TURN_ALARM_ON to serial port");
-    String command = "TURN_ALARM_ON";
+    log.info("Sending command BUILD_FAILED to serial port");
+    String command = "BUILD_FAILED";
     serialPortInterfaceProvider.getSerialPortInterface().sendCommand(command);
   }
 

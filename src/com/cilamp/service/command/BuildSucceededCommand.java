@@ -12,8 +12,8 @@ public class BuildSucceededCommand {
   private SerialPortInterfaceProvider serialPortInterfaceProvider = new SerialPortInterfaceProvider();
 
   public void execute() {
-    log.info("Sending command TURN_ALARM_OFF to serial port");
-    String command = "TURN_ALARM_OFF";
+    log.info("Sending command BUILD_SUCCEEDED to serial port");
+    String command = "BUILD_SUCCEEDED";
     serialPortInterfaceProvider.getSerialPortInterface().sendCommand(command);
   }
 
