@@ -10,13 +10,13 @@ public class SerialPortInterfaceIntegrationTest {
 
   @Test
   public void buildFailed() {
-    serialPortInterface.sendCommand("TURN_ALARM_ON");
+    serialPortInterface.sendCommand("BUILD_FAILED");
   }
 
   @Ignore
   @Test
   public void buildSucceeded() {
-    serialPortInterface.sendCommand("TURN_ALARM_OFF");
+    serialPortInterface.sendCommand("BUILD_SUCCEEDED");
   }
 
 }
