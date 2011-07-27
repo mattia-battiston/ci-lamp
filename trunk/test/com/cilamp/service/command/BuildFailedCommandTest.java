@@ -30,7 +30,7 @@ public class BuildFailedCommandTest {
   public void sendsCommandToSerialPort() {
     command.execute();
 
-    verify(serialPortInterface).sendCommand("TURN_ALARM_ON");
+    verify(serialPortInterface).sendCommand("BUILD_FAILED");
   }
 
   private void mockSerialPort() {
