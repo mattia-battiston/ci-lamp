@@ -1,10 +1,10 @@
-#define TURN_ALARM_ON "TURN_ALARM_ON"
-#define TURN_ALARM_OFF "TURN_ALARM_OFF"
+#define BUILD_FAILED "BUILD_FAILED"
+#define BUILD_SUCCEEDED "BUILD_SUCCEEDED"
 
 void setup() {
   Serial.begin(9600);
   Serial.flush();
-  log("Starting echoing: you tell me, I'll repeat ;)");
+  log("Starting application");
   pinMode(13, OUTPUT);
 }
 
@@ -13,10 +13,10 @@ void loop() {
   if(isCommandAvailable()){
     String command = readCommand();
 
-    if(command.equals(TURN_ALARM_ON)) {
+    if(command.equals(BUILD_FAILED)) {
       turnAlarmOn();
     }
-    else if(command.equals(TURN_ALARM_OFF)){
+    else if(command.equals(BUILD_SUCCEEDED)){
       turnAlarmOff();
     }
     else{
