@@ -1,42 +1,69 @@
+#define IDLE "IDLE"
 #define BUILD_FAILED "BUILD_FAILED"
 #define BUILD_SUCCEEDED "BUILD_SUCCEEDED"
+
+const int RED_LIGHT = 13;
+const int GREEN_LIGHT = 12;
+
+String command;
 
 void setup() {
   Serial.begin(9600);
   Serial.flush();
   log("Starting application");
-  pinMode(13, OUTPUT);
+  pinMode(RED_LIGHT, OUTPUT);
+  command = IDLE;
 }
 
 void loop() {
 
   if(isCommandAvailable()){
-    String command = readCommand();
+    command = readCommand();
+  } 
 
-    if(command.equals(BUILD_FAILED)) {
-      turnAlarmOn();
-    }
-    else if(command.equals(BUILD_SUCCEEDED)){
-      turnAlarmOff();
-    }
-    else{
-      log("Unknown command: [" + command + "]");
-    }
+  if(command.equals(BUILD_FAILED)) {
+    alarmOn();
+  } else if(command.equals(BUILD_SUCCEEDED)){
+    alarmOff();
+  } else if(command.equals(IDLE)){
+    //do nothing
+  } else{
+    log("Unknown command: [" + command + "]");
+    delay(1000);
   }
+
 
 }
 
 /**********************************************/
 /* Commands: */
 /**********************************************/
-void turnAlarmOn(){
-  log("Turning alarm on:");
-  digitalWrite(13, HIGH);
+void alarmOn(){
+  greenLightOff();
+  
+  redLightOn();
+  delay(1000);
+  redLightOff();
+  delay(500);
 }
 
-void turnAlarmOff(){
-  log("Turning alarm off:");
-  digitalWrite(13, LOW);
+void alarmOff(){
+  redLightOff();
+  greenLightOn();
+  delay(1000);
+}
+
+void redLightOn(){
+  digitalWrite(RED_LIGHT, HIGH);
+}
+void redLightOff(){
+  digitalWrite(RED_LIGHT, LOW);
+}
+void greenLightOn(){
+  digitalWrite(GREEN_LIGHT, HIGH);
+}
+void greenLightOff(){
+  digitalWrite(GREEN_LIGHT, LOW);
 }
 
 /**********************************************/
@@ -70,3 +97,4 @@ String readInputFromSerial(){
 void log(String param){
   Serial.println(param);
 }
+
