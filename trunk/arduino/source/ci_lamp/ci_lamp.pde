@@ -2,7 +2,7 @@
 #define BUILD_FAILED "BUILD_FAILED"
 #define BUILD_SUCCEEDED "BUILD_SUCCEEDED"
 
-const int RED_LIGHT = 13;
+const int RED_LIGHT = 10;
 const int GREEN_LIGHT = 12;
 
 String command;
