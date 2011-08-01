@@ -16,11 +16,19 @@
 		<delete dir="build" />
 	</target>
 
+	<target name="check-properties-are-set">
+		<fail unless="so" message="Set the property so in your cilamp.properties, example: so=x86"/>
+		<fail unless="endpoint" message="Set the property endpoint in your cilamp.properties, example: endpoint=http://localhost:8080"/>
+		<fail unless="jobname" message="Set the property jobname in your cilamp.properties, example: jobname=MY_BUILD_NAME"/>
+		<fail unless="refreshperiod" message="Set the property refreshperiod in your cilamp.properties, example: refreshperiod=10000"/>
+		<fail unless="serialportname" message="Set the property serialportname in your cilamp.properties, example: serialportname=COM1"/>
+	</target>
+	
 	<target name="init">
 		<mkdir dir="build" />
 	</target>
 
-	<target name="compile" depends="init">
+	<target name="compile" depends="init, check-properties-are-set">
 		<javac destdir="build" nowarn="false" debug="true" optimize="false" deprecation="true" target="1.6" verbose="false" fork="false" source="1.6" includeantruntime="true">
 			<src>
 				<pathelement location="src" />
