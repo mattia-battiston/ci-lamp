@@ -44,7 +44,7 @@
 
 	<target name="main" depends="compile" description="launch the application">
 		<java classname="com.cilamp.CILamp" fork="true" spawn="true">
-			<arg line="-Djava.library.path=lib/runtime/${so}"/>
+			<jvmarg line="-Djava.library.path=lib/runtime/${so}"/>
 			<classpath>
 				<path refid="build.classpath" />
 				<pathelement location="build" />
