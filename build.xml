@@ -35,7 +35,8 @@
 	</target>
 
 	<target name="main" depends="compile">
-		<java classname="com.cilamp.CILamp">
+		<java classname="com.cilamp.CILamp" fork="true" spawn="true">
+			<arg line="-Djava.library.path=lib/runtime/${so}"/>
 			<classpath>
 				<path refid="build.classpath" />
 				<pathelement location="build" />
