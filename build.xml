@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="CI-Lamp">
+
+	<property file="src-resource/cilamp.properties" />
+
+	<path id="build.classpath">
+		<fileset dir="lib/runtime">
+			<include name="*.jar" />
+		</fileset>
+		<fileset dir="lib/runtime">
+			<include name="${so}/*.jar" />
+		</fileset>
+	</path>
+
+	<target name="clean" description="cleans up the environment">
+		<delete dir="build" />
+	</target>
+
+	<target name="init">
+		<mkdir dir="build" />
+	</target>
+
+	<target name="compile" depends="init">
+		<javac destdir="build" nowarn="false" debug="true" optimize="false" deprecation="true" target="1.6" verbose="false" fork="false" source="1.6" includeantruntime="true">
+			<src>
+				<pathelement location="src" />
+			</src>
+			<classpath refid="build.classpath" />
+		</javac>
+		<copy file="CILavaLamp-icon.png" todir="build">
+		</copy>
+		<copy todir="build">
+			<fileset dir="src-resource" includes="*.properties" />
+		</copy>
+	</target>
+
+	<target name="main" depends="compile">
+		<java classname="com.cilamp.CILamp">
+			<classpath>
+				<path refid="build.classpath" />
+				<pathelement location="build" />
+			</classpath>
+		</java>
+	</target>
+
+</project>
