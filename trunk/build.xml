@@ -42,7 +42,7 @@
 		</copy>
 	</target>
 
-	<target name="main" depends="compile">
+	<target name="main" depends="compile" description="launch the application">
 		<java classname="com.cilamp.CILamp" fork="true" spawn="true">
 			<arg line="-Djava.library.path=lib/runtime/${so}"/>
 			<classpath>
