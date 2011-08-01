@@ -19,7 +19,7 @@ public class PropertiesService {
 
   private static void initialize() {
     log.info("initializing properties...");
-    URL url = ClassLoader.getSystemResource("cilamp.properties");
+    URL url = PropertiesService.class.getResource("/cilamp.properties");
     try {
       properties.load(url.openStream());
       log.info("properties read: {}", properties);

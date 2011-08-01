@@ -11,3 +11,6 @@ refreshperiod=10000
 
 #what serial port is your lamp connected to?
 serialportname=COM1
+
+#SO bit-version: x86 or x64
+so=x86
