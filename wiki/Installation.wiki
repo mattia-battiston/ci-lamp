@@ -1,5 +1,4 @@
-#Instructions to install and configure the lamp
-
+#labels Featured
 = Installation =
 
 TODO
