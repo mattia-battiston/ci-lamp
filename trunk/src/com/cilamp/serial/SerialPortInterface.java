@@ -86,6 +86,7 @@ public class SerialPortInterface {
     try {
       log.info("sending command to port {}: [{}]", SERIAL_PORT_NAME, command);
       serialPortOutputStream.write(command.getBytes());
+      serialPortOutputStream.flush();
     } catch (IOException e) {
       throw new RuntimeException(e.getMessage(), e);
     }

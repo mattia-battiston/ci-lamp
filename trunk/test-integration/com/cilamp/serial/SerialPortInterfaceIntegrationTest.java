@@ -1,6 +1,5 @@
 package com.cilamp.serial;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 public class SerialPortInterfaceIntegrationTest {
@@ -13,10 +12,10 @@ public class SerialPortInterfaceIntegrationTest {
     serialPortInterface.sendCommand("BUILD_FAILED");
   }
 
-  @Ignore
   @Test
-  public void buildSucceeded() {
+  public void buildSucceeded() throws InterruptedException {
     serialPortInterface.sendCommand("BUILD_SUCCEEDED");
+    Thread.sleep(1000L);
   }
 
 }
