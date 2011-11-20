@@ -17,4 +17,7 @@ Upload the program under arduino\source\ci_lamp\ci_lamp.pde to your Arduino boar
 Open the folder src-resource and create a copy of the file cilamp.properties.example called cilamp.properties. Open it and set the right properties for your system.
 
 == Start ==
-Launch the file start_cilamp.bat (or alternatively launch the task main on the ant build). 
+Launch the file start_cilamp.bat (or alternatively launch the task main on the ant build).  The application is now running, and you can see the icon in the tray.
+
+== Problems? ==
+If you have problems check the log in the logs folder. You can try to launch the integration tests from the source code to investigate more.
