@@ -1,8 +1,9 @@
 #labels Featured
 = Installation =
 
-==Install Arduino==
-First you need to be able to connect your Arduino to your computer. Follow the instructions on the Arduino site for the [http://arduino.cc/en/Guide/HomePage installation].
-You can use the Blink example which comes 
+== Install Arduino ==
+First you need to be able to connect your Arduino to your computer. Follow the instructions on the Arduino site for the [http://arduino.cc/en/Guide/HomePage installation]. You can use the [http://arduino.cc/en/Tutorial/Blink Blink example] which comes with Arduino to test it out. 
 
-== Configuration ==
+== Download the Code ==
+The source code is hosted on this svn repository: https://ci-lamp.googlecode.com/svn/trunk/ <br/>
+Read [http://code.google.com/p/ci-lamp/source/checkout this] for more information on how to check out the code
