@@ -6,3 +6,6 @@ First you need to be able to connect your Arduino to your computer. Follow the i
 
 == Download the Code ==
 The source code is hosted on this svn repository: https://ci-lamp.googlecode.com/svn/trunk/. Read [http://code.google.com/p/ci-lamp/source/checkout this] for more information on how to check out the code
+
+== Load the Arduino Program ==
+Upload the program under arduino\source\ci_lamp\ci_lamp.pde to your Arduino board. The easiest way is to open it using the Arduino IDE and upload it from there.
