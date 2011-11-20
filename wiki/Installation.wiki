@@ -7,5 +7,8 @@ First you need to be able to connect your Arduino to your computer. Follow the i
 == Download the Code ==
 The source code is hosted on this svn repository: https://ci-lamp.googlecode.com/svn/trunk/. Read [http://code.google.com/p/ci-lamp/source/checkout this] for more information on how to check out the code
 
+== Build the Circuit ==
+The schematic for the circuit has been drawn using [http://fritzing.org/ Fritzing]. If you don't already have it, install it and then open the file under arduino\sketch\cilamp.fz. There is also a jpg version, for easier access.
+
 == Load the Arduino Program ==
 Upload the program under arduino\source\ci_lamp\ci_lamp.pde to your Arduino board. The easiest way is to open it using the Arduino IDE and upload it from there.
